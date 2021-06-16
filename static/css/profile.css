@@ -1,0 +1,95 @@
+* {
+    border: 0px;
+    margin: 0px;
+}
+
+button{
+    background-color: rgb(71, 105, 216);
+    cursor: pointer;
+    margin-left: 5px;
+    color: white;
+    border-radius: 5px;
+}
+
+hr {
+    border: 0;
+    clear:both;
+    display:block;
+    width: 100%;               
+    background-color:#a8a8a8;
+    height: 1px;
+    margin-top: 6px;
+    margin-bottom: 10px;
+  }
+
+main{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    color: gray;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+body{
+    background-color:rgb(233, 233, 233) ;
+}
+
+#left-content{
+    text-align: center;
+    margin-right: 20px;
+}
+
+#content{
+    background-color: white;
+    width: 1000px;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.content-inside{
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+#change-image{
+    cursor: pointer;
+}
+
+#u-id{
+    margin-top: 15px;
+}
+
+#u-mail{
+    margin-left: 70px;
+}
+
+#u-name{
+    margin-left: 126px;
+    border: 1px black solid;
+    height: 30px;
+    border-radius: 5px;
+}
+
+
+#u-password{
+    margin-left: 130px;
+    background-color: rgb(71, 105, 216);
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+#u-date{
+    margin-left: 87px;
+}
+
+#u-open{
+    margin-left: 87px;
+}
+
+#u-follow{
+    margin-left: 87px;
+}

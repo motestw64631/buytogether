@@ -1,0 +1,45 @@
+* {
+    border: 0px;
+    margin: 0px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 75%;
+}
+  
+td {
+    border-right: 3px solid rgba(194, 179, 179, 0.712);
+    text-align: center;
+    cursor: pointer;
+}
+
+td:last-child {
+border: 0;
+}
+
+
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#class{
+    margin-top: 50px;
+    color: rgb(156, 155, 155);
+}
+
+#main-pic{
+    width: 1200px;
+    overflow: hidden;
+}
+
+#pic{
+    margin-top: 15px;
+    width: 1200px;
+    height: 300px;
+    border-radius: 5px;
+    display: none;
+}

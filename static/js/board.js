@@ -1,0 +1,234 @@
+//model
+let user;
+let nextPage = 0;
+let timeout;
+
+function linkify(text) {
+    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return text.replace(urlRegex, function (url) {
+        return '<a href="' + url + '">' + url + '</a>';
+    });
+}
+
+function getUser() {
+    return fetch('/api/user')
+        .then((response) => response.json())
+}
+
+function postMessage() {
+    let title = document.getElementById('message-input-title').value;
+    let message = document.getElementById('message-input-main').value;
+    let images = document.querySelectorAll("input[type='file']")
+    let data = new FormData();
+    data.append('user', user['id']);
+    data.append('title', title);
+    data.append('message', message);
+    for (let i = 0; i < images.length; i++) {
+        data.append('images', images[i].files[0])
+    }
+
+    for (var value of data.values()) {
+        console.log(value);
+    }
+
+    return fetch('/api/message', {
+        method: 'POST',
+        body: data
+    }).then((response) => response.json())
+}
+
+function getMessage(page) {
+    return fetch(`/api/message?page=${page}`)
+        .then((response) => response.json())
+}
+
+function deleteMessage(messageId) {
+    return fetch('api/message', {
+        body: JSON.stringify({
+            'messageId': messageId
+        }),
+        method: 'DELETE',
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then((response) => response.json())
+}
+
+//view
+function loginView() {
+    document.getElementById('right-header').style.width = '200px'
+    let beforeLogin = Array.from(document.getElementsByClassName('before-login'));
+    beforeLogin.forEach((node) => { node.style.display = 'none' });
+    let afterLogin = Array.from(document.getElementsByClassName('after-login'));
+    afterLogin.forEach((node) => { node.style.display = 'inline' });
+}
+function userView() {
+    let userImage = document.getElementById('u-img');
+    userImage.src = user['image'];
+}
+
+function messageView(datas) {
+    console.log(datas);
+    const mainContent = document.getElementById('show-message')
+    datas['data'].forEach(function (data) {
+        const messages = document.createElement('div');
+        messages.className = 'messages';
+        const messageHeader = document.createElement('div');
+        messageHeader.className = 'message-header'
+        const messageImage = document.createElement('div');
+        messageImage.className = 'message-image'
+        const message = document.createElement('div');
+        message.className = 'message';
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user';
+        const messageTitle = document.createElement('div')
+        messageTitle.className = 'message-title';
+        const messageUserIcon = document.createElement('img');
+        messageUserIcon.className = 'message-user-icon';
+        const name = document.createElement('a');
+        name.className = 'name';
+        const more = document.createElement('div');
+        more.className = 'more';
+        const menu = document.createElement('div');
+        menu.classList.add('menu-none');
+        const title = document.createElement('div');
+        title.className = 'title';
+        const time = document.createElement('div');
+        time.className = 'time';
+        const img = document.createElement('img');
+        //content
+        messageUserIcon.src = data['userImage'];
+        name.textContent = data['userName'];
+        more.textContent = '...'
+        menu.textContent = '刪除'
+        menu.addEventListener('click', function (e) {
+            e.stopPropagation();
+            b = swal({
+                title: "確定要刪除此篇貼文嗎?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then(response => {
+                if (response) {
+                    console.log('確認刪除')
+                    deleteMessage(data['messageId']).then(response => {
+                        if (response['ok']) {
+                            location.reload()
+                        }
+                    })
+                }
+            })
+        })
+        title.textContent = data['title'];
+        time.textContent = data['date'];
+        if (data['contentImage'][0] !== undefined) {
+            img.src = data['contentImage'][0];
+        }
+        let content = data['content'].replace(/\n/g, "\r\n");
+        content = linkify(content);
+        message.innerHTML = content;
+        more.addEventListener('click', function () {
+            menu.classList.toggle('menu');
+        })
+        //structure
+        if (data['contentImage'][0] !== undefined) {
+            messageImage.appendChild(img);
+        }
+        messageTitle.appendChild(title);
+        messageTitle.appendChild(time);
+        userDiv.appendChild(messageUserIcon);
+        userDiv.appendChild(name);
+        more.appendChild(menu);
+        console.log(user)
+        if (user['id'] == data['userId']) {
+            userDiv.appendChild(more);
+        }
+        messageHeader.appendChild(userDiv);
+        messageHeader.appendChild(messageTitle);
+        messages.appendChild(messageHeader);
+        messages.appendChild(messageImage);
+        messages.appendChild(message);
+        mainContent.append(messages);
+    })
+}
+
+//controller
+function init() {
+    getUser().then((myJson) => {
+        if (myJson['data']) {
+            user = myJson['data'];
+            loginView();
+            userView();
+            getMessage(nextPage).then((myJson => {
+                messageView(myJson);
+                nextPage = myJson['nextPage'];
+            }))
+        }
+    })
+}
+
+
+function events() {
+    document.getElementById('toggle-control').addEventListener('click', () => {
+        let menu = document.getElementById('menu');
+        if (menu.style.display == 'none' || menu.style.display == "") {
+            menu.style.display = 'flex';
+        } else {
+            menu.style.display = 'none';
+        }
+    })
+
+    document.getElementById('upload_icon').addEventListener('click', (e) => {
+        const footer = document.getElementById('preview');
+        let input = document.createElement('input');
+        let image = document.createElement('img');
+        let imageDiv = document.createElement('div');
+        let rmImage = document.createElement('div');
+        imageDiv.className = 'imageDiv';
+        rmImage.className = 'rmImage';
+        rmImage.textContent = '✖'
+        image.className = 'previewImage';
+        input.type = 'file';
+        input.style.display = 'none';
+        rmImage.addEventListener('click', () => {
+            imageDiv.remove();
+            input.remove();
+            if (document.getElementById("upload_icon").style.display == 'none') {
+                document.getElementById('upload_icon').style.display = 'block';
+            }
+        })
+        input.addEventListener('change', function (e) {
+            let file = input.files[0];
+            image.src = URL.createObjectURL(file);
+            imageDiv.appendChild(image);
+            imageDiv.appendChild(rmImage);
+            footer.appendChild(imageDiv);
+        })
+        footer.appendChild(input);
+        input.click();
+        if (document.querySelectorAll("input[type='file']").length > 3) {
+            document.getElementById('upload_icon').style.display = 'none';
+        }
+    })
+    document.getElementById('post-message').addEventListener('click', (e) => {
+        postMessage();
+    })
+
+    window.addEventListener('scroll', function btEvent(event) {
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            if (nextPage !== null) {
+                console.log(nextPage)
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.95) {
+                    getMessage(nextPage).then((myJson => {
+                        messageView(myJson);
+                        nextPage = myJson['nextPage'];
+                    }))
+                }
+            }
+        }, 50);
+    });
+}
+
+init()
+events()
