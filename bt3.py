@@ -1,8 +1,9 @@
 import boto3, botocore 
+import os
 
-access_key_id = 'AKIAWBGPPXPDLVPR3ZAO'
-access_key_secret = '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'
-s3_bucket = 'shauncc'
+access_key_id = os.getenv('access_key_id')
+access_key_secret = os.getenv('access_key_secret')
+s3_bucket = os.getenv('s3_bucket')
 
 s3 = boto3.client(
     "s3",
