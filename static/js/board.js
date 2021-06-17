@@ -151,6 +151,7 @@ function messageView(datas) {
                     });
                 })
             });
+            subMessageInput.value='';
             while(subMessages.firstChild){
                 subMessages.removeChild(subMessages.firstChild);
             }
