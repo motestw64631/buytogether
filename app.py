@@ -46,10 +46,12 @@ def profile():
 from view.user import user_api
 from view.purchaseorder_api import purchaseorder_api
 from view.message_api import message_api
+from view.sub_message_api import sub_message_api
 
 app.register_blueprint(user_api)
 app.register_blueprint(purchaseorder_api)
 app.register_blueprint(message_api)
+app.register_blueprint(sub_message_api)
 
 if __name__ =='__main__':
-    app.run(port='5000')
+    app.run(host='0.0.0.0',port='5000')

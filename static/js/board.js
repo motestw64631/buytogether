@@ -27,9 +27,9 @@ function postMessage() {
         data.append('images', images[i].files[0])
     }
 
-    for (var value of data.values()) {
-        console.log(value);
-    }
+    // for (var value of data.values()) {
+    //     console.log(value);
+    // }
 
     return fetch('/api/message', {
         method: 'POST',
@@ -43,7 +43,7 @@ function getMessage(page) {
 }
 
 function deleteMessage(messageId) {
-    return fetch('api/message', {
+    return fetch('/api/message', {
         body: JSON.stringify({
             'messageId': messageId
         }),
@@ -52,6 +52,25 @@ function deleteMessage(messageId) {
             'content-type': 'application/json'
         }
     }).then((response) => response.json())
+}
+
+function postSubMessage(messageId,userId,content){
+    return fetch('/api/sub_message',{
+        method:'POST',
+        headers:{
+            'content-type': 'application/json'
+        },
+        body:JSON.stringify({
+            "messageId":messageId,
+            "userId":userId,
+            "content":content
+        })
+    })
+}
+
+function getSubMessage(messageId){
+    return fetch(`/api/sub_message?message_id=${messageId}`)
+        .then(response=>response.json())
 }
 
 //view
@@ -67,9 +86,9 @@ function userView() {
     userImage.src = user['image'];
 }
 
+
 function messageView(datas) {
-    console.log(datas);
-    const mainContent = document.getElementById('show-message')
+    const mainContent = document.getElementById('show-message');
     datas['data'].forEach(function (data) {
         const messages = document.createElement('div');
         messages.className = 'messages';
@@ -96,6 +115,67 @@ function messageView(datas) {
         const time = document.createElement('div');
         time.className = 'time';
         const img = document.createElement('img');
+        const subMessage = document.createElement('div');
+        const subMessageHeader = document.createElement('div');
+        subMessageHeader.className='sub-header';
+        const subMessageUser = document.createElement('img');
+        subMessageUser.className='sub-user';
+        const subMessageInput = document.createElement('div');
+        subMessageInput.contentEditable=true;
+        subMessageInput.className='sub-input';
+        const subMessageBtn = document.createElement('button');
+        const subMessages = document.createElement('div');
+        //show sub-messages
+        subMessageBtn.addEventListener('click',()=>{
+            let content = subMessageInput.textContent;
+            postSubMessage(data['messageId'],user['id'],content).then((response)=>{
+                getSubMessage(data['messageId']).then((json)=>{
+                    json['data'].forEach(function subView(data){
+                        const subMessageOther=document.createElement('div');
+                        subMessageOther.className='other-message';
+                        const subMessageOtherUser=document.createElement('img');
+                        subMessageOtherUser.className='sub-user';
+                        const subMessageOtherRight=document.createElement('div');
+                        subMessageOtherRight.className='other-message-right';
+                        const subMessageOtherName=document.createElement('div');
+                        subMessageOtherName.className='other-message-name';
+                        const subMessageOtherContent=document.createElement('div');
+                        subMessageOtherUser.src=data['userImage'];
+                        subMessageOtherName.textContent=data['userName'];
+                        subMessageOtherContent.textContent=data['content'];
+                        subMessageOther.appendChild(subMessageOtherUser);
+                        subMessageOther.appendChild(subMessageOtherRight);
+                        subMessageOtherRight.appendChild(subMessageOtherName);
+                        subMessageOtherRight.appendChild(subMessageOtherContent);
+                        subMessages.appendChild(subMessageOther);
+                    });
+                })
+            });
+            while(subMessages.firstChild){
+                subMessages.removeChild(subMessages.firstChild);
+            }
+        })
+        getSubMessage(data['messageId']).then((json)=>{
+            json['data'].forEach(function subView(data){
+                const subMessageOther=document.createElement('div');
+                subMessageOther.className='other-message';
+                const subMessageOtherUser=document.createElement('img');
+                subMessageOtherUser.className='sub-user';
+                const subMessageOtherRight=document.createElement('div');
+                subMessageOtherRight.className='other-message-right';
+                const subMessageOtherName=document.createElement('div');
+                subMessageOtherName.className='other-message-name';
+                const subMessageOtherContent=document.createElement('div');
+                subMessageOtherUser.src=data['userImage'];
+                subMessageOtherName.textContent=data['userName'];
+                subMessageOtherContent.textContent=data['content'];
+                subMessageOther.appendChild(subMessageOtherUser);
+                subMessageOther.appendChild(subMessageOtherRight);
+                subMessageOtherRight.appendChild(subMessageOtherName);
+                subMessageOtherRight.appendChild(subMessageOtherContent);
+                subMessages.appendChild(subMessageOther);
+            });
+        })
         //content
         messageUserIcon.src = data['userImage'];
         name.textContent = data['userName'];
@@ -125,21 +205,21 @@ function messageView(datas) {
             img.src = data['contentImage'][0];
         }
         let content = data['content'].replace(/\n/g, "\r\n");
-        content = linkify(content);
-        message.innerHTML = content;
+        message.textContent = content;
         more.addEventListener('click', function () {
             menu.classList.toggle('menu');
         })
-        //structure
+        subMessageUser.src=user['image'];
+        subMessageBtn.textContent='發佈';
         if (data['contentImage'][0] !== undefined) {
             messageImage.appendChild(img);
         }
+        //structure
         messageTitle.appendChild(title);
         messageTitle.appendChild(time);
         userDiv.appendChild(messageUserIcon);
         userDiv.appendChild(name);
         more.appendChild(menu);
-        console.log(user)
         if (user['id'] == data['userId']) {
             userDiv.appendChild(more);
         }
@@ -148,6 +228,13 @@ function messageView(datas) {
         messages.appendChild(messageHeader);
         messages.appendChild(messageImage);
         messages.appendChild(message);
+        subMessageHeader.appendChild(subMessageUser);
+        subMessageHeader.appendChild(subMessageInput);
+        subMessageHeader.appendChild(subMessageBtn);
+        subMessage.appendChild(subMessages);
+        subMessage.appendChild(subMessageHeader);
+        messages.appendChild(document.createElement('hr'));
+        messages.appendChild(subMessage);
         mainContent.append(messages);
     })
 }
@@ -211,14 +298,18 @@ function events() {
         }
     })
     document.getElementById('post-message').addEventListener('click', (e) => {
-        postMessage();
+        postMessage().then((response) => {
+            if (response['ok']) {
+                location.reload()
+            }
+        });
+        document.getElementById('loading-mask').style.display='flex';
     })
 
     window.addEventListener('scroll', function btEvent(event) {
         clearTimeout(timeout);
         timeout = setTimeout(function () {
             if (nextPage !== null) {
-                console.log(nextPage)
                 if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.95) {
                     getMessage(nextPage).then((myJson => {
                         messageView(myJson);

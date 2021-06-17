@@ -20,7 +20,16 @@ main{
     align-items: center;
 }
 
-
+#loading-mask{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(158, 158, 158, 0.521);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    display: none;
+}
 
 .message-input{
     margin-top: 50px;
@@ -180,6 +189,7 @@ main{
 .message-image{
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 .message-image > img{
@@ -192,6 +202,69 @@ main{
     line-height: 30px;
 }
 
+.messages hr{
+    border: 0;
+    clear:both;
+    display:block;
+    width: 90%;               
+    background-color:rgb(154, 153, 167);
+    height: 1px;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .message a{
     text-decoration:underline;
 }
+
+.sub-user{
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    margin-right: 10px;
+    border-radius: 40px;
+    border: 2px solid rgb(123, 121, 139);
+}
+.sub-header{
+    display: flex;
+    align-items: center;
+}
+
+.sub-header button{
+    width: 40px;
+    height: 20px;
+    cursor: pointer;
+    background-color:rgba(255, 255, 255, 0);
+    color: blue;
+    font-weight: bold;
+}
+
+.sub-input{
+    width: 80%;
+    min-height: 30px;
+    overflow: auto;
+    background-color: #F0F2F5;
+    border-radius: 15px;
+    padding-left: 5px;
+    font-size: 20px;
+}
+
+.other-message{
+    display: flex;
+    align-items: center;
+}
+
+.other-message-name{
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.other-message-right{
+    background-color: #F0F2F5;
+    width: 83%;
+    border-radius: 15px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+

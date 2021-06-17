@@ -17,6 +17,7 @@ class User(db.Model):
     date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
     purchase = db.relationship('PurchaseOrder',backref='user')
     message = db.relationship('Message',backref='user')
+    sub_message = db.relationship('Sub_Message',backref='user')
     def __init__(self,name,email,password,provider):
         self.name = name
         self.image = 'https://d84l4b8eh7ljv.cloudfront.net/animal_inu.png'
@@ -64,11 +65,24 @@ class Message(db.Model):
     message = db.Column(db.Text)
     date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
     image = db.relationship('Image',backref='message')
+    sub_message = db.relationship('Sub_Message',backref='message')
     def __init__(self,title,user_id,message):
         self.title = title
         self.message = message
         self.user_id = user_id
 
+class Sub_Message(db.Model):
+    __tablename__ = 'sub_message'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    message_id = db.Column(db.Integer, db.ForeignKey('message.id'))
+    content = db.Column(db.Text)
+    date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
+    def __init__(self,user_id,message_id,content):
+        self.message_id = message_id
+        self.user_id = user_id
+        self.content = content
 
 class Image(db.Model):
     __tablename__ = 'image'
