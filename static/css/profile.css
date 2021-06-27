@@ -23,16 +23,17 @@ hr {
   }
 
 main{
-    display: flex;
+    flex-direction: row !important;
     justify-content: center;
-    margin-top: 40px;
+    align-items: flex-start !important;
+    margin-top: 70px !important;
     color: gray;
     font-size: 20px;
     font-weight: bold;
 }
 
 body{
-    background-color:rgb(233, 233, 233) ;
+    background-color:rgb(220, 234, 247);
 }
 
 #left-content{

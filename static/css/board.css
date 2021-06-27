@@ -4,7 +4,7 @@
 }
 
 body{
-    background-color:rgb(245, 243, 243) ;
+    background-color:rgb(220, 234, 247) ;
 }
 
 textarea{
@@ -48,10 +48,12 @@ main{
 }
 #message-input-title{
     width: 900px;
-    height: 35px;
+    height: 40px;
     margin-bottom: 5px;
-    font-size: 25px;
+    font-size: 22px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
 }
 
 #message-input-main{

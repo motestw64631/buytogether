@@ -3,6 +3,8 @@
     margin: 0px;
 }
 
+
+
 hr {
     border: 0;
     clear:both;
@@ -15,14 +17,25 @@ hr {
   }
 
 body{
-    background-color:#E9E9E9;
+    background-color:rgb(220, 234, 247);
+}
+
+a:hover{
+    text-decoration: none;
+}
+a:active{
+    text-decoration: none;
+}
+
+.modal right fade a:hover {
+    color: white;
 }
 
 main{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 1px;
 }
 
 #loader{
@@ -117,7 +130,9 @@ main{
     cursor: pointer;
 }
 
-
+.delete{
+    cursor: pointer;
+}
 
 /*******************************
 * MODAL AS LEFT/RIGHT SIDEBAR
@@ -128,7 +143,7 @@ main{
 .modal.right .modal-dialog {
     position: fixed;
     margin: auto;
-    width: 600px;
+    width: 650px;
     height: 100%;
     -webkit-transform: translate3d(0%, 0, 0);
         -ms-transform: translate3d(0%, 0, 0);
@@ -173,9 +188,13 @@ main{
 
 .modal-header {
     border-bottom-color: #EEEEEE;
-    background-color: #FAFAFA;
+    background-color: #4769D8;
+    color: white;
+    font-weight: boldd;
 }
 
 
 
-
+.booking-footer  a:hover{
+    color: tomato !important;
+  }

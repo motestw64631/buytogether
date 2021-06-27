@@ -19,7 +19,7 @@ header{
     font-size: 30px;
     height: 35px;
     border-radius: 5px;
-    font-family: "Sofia", sans-serif;
+    font-family: "Sofia", sans-serif !important;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -85,7 +85,9 @@ a, u {
     background-color: rgb(228, 228, 228);
 }
 
-/* @keyframes slideDown{
+
+
+@keyframes slideDown{
     from {
       transform: translateX(100%);
       opacity: 0;
@@ -94,4 +96,4 @@ a, u {
       transform: translateY(0);
       opacity: 1;
     }
-  } */
+  }

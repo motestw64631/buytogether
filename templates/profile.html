@@ -1,67 +1,30 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title>BuyTogether</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/profile.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/header.css')}}">
-    <link rel="icon" href="{{url_for('static',filename='img/icon_buy.png')}}">
-</head>
-
-<body>
-    <header>
-        <div id="left-header">
-            <div id='home'><a href="/">S&S</a></div>
-        </div>
-        <div id="mid-header">
-            <form id="search">
-                <input type="text" placeholder="我想找團購" id="search-item">
-                <input type="image" name='submit' src="{{url_for('static',filename='img/icon_search.png')}}"
-                    id='search-icon'>
-            </form>
-        </div>
-        <div id="right-header">
-            <a class="after-login" href="/board">徵團留言區</a>|<a href="/cart">購物車</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
-            <a id='sign-in' href="/sign_in" class="before-login">登入</a>
-            <span class="after-login"><a id='toggle-control'>個人帳戶</a>
-                <div id='menu'>
-                    <table id='menu-table'>
-                        <tr><td><a href="/profile">個人資訊</a></td></tr>
-                        <tr><td><a href="#">團購管理</a></td></tr>
-                        <tr><td><a href="/purchase_set">我要開團</a></td></tr>
-                        <tr><td><a href="/logout">登出</a></td></tr>
-                    </table>
-                </div>
-            </span>
-        </div>
-    </header>
-    <main>
-        <div id=left-content>
-            <div id="change-image">
-                <label for="img">
-                    <a style="cursor: pointer;">✎更換大頭貼</a>
-                    <input type="file" name="img" id="img" style="display: none;" accept="image/*">
-                </label>
-            </div>
-            <div>
-                <img id='u-img' src="" width='150px' height="150px">
-            </div>
-            <div id='u-id'></div>
-        </div>
-        <div id='content'>
-            我的檔案
-            <hr>
-            <div class='content-inside'>使用者帳號<a id=u-mail></a><a id='auth'>(已通過驗證)</a></div>
-            <div class='content-inside'>姓名<input id=u-name value=""><button id='ch-name'>修改</button></div>
-            <div class='content-inside'>註冊日期<a id=u-date></a></div>
-            <div class='content-inside'>開團次數<a id=u-open>0</a></div>
-            <div class='content-inside'>跟團次數<a id=u-follow>0</a></div>
-        </div>
-    </main>
-    <script src="{{url_for('static',filename='js/profile.js')}}"></script>
-</body>
-
-</html>
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/profile.css')}}">
+{% endblock %}
+{% block main%}
+<div id=left-content>
+    <div id="change-image">
+        <label for="img">
+            <a style="cursor: pointer;">✎更換大頭貼</a>
+            <input type="file" name="img" id="img" style="display: none;" accept="image/*">
+        </label>
+    </div>
+    <div>
+        <img id='u-img' src="" width='150px' height="150px">
+    </div>
+    <div id='u-id'></div>
+</div>
+<div id='content'>
+    我的檔案
+    <hr>
+    <div class='content-inside'>使用者帳號<a id=u-mail></a><a id='auth'>(已通過驗證)</a></div>
+    <div class='content-inside'>姓名<input id=u-name value=""><button id='ch-name'>修改</button></div>
+    <div class='content-inside'>註冊日期<a id=u-date></a></div>
+    <div class='content-inside'>開團次數<a id=u-open>0</a></div>
+    <div class='content-inside'>跟團次數<a id=u-follow>0</a></div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static',filename='js/profile.js')}}"></script>
+{% endblock %}

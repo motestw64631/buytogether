@@ -1,149 +1,104 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title>BuyTogether</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/merchandisePost.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/header.css')}}">
-    <link rel="icon" href="{{url_for('static',filename='img/icon_buy.png')}}">
-</head>
-
-<body>
-    <header>
-        <div id="left-header">
-            <div id='home'><a href="/">S&S</a></div>
-        </div>
-        <div id="mid-header">
-            <form id="search">
-                <input type="text" placeholder="我想找團購" id="search-item">
-                <input type="image" name='submit' src="{{url_for('static',filename='img/icon_search.png')}}"
-                    id='search-icon'>
-            </form>
-        </div>
-        <div id="right-header">
-            <a class="after-login" href="/board">徵團留言區</a>|<a href="/cart">購物車</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
-            <a id='sign-in' href="/sign_in" class="before-login">登入</a>
-            <span class="after-login"><a id='toggle-control'>個人帳戶</a>
-                <div id='menu'>
-                    <table id='menu-table'>
-                        <tr>
-                            <td><a href="/profile">個人資訊</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="#">團購管理</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="/purchase_set">我要開團</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="/logout">登出</a></td>
-                        </tr>
-                    </table>
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/merchandisePost.css')}}">
+{% endblock %}
+{% block main%}
+<div id='shell'>
+    <div id='merchandise-info'>
+        <form id='base-info'>
+            <div>來源網址*<input type="text" name='origin' id='origin'
+                    placeholder="例如:https://www.lativ.com.tw/Detail/53371011"></div>
+            <div>商品名稱*<input type='text' name='name' id='name'></div>
+            <div id='tmp'>商品描述* <textarea name='describe' id='describe'
+                    placeholder="請在此描述商品細節,商品價格,匯款方式,寄送價格"></textarea></div>
+            <div id='up-dv'>上傳圖片*
+                <div class="upload-shell">
+                    <label for='img_post'>
+                        <img height="150px" width="150px" src="{{url_for('static',filename='img/upload.png')}}">
+                        <div class='close' id='c1'>✕</div>
+                        <input type='file' name='img_post' id='img_post' accept="image/*">
+                    </label>
                 </div>
-            </span>
-        </div>
-    </header>
-    <main>
-        <div id='shell'>
-            <div id='merchandise-info'>
-                <form id='base-info'>
-                    <div>來源網址*<input type="text" name='origin' id='origin'
-                            placeholder="例如:https://www.lativ.com.tw/Detail/53371011"></div>
-                    <div>商品名稱*<input type='text' name='name' id='name'></div>
-                    <div id='tmp'>商品描述* <textarea name='describe' id='describe'
-                            placeholder="請在此描述商品細節,商品價格,匯款方式,寄送價格"></textarea></div>
-                    <div id='up-dv'>上傳圖片*
-                        <div class="upload-shell">
-                            <label for='img_post'>
-                                <img height="150px" width="150px" src="{{url_for('static',filename='img/upload.png')}}">
-                                <div class='close' id='c1'>✕</div>
-                                <input type='file' name='img_post' id='img_post' accept="image/*">
-                            </label>
-                        </div>
-                        <div class="upload-shell">
-                            <label for='img_post_1'>
-                                <img height="150px" width="150px" src="{{url_for('static',filename='img/upload.png')}}">
-                                <div class='close' id='c2'>✕</div>
-                                <input type='file' name='img_post' id='img_post_1' accept="image/*">
-                            </label>
-                        </div>
-                        <div class="upload-shell">
-                            <label for='img_post_2'>
-                                <img height="150px" width="150px" src="{{url_for('static',filename='img/upload.png')}}">
-                                <div class='close' id='c3'>✕</div>
-                                <input type='file' name='img_post' id='img_post_2' accept="image/*">
-                            </label>
-                        </div>
-                        <a style="position: absolute;bottom:0;right:15vw;color: rgb(138, 17, 54);font-size: 12px;">請至少上傳一張圖片</a>
-                    </div>
-                    <div>商品類別*
-                        <select id='cls'>
-                            <option value="">請選擇類別</option>
-                            <option value="1">服裝/鞋包</option>
-                            <option value="2">美妝/保養</option>
-                            <option value="3">美食/保健</option>
-                            <option value="4">家電/3C</option>
-                            <option value="5">旅遊/票券</option>
-                            <option value="6">其他</option>
-                        </select>
-                    </div>
-                    <div style="display: flex;">
-                        商品規格
-                        <div id='tag'>
-
-                        </div>
-                        <button id='add-spec'>增加規格</button>(若不增加規格則由跟團者自由填寫購買資訊)
-                    </div>
-                    <table id='spec-edit'>
-                        <tr>
-                            <th>規格</th>
-                            <th>商品價格</th>
-                            <th>商品數量</th>
-                        </tr>
-                        <tbody>
-                            <!-- <tr>
-                                <td>紅色</td>
-                                <td contenteditable='true'>321</td>
-                                <td contenteditable='true'></td>
-                            </tr>
-                            <tr>
-                                <td>白色</td>
-                                <td contenteditable='true'></td>
-                                <td contenteditable='true'></td>
-                            </tr> -->
-                        </tbody>
-                    </table>
-                    <div>
-                        <a style="margin-right: 8px;">寄送方式*</a>
-                        <input type="checkbox" class='shipping' name="711" value="seven"> 7-11
-                        <input type="checkbox" class='shipping' name="family" value="family"> 全家
-                        <input type="checkbox" class='shipping' name="hilife" value="hilife"> 萊爾富
-                        <input type="checkbox" class='shipping' name="ok" value="ok"> OK Mart
-                        <input type="checkbox" class='shipping' name="face" value="face"> 面交
-                        <input type="checkbox" class='shipping' name="home" value="home"> 宅配
-                    </div>
-                    <div style="display: flex;align-items: center;">
-                        <a style="margin-right: 20px;">成團條件*</a>
-                        到達指定時間<input type="radio" name='condition' value="time" style="margin-right: 20px;"
-                            id='condition-time'>
-                        到達指定數量<input type="radio" name='condition' value="number" id='condition-number'>
-                        到達指定價格<input type="radio" name='condition' value="price" id='condition-price'>
-                    </div>
-                    <div id='set-condition'>
-                    </div>
-                    <div id='form-footer'>
-                        <div class="lds-dual-ring"></div>
-                        <div class="message" id='message'></div>(*)為必填選項<input type="button" id='form-submit'
-                            value="開團">
-                    </div>
-                </form>
+                <div class="upload-shell">
+                    <label for='img_post_1'>
+                        <img height="150px" width="150px" src="{{url_for('static',filename='img/upload.png')}}">
+                        <div class='close' id='c2'>✕</div>
+                        <input type='file' name='img_post' id='img_post_1' accept="image/*">
+                    </label>
+                </div>
+                <div class="upload-shell">
+                    <label for='img_post_2'>
+                        <img height="150px" width="150px" src="{{url_for('static',filename='img/upload.png')}}">
+                        <div class='close' id='c3'>✕</div>
+                        <input type='file' name='img_post' id='img_post_2' accept="image/*">
+                    </label>
+                </div>
+                <a style="position: absolute;bottom:0;right:0;color: rgb(138, 17, 54);font-size: 12px;">請至少上傳一張圖片</a>
             </div>
-        </div>
-    </main>
-    <script src="{{url_for('static',filename='js/merchandisePost.js')}}"></script>
-</body>
+            <div>商品類別*
+                <select id='cls'>
+                    <option value="">請選擇類別</option>
+                    <option value="1">服裝/鞋包</option>
+                    <option value="2">美妝/保養</option>
+                    <option value="3">美食/保健</option>
+                    <option value="4">家電/3C</option>
+                    <option value="5">旅遊/票券</option>
+                    <option value="6">其他</option>
+                </select>
+            </div>
+            <div style="display: flex;">
+                商品規格
+                <div id='tag'>
 
-</html>
+                </div>
+                <button id='add-spec'>增加規格</button>(若不增加規格則由跟團者自由填寫購買資訊)
+            </div>
+            <table id='spec-edit'>
+                <tr>
+                    <th>規格</th>
+                    <th>商品價格</th>
+                    <th>商品數量</th>
+                </tr>
+                <tbody>
+                    <!-- <tr>
+                        <td>紅色</td>
+                        <td contenteditable='true'>321</td>
+                        <td contenteditable='true'></td>
+                    </tr>
+                    <tr>
+                        <td>白色</td>
+                        <td contenteditable='true'></td>
+                        <td contenteditable='true'></td>
+                    </tr> -->
+                </tbody>
+            </table>
+            <div>
+                <a style="margin-right: 8px;">寄送方式*</a>
+                <input type="checkbox" class='shipping' name="711" value="seven"> 7-11
+                <input type="checkbox" class='shipping' name="family" value="family"> 全家
+                <input type="checkbox" class='shipping' name="hilife" value="hilife"> 萊爾富
+                <input type="checkbox" class='shipping' name="ok" value="ok"> OK Mart
+                <input type="checkbox" class='shipping' name="face" value="face"> 面交
+                <input type="checkbox" class='shipping' name="home" value="home"> 宅配
+            </div>
+            <div style="display: flex;align-items: center;">
+                <a style="margin-right: 20px;">成團條件*</a>
+                到達指定時間<input type="radio" name='condition' value="time" style="margin-right: 20px;"
+                    id='condition-time'>
+                到達指定數量<input type="radio" name='condition' value="number" id='condition-number'>
+                到達指定價格<input type="radio" name='condition' value="price" id='condition-price'>
+            </div>
+            <div id='set-condition'>
+            </div>
+            <div id='form-footer'>
+                <div class="lds-dual-ring"></div>
+                <div class="message" id='message'></div>(*)為必填選項<input type="button" id='form-submit'
+                    value="開團">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static',filename='js/merchandisePost.js')}}"></script>
+{% endblock %}

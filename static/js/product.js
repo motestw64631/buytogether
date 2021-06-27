@@ -25,6 +25,21 @@ function initData() {
         })
 }
 
+function postBooking(){
+    productId = product['data']['productId'];
+    spec = document.querySelector('input[name=sp]:checked').value;
+    buyNumber = document.querySelector('.nice-number input').value;
+    let data = new FormData();
+    data.append('productId',product_id);
+    data.append('specId',spec);
+    data.append('bookingNumber',buyNumber);
+    data.append('normalize',true);
+    return fetch('/api/booking',{
+        method:'POST',
+        body:data
+    }).then(response=>response.json())
+}
+
 
 
 //view
@@ -154,12 +169,14 @@ function initView() {
             tb.appendChild(tr);
         })
         specDiv.appendChild(addSpecBtn);
+        //post when not spec
     } else {
         product['data']['productSpec'].forEach(function (spec) {
             const radio = document.createElement('input');
             radio.type = 'radio';
             radio.id = `radio-${spec['spec_name']}`;
             radio.name = 'sp';
+            radio.value=spec['specId'];
             const lb = document.createElement('label');
             lb.textContent = spec['spec_name'];
             lb.setAttribute("for", `radio-${spec['spec_name']}`);
@@ -169,6 +186,18 @@ function initView() {
     }
     let ct = product['data']['productDescribe'].replace(/\n/g, "\r\n");
     document.getElementById('desc-content').textContent = ct;
+    document.getElementById('cart').addEventListener('click',function(){
+        postBooking().then((myJson)=>{
+            if(myJson['ok']){
+                swal({
+                    title:'成功加入購物車',
+                    icon:'success',
+                    buttons:false,
+                    className: "swal"
+                });
+            };
+        });
+    })
 }
 
 //controller
@@ -191,12 +220,3 @@ $(function () {
     });
 
 });
-
-document.getElementById('toggle-control').addEventListener('click', () => {
-    let menu = document.getElementById('menu');
-    if (menu.style.display == 'none' || menu.style.display == "") {
-        menu.style.display = 'flex';
-    } else {
-        menu.style.display = 'none';
-    }
-})

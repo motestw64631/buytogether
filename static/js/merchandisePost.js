@@ -8,11 +8,11 @@ function loginView() {
 }
 
 function clearFileInput(num) {
-    let preview = document.querySelectorAll('img')[num];
-    let file = document.querySelectorAll('input[type=file]')[num];
+    let preview = document.querySelectorAll('#up-dv img')[num];
+    let file = document.querySelectorAll('#up-dv input[type=file]')[num];
     file.value = ''
     preview.src = '/static/img/upload.png'
-    document.querySelectorAll('.close')[num].style.display = 'none';
+    document.querySelectorAll('#up-dv .close')[num].style.display = 'none';
 }
 
 
@@ -89,8 +89,8 @@ function init() {
 
 
 function previewFile(num) {
-    var preview = document.querySelectorAll('img')[num];
-    var file = document.querySelectorAll('input[type=file]')[num].files[0];
+    var preview = document.querySelectorAll('#up-dv img')[num];
+    var file = document.querySelectorAll('#up-dv input[type=file]')[num].files[0];
     var reader = new FileReader();
 
     reader.addEventListener("load", function () {
@@ -99,8 +99,8 @@ function previewFile(num) {
 
     if (file) {
         reader.readAsDataURL(file);
-        document.querySelectorAll('.close')[num].style.display = 'inline';
-        document.querySelectorAll('.close')[num].addEventListener('click', function (e) {
+        document.querySelectorAll('#up-dv .close')[num].style.display = 'inline';
+        document.querySelectorAll('#up-dv .close')[num].addEventListener('click', function (e) {
             clearFileInput(num);
             e.preventDefault()
         })
@@ -200,16 +200,6 @@ document.getElementById('condition-price').addEventListener('click', () => {
     pc.type = 'text';
     cdt.appendChild(pc);
     cdt.appendChild(text);
-})
-
-document.getElementById('toggle-control').addEventListener('click', () => {
-    let menu = document.getElementById('menu');
-    if (menu.style.display == 'none' || menu.style.display == "") {
-        menu.style.display = 'flex';
-        menu.style.bottom = '-150px';
-    } else {
-        menu.style.display = 'none';
-    }
 })
 
 

@@ -1,113 +1,69 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title>BuyTogether</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/product.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/header.css')}}">
-    <link rel="icon" href="{{url_for('static',filename='img/icon_buy.png')}}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
-    <link rel="stylesheet" href="{{url_for('static',filename='node_modules/magnific-popup/dist/magnific-popup.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename='node_modules/Number-Input-Spinner-jQuery-Nice-Number/dist/jquery.nice-number.css')}}">
-</head>
-
-<body>
-    <header>
-        <div id="left-header">
-            <div id='home'><a href="/">S&S</a></div>
-        </div>
-        <div id="mid-header">
-            <form id="search">
-                <input type="text" placeholder="我想找團購" id="search-item">
-                <input type="image" name='submit' src="{{url_for('static',filename='img/icon_search.png')}}"
-                    id='search-icon'>
-            </form>
-        </div>
-        <div id="right-header">
-            <a class="after-login" href="/board">徵團留言區</a>|<a href="/cart">購物車</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
-            <a id='sign-in' href="/sign_in" class="before-login">登入</a>
-            <span class="after-login"><a id='toggle-control'>個人帳戶</a>
-                <div id='menu'>
-                    <table id='menu-table'>
-                        <tr>
-                            <td><a href="/profile">個人資訊</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="#">團購管理</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="/purchase_set">我要開團</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="/logout">登出</a></td>
-                        </tr>
-                    </table>
-                </div>
-            </span>
-        </div>
-    </header>
-    <main>
-        <div id='product'>
-            <div id='product-image'>
-                <div id="primary-slider" class="splide">
-                    <div class="splide__track">
-                        <ul class="splide__list">
-                            <!-- <li class="splide__slide"><img src="{{url_for('static',filename='img/fake/O1CN01GKre7M1jNzYQem8ya_!!340024537.jpg')}}">
-                            </li>
-                            <li class="splide__slide"><img src="{{url_for('static',filename='img/fake/soap.jpg')}}">
-                            </li>
-                            <li class="splide__slide"><img src="{{url_for('static',filename='img/1543540417194758586.jpg')}}"></li> -->
-                        </ul>
-                    </div>
-
-                </div>
-                <div id="secondary-slider" class="splide">
-                    <div class="splide__track">
-                        <ul class="splide__list">
-                            <!-- <li class="splide__slide">
-                                <img
-                                    src="{{url_for('static',filename='img/fake/O1CN01GKre7M1jNzYQem8ya_!!340024537.jpg')}}">
-                            </li>
-                            <li class="splide__slide">
-                                <img src="{{url_for('static',filename='img/fake/soap.jpg')}}">
-                            </li>
-                            <li class="splide__slide">
-                                <img src="{{url_for('static',filename='img/1543540417194758586.jpg')}}">
-                            </li> -->
-                        </ul>
-                    </div>
-                </div>
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/product.css')}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
+<link rel="stylesheet" href="{{url_for('static',filename='node_modules/magnific-popup/dist/magnific-popup.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='node_modules/Number-Input-Spinner-jQuery-Nice-Number/dist/jquery.nice-number.css')}}">
+{% endblock %}
+{% block main%}
+<div id='product'>
+    <div id='product-image'>
+        <div id="primary-slider" class="splide">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <!-- <li class="splide__slide"><img src="{{url_for('static',filename='img/fake/O1CN01GKre7M1jNzYQem8ya_!!340024537.jpg')}}">
+                    </li>
+                    <li class="splide__slide"><img src="{{url_for('static',filename='img/fake/soap.jpg')}}">
+                    </li>
+                    <li class="splide__slide"><img src="{{url_for('static',filename='img/1543540417194758586.jpg')}}"></li> -->
+                </ul>
             </div>
-            <div id="product-detail">
-                <div id="product-title"></div>
-                <div id="product-owner">
-                    <img id="owner-image" src="{{url_for('static',filename='img/animal_inu.png')}}">
-                    <div id="owner-name"></div>
-                    <div id="date"></div>
-                </div>
-                <div id="product-src"><a>來源</a></div>
-                <div id="condition">成團條件<a></a></div>
-                <div id="shipping">寄送方式<a></a></div>
-                <div id="spec">商品選項</div>
-                <div class="quantity">數量<input type="number" min="1" value="1" />
-                </div>
-                <div id="cart">🛒加入購物車</div>
+
+        </div>
+        <div id="secondary-slider" class="splide">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <!-- <li class="splide__slide">
+                        <img
+                            src="{{url_for('static',filename='img/fake/O1CN01GKre7M1jNzYQem8ya_!!340024537.jpg')}}">
+                    </li>
+                    <li class="splide__slide">
+                        <img src="{{url_for('static',filename='img/fake/soap.jpg')}}">
+                    </li>
+                    <li class="splide__slide">
+                        <img src="{{url_for('static',filename='img/1543540417194758586.jpg')}}">
+                    </li> -->
+                </ul>
             </div>
         </div>
-        <div id='product-describe'>
-            <div id='desc'>團購敘述</div>
-            <div id="desc-content"></div>
+    </div>
+    <div id="product-detail">
+        <div id="product-title"></div>
+        <div id="product-owner">
+            <img id="owner-image" src="{{url_for('static',filename='img/animal_inu.png')}}">
+            <div id="owner-name"></div>
+            <div id="date"></div>
         </div>
+        <div id="product-src"><a>來源</a></div>
+        <div id="condition">成團條件<a></a></div>
+        <div id="shipping">寄送方式<a></a></div>
+        <div id="spec">商品選項</div>
+        <div class="quantity">數量<input type="number" min="1" value="1" />
         </div>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
-    <script src="{{url_for('static',filename='node_modules/jquery/dist/jquery.min.js')}}"></script>
-    <script src="{{url_for('static',filename='node_modules/Number-Input-Spinner-jQuery-Nice-Number/dist/jquery.nice-number.js')}}"></script>
-    <script src="{{url_for('static',filename='node_modules/magnific-popup/dist/jquery.magnific-popup.js')}}"></script>
-    <script src="{{url_for('static',filename='js/product.js')}}"></script>
-</body>
-
-</html>
+        <div id="cart">🛒加入購物車</div>
+    </div>
+</div>
+<div id='product-describe'>
+    <div id='desc'>團購敘述</div>
+    <div id="desc-content"></div>
+</div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+<script src="{{url_for('static',filename='node_modules/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{url_for('static',filename='node_modules/Number-Input-Spinner-jQuery-Nice-Number/dist/jquery.nice-number.js')}}"></script>
+<script src="{{url_for('static',filename='node_modules/magnific-popup/dist/jquery.magnific-popup.js')}}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{url_for('static',filename='js/product.js')}}"></script>
+{% endblock %}

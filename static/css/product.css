@@ -1,7 +1,6 @@
 * {
     border: 0px;
     margin: 0px;
-    font-family:Microsoft JhengHei;
 }
 
 
@@ -169,6 +168,10 @@ input[type='number']{
     color:#757575;
 }
 
+.quantity{
+    margin-bottom: 50px !important;
+}
+
 #desc-content{
     white-space: pre;
     margin-top: 5px;
@@ -178,6 +181,10 @@ input[type='number']{
 
 #primary-slider .image-link{
     width: 500px;
+}
+
+#primary-slider .splide__slide{
+    height: 300px !important;
 }
 
 .addBtn{
@@ -228,4 +235,8 @@ input[type='number']{
     position: absolute;
     right: 0;
     top:6px;
+}
+
+.swal{
+    width: 280px;
 }

@@ -95,7 +95,7 @@ def productbyid(p_id):
             "productSource":product.url,
             "productStatus":product.status,
             "productShip":ship_model_to_json(product.shipping[0]),
-            "productSpec":[{'spec_name':spec.spec_name,'specNumber':spec.spec_number,'specPrice':spec.spec_price} for spec in product.spec],
+            "productSpec":[{'specId':spec.spec_id,'spec_name':spec.spec_name,'specNumber':spec.spec_number,'specPrice':spec.spec_price} for spec in product.spec],
             "productImage":[images.image_url for images in product.images],
             "productCondition":[{'condition':cdn.condition_class,'conditionNumber':cdn.condition_number,'conditionPrice':cdn.condition_price,'conditionDate':cdn.condition_date} for cdn in product.condition][0]
         }
