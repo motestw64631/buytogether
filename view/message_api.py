@@ -16,7 +16,7 @@ def post_message():
     m = Message(title,id,message)
     for image in images:
         url = upload_file_to_s3(image,'shauncc','message')
-        img = Image(url)
+        img = Message_Image(url)
         m.image.append(img)
     db.session.add(m)
     db.session.commit()

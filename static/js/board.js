@@ -3,12 +3,6 @@ let user;
 let nextPage = 0;
 let timeout;
 
-function linkify(text) {
-    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-    return text.replace(urlRegex, function (url) {
-        return '<a href="' + url + '">' + url + '</a>';
-    });
-}
 
 function getUser() {
     return fetch('/api/user')
@@ -74,8 +68,19 @@ function getSubMessage(messageId){
 }
 
 //view
+
+function enlargeImage(){
+    $(document).ready(function () {
+        $('.message-image img').each(function () {
+          var currentImage = $(this);
+          currentImage.wrap("<a class='image-link' href='" + currentImage.attr("src") + "'</a>");
+        });
+        $('.image-link').magnificPopup({ type: 'image' });
+      });
+}
+
 function loginView() {
-    document.getElementById('right-header').style.width = '200px'
+    document.getElementById('right-header').style.width = '280px'
     let beforeLogin = Array.from(document.getElementsByClassName('before-login'));
     beforeLogin.forEach((node) => { node.style.display = 'none' });
     let afterLogin = Array.from(document.getElementsByClassName('after-login'));
@@ -127,7 +132,7 @@ function messageView(datas) {
         const subMessages = document.createElement('div');
         //show sub-messages
         subMessageBtn.addEventListener('click',()=>{
-            let content = subMessageInput.textContent;
+            let content = subMessageInput.innerText;
             postSubMessage(data['messageId'],user['id'],content).then((response)=>{
                 getSubMessage(data['messageId']).then((json)=>{
                     json['data'].forEach(function subView(data){
@@ -156,6 +161,12 @@ function messageView(datas) {
                 subMessages.removeChild(subMessages.firstChild);
             }
         })
+        subMessageInput.addEventListener('keydown',function(e){
+            if (e.key === 'Enter'&& e.shiftKey === false) {
+                e.preventDefault();
+                subMessageBtn.click();
+              }
+        })
         getSubMessage(data['messageId']).then((json)=>{
             json['data'].forEach(function subView(data){
                 const subMessageOther=document.createElement('div');
@@ -169,7 +180,7 @@ function messageView(datas) {
                 const subMessageOtherContent=document.createElement('div');
                 subMessageOtherUser.src=data['userImage'];
                 subMessageOtherName.textContent=data['userName'];
-                subMessageOtherContent.textContent=data['content'];
+                subMessageOtherContent.textContent=data['content'].replace(/\n/g, "\r\n");
                 subMessageOther.appendChild(subMessageOtherUser);
                 subMessageOther.appendChild(subMessageOtherRight);
                 subMessageOtherRight.appendChild(subMessageOtherName);
@@ -204,6 +215,7 @@ function messageView(datas) {
         time.textContent = data['date'];
         if (data['contentImage'][0] !== undefined) {
             img.src = data['contentImage'][0];
+            img.width = '500';
         }
         let content = data['content'].replace(/\n/g, "\r\n");
         message.textContent = content;
@@ -238,6 +250,7 @@ function messageView(datas) {
         messages.appendChild(subMessage);
         mainContent.append(messages);
     })
+    enlargeImage();
 }
 
 //controller

@@ -1,0 +1,181 @@
+* {
+    border: 0px;
+    margin: 0px;
+}
+
+hr {
+    border: 0;
+    clear:both;
+    display:block;
+    width: 100%;               
+    background-color:#a8a8a8;
+    height: 1px;
+    margin-top: 6px;
+    margin-bottom: 10px;
+  }
+
+body{
+    background-color:#E9E9E9;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+#loader{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(211, 211, 211, 0.377);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loader-img{
+    width: 8%;
+    height: 15%;
+}
+
+.booking{
+    width: 600px;
+    background-color: white;
+    padding: 15px;
+}
+
+.product-header{
+    display: flex;
+    align-items: center;
+
+}
+
+.header-img{
+    height: 75px;
+    width: 75px;
+    background-position: center center;
+    background-size: cover;
+    background-image: url("https://d84l4b8eh7ljv.cloudfront.net/purchase/clothe.jpg");
+}
+
+.booking-header{
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+}
+.booking-header div{
+    width: 150px;
+    display: flex;
+    justify-content: center;
+}
+
+.header-name{
+    font-size: 30px;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.booking-detail{
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.booking-detail div{
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.booking-footer{
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    font-size: 30px;
+}
+
+.price-sum a{
+    color: tomato;
+}
+
+.buy{
+    margin-left: 30px;
+    padding: 5px;
+    padding-inline: 25px;
+    background-color: rgb(71, 105, 216);
+    width: auto;
+    color: white;
+    cursor: pointer;
+}
+
+#header-cart{
+    cursor: pointer;
+}
+
+
+
+/*******************************
+* MODAL AS LEFT/RIGHT SIDEBAR
+* Add "left" or "right" in modal parent div, after class="modal".
+* Get free snippets on bootpen.com
+*******************************/
+
+.modal.right .modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 600px;
+    height: 100%;
+    -webkit-transform: translate3d(0%, 0, 0);
+        -ms-transform: translate3d(0%, 0, 0);
+         -o-transform: translate3d(0%, 0, 0);
+            transform: translate3d(0%, 0, 0);
+}
+
+
+.modal.right .modal-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+
+.modal.right .modal-body {
+    padding: 15px 15px 80px;
+}
+
+/*Left*/
+
+
+
+    
+/*Right*/
+.modal.right.fade .modal-dialog {
+    right: -320px;
+    -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+       -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+         -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+            transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+
+.modal.right.fade.in .modal-dialog {
+    right: 0;
+}
+
+/* ----- MODAL STYLE ----- */
+.modal-content {
+    border-radius: 0;
+    border: none;
+}
+
+.modal-header {
+    border-bottom-color: #EEEEEE;
+    background-color: #FAFAFA;
+}
+
+
+
+

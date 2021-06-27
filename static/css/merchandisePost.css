@@ -84,10 +84,12 @@ button{
     margin-left: 15px;
     overflow: hidden;
     position: relative;
+    height: 148px;
 }
 
 #up-dv{
     display:flex;
+    position: relative;
 }
 
 #describe{
@@ -179,7 +181,6 @@ button{
 }
 
 .close{
-    border: 1px solid rgb(255, 255, 255);
     width: 20px;
     height: 20px;
     border-radius: 10px;
@@ -187,8 +188,35 @@ button{
     right: 0px;
     top: 0px;
     display: none;
+    font-weight: 1000;
+    cursor: pointer;
 }
 
 #condition-number{
     margin-right: 20px;
 }
+
+#spec-edit {
+    margin-top: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #spec-edit td, #spec-edit th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 300px;
+  }
+  
+  #spec-edit tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #spec-edit tr:hover {background-color: #ddd;}
+  
+  #spec-edit th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(71, 105, 216);
+    color: white;
+  }

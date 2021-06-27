@@ -1,61 +1,25 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title>BuyTogether</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/home.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/header.css')}}">
-</head>
-
-<body>
-    <header>
-        <div id="left-header">
-            <div id='home'><a href="/">S&S</a></div>
-        </div>
-        <div id="mid-header">
-            <form id="search">
-                <input type="text" placeholder="我想找團購" id="search-item">
-                <input type="image" name='submit' src="{{url_for('static',filename='img/icon_search.png')}}"
-                    id='search-icon'>
-            </form>
-        </div>
-        <div id="right-header">
-            <a class="after-login" href="/board">徵團留言區</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
-            <a id='sign-in' href="/sign_in" class="before-login">登入</a>
-            <span class="after-login"><a id='toggle-control'>個人帳戶</a>
-                <div id='menu'>
-                    <table id='menu-table'>
-                        <tr><td><a href="/profile">個人資訊</a></td></tr>
-                        <tr><td><a href="#">團購紀錄</a></td></tr>
-                        <tr><td><a href="/purchase_set">我要開團</a></td></tr>
-                        <tr><td><a href="/logout">登出</a></td></tr>
-                    </table>
-                </div>
-            </span>
-        </div>
-    </header>
-    <main>
-        <table id='class'>
-            <tr id='cls-tb'>
-                <td id='outfit'>服裝/鞋包</td>
-                <td id='makeup'>美妝/保養</td>
-                <td id='food'>美食/保健</td>
-                <td id='3c'>家電/3C</td>
-                <td id='travel'>旅遊/票券</td>
-                <td id='other'>其他</td>
-            </tr>
-        </table>
-        <figure id='main-pic'>
-            <img id='pic'>
-        </figure>
-        <div id='hot'>
-            aaa
-        </div>
-    </main>
-    <script src="{{url_for('static',filename='js/home.js')}}"></script>
-</body>
-
-</html>
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/home.css')}}">
+{% endblock %}
+{% block main%}
+<table id='class'>
+    <tr id='cls-tb'>
+        <td id='outfit'>服裝/鞋包</td>
+        <td id='makeup'>美妝/保養</td>
+        <td id='food'>美食/保健</td>
+        <td id='3c'>家電/3C</td>
+        <td id='travel'>旅遊/票券</td>
+        <td id='other'>其他</td>
+    </tr>
+</table>
+<figure id='main-pic'>
+    <img id='pic'>
+</figure>
+<div id='content'>
+    
+</div>
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static',filename='js/home.js')}}"></script>
+{% endblock %}

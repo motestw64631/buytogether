@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
     <link rel="stylesheet" href="{{url_for('static',filename='css/merchandisePost.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='css/header.css')}}">
+    <link rel="icon" href="{{url_for('static',filename='img/icon_buy.png')}}">
 </head>
 
 <body>
@@ -23,7 +24,7 @@
             </form>
         </div>
         <div id="right-header">
-            <a class="after-login" href="/board">徵團留言區</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
+            <a class="after-login" href="/board">徵團留言區</a>|<a href="/cart">購物車</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
             <a id='sign-in' href="/sign_in" class="before-login">登入</a>
             <span class="after-login"><a id='toggle-control'>個人帳戶</a>
                 <div id='menu'>
@@ -32,7 +33,7 @@
                             <td><a href="/profile">個人資訊</a></td>
                         </tr>
                         <tr>
-                            <td><a href="#">團購紀錄</a></td>
+                            <td><a href="#">團購管理</a></td>
                         </tr>
                         <tr>
                             <td><a href="/purchase_set">我要開團</a></td>
@@ -49,12 +50,12 @@
         <div id='shell'>
             <div id='merchandise-info'>
                 <form id='base-info'>
-                    <div>來源網址<input type="text" name='origin' id='origin'
+                    <div>來源網址*<input type="text" name='origin' id='origin'
                             placeholder="例如:https://www.lativ.com.tw/Detail/53371011"></div>
-                    <div>商品名稱*<input type='text' name='name' id='name' style="margin-left:8px ;"></div>
-                    <div id='tmp'>商品描述 <textarea name='describe' id='describe'
+                    <div>商品名稱*<input type='text' name='name' id='name'></div>
+                    <div id='tmp'>商品描述* <textarea name='describe' id='describe'
                             placeholder="請在此描述商品細節,商品價格,匯款方式,寄送價格"></textarea></div>
-                    <div id='up-dv'>上傳圖片
+                    <div id='up-dv'>上傳圖片*
                         <div class="upload-shell">
                             <label for='img_post'>
                                 <img height="150px" width="150px" src="{{url_for('static',filename='img/upload.png')}}">
@@ -76,6 +77,7 @@
                                 <input type='file' name='img_post' id='img_post_2' accept="image/*">
                             </label>
                         </div>
+                        <a style="position: absolute;bottom:0;right:15vw;color: rgb(138, 17, 54);font-size: 12px;">請至少上傳一張圖片</a>
                     </div>
                     <div>商品類別*
                         <select id='cls'>
@@ -95,9 +97,28 @@
                         </div>
                         <button id='add-spec'>增加規格</button>(若不增加規格則由跟團者自由填寫購買資訊)
                     </div>
+                    <table id='spec-edit'>
+                        <tr>
+                            <th>規格</th>
+                            <th>商品價格</th>
+                            <th>商品數量</th>
+                        </tr>
+                        <tbody>
+                            <!-- <tr>
+                                <td>紅色</td>
+                                <td contenteditable='true'>321</td>
+                                <td contenteditable='true'></td>
+                            </tr>
+                            <tr>
+                                <td>白色</td>
+                                <td contenteditable='true'></td>
+                                <td contenteditable='true'></td>
+                            </tr> -->
+                        </tbody>
+                    </table>
                     <div>
-                        <a style="margin-right: 20px;">寄送方式</a>
-                        <input type="checkbox" class='shipping' name="711" value="711"> 7-11
+                        <a style="margin-right: 8px;">寄送方式*</a>
+                        <input type="checkbox" class='shipping' name="711" value="seven"> 7-11
                         <input type="checkbox" class='shipping' name="family" value="family"> 全家
                         <input type="checkbox" class='shipping' name="hilife" value="hilife"> 萊爾富
                         <input type="checkbox" class='shipping' name="ok" value="ok"> OK Mart

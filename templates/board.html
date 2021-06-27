@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
     <link rel="stylesheet" href="{{url_for('static',filename='css/board.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='css/header.css')}}">
+    <link rel="icon" href="{{url_for('static',filename='img/icon_buy.png')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='node_modules/magnific-popup/dist/magnific-popup.css')}}">
 </head>
 
 <body>
@@ -26,7 +29,7 @@
             </form>
         </div>
         <div id="right-header">
-            <a class="after-login">徵團留言區</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
+            <a class="after-login">徵團留言區</a>|<a href="/cart">購物車</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
             <a id='sign-in' href="/sign_in" class="before-login">登入</a>
             <span class="after-login"><a id='toggle-control'>個人帳戶</a>
                 <div id='menu'>
@@ -35,7 +38,7 @@
                             <td><a href="/profile">個人資訊</a></td>
                         </tr>
                         <tr>
-                            <td><a href="#">團購紀錄</a></td>
+                            <td><a href="#">團購管理</a></td>
                         </tr>
                         <tr>
                             <td><a href="/purchase_set">我要開團</a></td>
@@ -93,6 +96,9 @@
         </div>
     </main>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+    <script src="{{url_for('static',filename='node_modules/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{url_for('static',filename='node_modules/magnific-popup/dist/jquery.magnific-popup.js')}}"></script>
     <script src="{{url_for('static',filename='js/board.js')}}"></script>
 </body>
 

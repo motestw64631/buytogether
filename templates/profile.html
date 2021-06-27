@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
     <link rel="stylesheet" href="{{url_for('static',filename='css/profile.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='css/header.css')}}">
+    <link rel="icon" href="{{url_for('static',filename='img/icon_buy.png')}}">
 </head>
 
 <body>
@@ -23,13 +24,13 @@
             </form>
         </div>
         <div id="right-header">
-            <a class="after-login" href="/board">徵團留言區</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
+            <a class="after-login" href="/board">徵團留言區</a>|<a href="/cart">購物車</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
             <a id='sign-in' href="/sign_in" class="before-login">登入</a>
             <span class="after-login"><a id='toggle-control'>個人帳戶</a>
                 <div id='menu'>
                     <table id='menu-table'>
                         <tr><td><a href="/profile">個人資訊</a></td></tr>
-                        <tr><td><a href="#">團購紀錄</a></td></tr>
+                        <tr><td><a href="#">團購管理</a></td></tr>
                         <tr><td><a href="/purchase_set">我要開團</a></td></tr>
                         <tr><td><a href="/logout">登出</a></td></tr>
                     </table>

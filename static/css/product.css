@@ -1,0 +1,231 @@
+* {
+    border: 0px;
+    margin: 0px;
+    font-family:Microsoft JhengHei;
+}
+
+
+
+body{
+    background-color: rgb(220, 234, 247);
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#shell{
+    width: 1200px;
+    background-color: white;
+}
+
+#product{
+    margin-top: 50px;
+    width: 1200px;
+    border-radius: 10px;
+    background-color: white;
+    overflow: hidden;
+    padding: 5px;
+    display: flex;
+}
+
+.splide{
+    width: 500px;
+}
+
+.splide__slide{
+    display: flex;
+}
+
+.splide__slide img {
+	width : 100%;
+	height: auto;
+}
+
+#product-detail{
+    margin-left: 10px;
+    font-size: 18px;
+    position: relative;
+}
+
+#product-owner{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+#owner-image{
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    margin-right: 10px;
+    border-radius: 40px;
+    border: 2px solid rgb(123, 121, 139);
+}
+#date{
+    color: gray;
+    margin-left: 10px;
+    font-size: 10px;
+}
+
+label {
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+    padding: 6px;
+}
+input[type="radio"] {
+    display:none;   
+}
+input[type="radio"]:checked + label {
+    background-color: rgba(94, 46, 226, 0.26);
+}
+
+#product-detail div{
+    display: flex;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+input[type='number']{
+    width: 100px;
+    height: 30px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    font-size: 20px;
+}
+.nice-number button{
+    height: 34px;
+    width: 30px;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    border: 1px solid black;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+}
+.nice-number{
+    margin-left: 88px;
+    padding-top: 10px;
+}
+
+#condition a,#shipping a{
+    margin-left: 50px;
+    color: black;
+}
+#spec :nth-child(2){
+    margin-left: 50px;
+}
+
+#spec label{
+    color: black;
+}
+
+#product-src{
+    text-decoration: underline;
+    color: blue;
+}
+
+#cart {
+    border: 1px solid blue;
+    background-color: rgba(107, 107, 199, 0.253);
+    width: 170px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+}
+
+#product-describe{
+    background-color: white;
+    margin-top: 15px;
+    width: 1180px;
+    border-radius: 10px;
+    padding: 16px;
+}
+#desc{
+    display: flex;
+    justify-content: flex-start;
+    background-color:#FAFAFA ;
+    height: 32px;
+    padding: 8px;
+    align-items: center;
+}
+
+#product-title{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#condition,#shipping,#spec,.quantity{
+    color:#757575;
+}
+
+#desc-content{
+    white-space: pre;
+    margin-top: 5px;
+    line-height: 30px;
+    margin-left: 5px;
+}
+
+#primary-slider .image-link{
+    width: 500px;
+}
+
+.addBtn{
+    margin-bottom: 0 !important;
+    margin-left: 50px;
+    background-color: rgb(71, 105, 216);
+    color: white;
+    font-weight: bold;
+    width: 90px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#spec-edit {
+    margin-top: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    margin-bottom: 60px;
+  }
+  
+  #spec-edit td, #spec-edit th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 200px;
+  }
+  
+  #spec-edit tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #spec-edit tr:hover {background-color: #ddd;}
+  #spec-edit tr{
+      position: relative;
+  }
+  #spec-edit th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(71, 105, 216);
+    color: white;
+    height: 10px;
+  }
+
+  .remove{
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top:6px;
+}

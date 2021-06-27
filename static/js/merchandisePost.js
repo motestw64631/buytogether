@@ -1,67 +1,73 @@
 //view
-function loginView(){
-    document.getElementById('right-header').style.width='200px'
+function loginView() {
+    document.getElementById('right-header').style.width = '280px'
     let beforeLogin = Array.from(document.getElementsByClassName('before-login'));
-    beforeLogin.forEach((node)=>{node.style.display='none'});
+    beforeLogin.forEach((node) => { node.style.display = 'none' });
     let afterLogin = Array.from(document.getElementsByClassName('after-login'));
-    afterLogin.forEach((node)=>{node.style.display='inline'});
+    afterLogin.forEach((node) => { node.style.display = 'inline' });
 }
 
-function clearFileInput(num){
+function clearFileInput(num) {
     let preview = document.querySelectorAll('img')[num];
-    let file    = document.querySelectorAll('input[type=file]')[num];
+    let file = document.querySelectorAll('input[type=file]')[num];
     file.value = ''
-    preview.src='/static/img/upload.png'
-    document.querySelectorAll('.close')[num].style.display='none';
+    preview.src = '/static/img/upload.png'
+    document.querySelectorAll('.close')[num].style.display = 'none';
 }
 
 
 //model
-function getUser(){
+function getUser() {
     return fetch('/api/user')
-    .then((response)=>response.json())
+        .then((response) => response.json())
 }
 
-function postPurchase(){
+function postPurchase() {
     let origin = document.getElementById('origin').value;
     let name = document.getElementById('name').value;
     let describe = document.getElementById('describe').value;
     let cls = document.getElementById("cls").value;
-    let specs = document.querySelectorAll('.spc');
+    let specs = document.querySelectorAll('#spec-edit tr:not(:first-child)')
     let shippingList = []
     let checkedValue = document.querySelectorAll('.shipping:checked');
-    checkedValue.forEach(function(n){
+    checkedValue.forEach(function (n) {
         shippingList.push(n.value);
     })
     let condition = document.querySelector('input[name="condition"]:checked').value;
     let conditionValue
-    if (condition=='time'){
+    if (condition == 'time') {
         conditionValue = document.getElementById('conditionTime').value;
-    }else if(condition=='number'){
+    } else if (condition == 'number') {
         conditionValue = document.getElementById('conditionNum').value;
-    }else if(condition=='price'){
+    } else if (condition == 'price') {
         conditionValue = document.getElementById('conditionPrice').value;
     }
-    let specJson = {};
-    for(let i=0;i<specs.length;i++){
-        let key=i.toString();
-        specJson[key]=specs[i].value;
-    }
+    let specJson = [];
+    specs.forEach(function (node) {
+        frag = {};
+        frag['name'] = node.childNodes[0].textContent;
+        frag['price'] = node.childNodes[1].textContent;
+        frag['number'] = node.childNodes[2].textContent;
+        specJson.push(frag);
+    })
     let images = document.querySelectorAll('input[type=file]')[0].files[0];
     let images1 = document.querySelectorAll('input[type=file]')[1].files[0];
     let images2 = document.querySelectorAll('input[type=file]')[2].files[0];
     let data = new FormData()
-    data.append('file',images);
-    data.append('file',images1);
-    data.append('file',images2);
-    data.append('origin',origin)
-    data.append('name',name);
-    data.append('describe',describe);
-    data.append('cls',cls);
-    data.append('spec',JSON.stringify(specJson));
-    data.append('shipping',shippingList);
-    data.append('condition',condition);
-    data.append('conditionValue',conditionValue);
+    data.append('file', images);
+    data.append('file', images1);
+    data.append('file', images2);
+    data.append('origin', origin)
+    data.append('name', name);
+    data.append('describe', describe);
+    data.append('cls', cls);
+    data.append('spec', JSON.stringify(specJson));
+    data.append('shipping', shippingList);
+    data.append('condition', condition);
+    data.append('conditionValue', conditionValue);
+    for (var value of data.values()) {
+        console.log(value);
+    }
     return fetch('/api/purchaseorder',{
         method:'POST',
         body:data
@@ -70,12 +76,12 @@ function postPurchase(){
 
 
 //controller
-function init(){
-    getUser().then((myJson)=>{
-        if(myJson['data']){
+function init() {
+    getUser().then((myJson) => {
+        if (myJson['data']) {
             loginView()
-        }else{
-            location.href='/'
+        } else {
+            location.href = '/'
         }
     })
 }
@@ -84,121 +90,141 @@ function init(){
 
 function previewFile(num) {
     var preview = document.querySelectorAll('img')[num];
-    var file    = document.querySelectorAll('input[type=file]')[num].files[0];
-    var reader  = new FileReader();
-  
+    var file = document.querySelectorAll('input[type=file]')[num].files[0];
+    var reader = new FileReader();
+
     reader.addEventListener("load", function () {
-      preview.src = reader.result;
+        preview.src = reader.result;
     }, false);
-  
+
     if (file) {
-      reader.readAsDataURL(file);
-      document.querySelectorAll('.close')[num].style.display='inline';
-      document.querySelectorAll('.close')[num].addEventListener('click',function(e){
-          clearFileInput(num);
-          e.preventDefault()
-      })
+        reader.readAsDataURL(file);
+        document.querySelectorAll('.close')[num].style.display = 'inline';
+        document.querySelectorAll('.close')[num].addEventListener('click', function (e) {
+            clearFileInput(num);
+            e.preventDefault()
+        })
     }
-  }
+}
 
 
 init()
 
 
-document.getElementById('img_post').addEventListener('change',function(){
+document.getElementById('img_post').addEventListener('change', function () {
     previewFile(0);
 })
-document.getElementById('img_post_1').addEventListener('change',function(){
+document.getElementById('img_post_1').addEventListener('change', function () {
     previewFile(1);
 })
-document.getElementById('img_post_2').addEventListener('change',function(){
+document.getElementById('img_post_2').addEventListener('change', function () {
     previewFile(2);
 })
 
-document.getElementById('add-spec').addEventListener('click',function(e){
+document.getElementById('add-spec').addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
-    let shell=document.createElement('div');
-    let spec=document.createElement('input');
-    spec.className='spc';
+    // let shell=document.createElement('div');
+    // let spec=document.createElement('input');
+    // spec.className='spc';
+    // let btn = document.createElement('span');
+    // spec.placeholder='例如:顏色/白色,口味/辣味';
+    // btn.className='remove';
+    // btn.textContent='✕';
+    // shell.appendChild(spec);
+    // shell.appendChild(btn);
+    // document.getElementById('tag').appendChild(shell);
+    // btn.addEventListener('click',function(){
+    //     document.getElementById('tag').removeChild(shell);
+    // })
+    let tb = document.querySelector('#spec-edit > tbody');
+    let tr = document.createElement('tr');
+    let name = document.createElement('td');
+    name.contentEditable = true;
+    let price = document.createElement('td');
+    price.contentEditable = true;
+    let number = document.createElement('td');
+    number.contentEditable = true;
     let btn = document.createElement('span');
-    spec.placeholder='例如:顏色/白色,口味/辣味';
-    btn.className='remove';
-    btn.textContent='✕';
-    shell.appendChild(spec);
-    shell.appendChild(btn);
-    document.getElementById('tag').appendChild(shell);
-    btn.addEventListener('click',function(){
-        document.getElementById('tag').removeChild(shell);
+    btn.className = 'remove';
+    btn.textContent = '✕';
+    btn.addEventListener('click', function () {
+        tb.removeChild(tr);
     })
+    tr.appendChild(name);
+    tr.appendChild(price);
+    tr.appendChild(number);
+    tr.appendChild(btn);
+    tb.appendChild(tr);
+
 })
-document.getElementById('condition-number').addEventListener('click',()=>{
+document.getElementById('condition-number').addEventListener('click', () => {
     let cdt = document.getElementById('set-condition');
-    if(cdt.hasChildNodes){
+    if (cdt.hasChildNodes) {
         cdt.removeChild(cdt.firstChild)
-        cdt.textContent=''
+        cdt.textContent = ''
     }
     let text = document.createTextNode('跟團者購買物品總數到達指定數量後通知開團主');
     let number = document.createElement('input');
     number.id = 'conditionNum';
-    number.placeholder='數量,例如:20';
-    number.type='text';
+    number.placeholder = '數量,例如:20';
+    number.type = 'text';
     cdt.appendChild(number);
     cdt.appendChild(text);
 })
 
-document.getElementById('condition-time').addEventListener('click',()=>{
+document.getElementById('condition-time').addEventListener('click', () => {
     let cdt = document.getElementById('set-condition');
-    if(cdt.hasChildNodes){
+    if (cdt.hasChildNodes) {
         cdt.removeChild(cdt.firstChild);
-        cdt.textContent=''
+        cdt.textContent = ''
     }
     let text = document.createTextNode('時間到達指定時間後通知團主');
     let date = document.createElement('input');
     date.id = 'conditionTime'
-    date.type='datetime-local';
+    date.type = 'date';
     cdt.appendChild(date);
     cdt.appendChild(text);
 })
 
-document.getElementById('condition-price').addEventListener('click',()=>{
+document.getElementById('condition-price').addEventListener('click', () => {
     let cdt = document.getElementById('set-condition');
-    if(cdt.hasChildNodes){
+    if (cdt.hasChildNodes) {
         cdt.removeChild(cdt.firstChild);
-        cdt.textContent=''
+        cdt.textContent = ''
     }
     let text = document.createTextNode('價格到達指定價格後通知團主');
     let pc = document.createElement('input');
-    pc.placeholder='價格,例如:5000';
+    pc.placeholder = '價格,例如:5000';
     pc.id = 'conditionPrice'
-    pc.type='text';
+    pc.type = 'text';
     cdt.appendChild(pc);
     cdt.appendChild(text);
 })
 
-document.getElementById('toggle-control').addEventListener('click',()=>{
+document.getElementById('toggle-control').addEventListener('click', () => {
     let menu = document.getElementById('menu');
-    if(menu.style.display=='none' || menu.style.display==""){
-        menu.style.display='flex';
-        menu.style.bottom='-150px';
-    }else{
-        menu.style.display='none';
+    if (menu.style.display == 'none' || menu.style.display == "") {
+        menu.style.display = 'flex';
+        menu.style.bottom = '-150px';
+    } else {
+        menu.style.display = 'none';
     }
 })
 
 
-document.getElementById('form-submit').addEventListener('click',()=>{
-    postPurchase().then((myJson)=>{
-        if(myJson['ok']){
-            document.getElementsByClassName('lds-dual-ring')[0].style.display='none';
+document.getElementById('form-submit').addEventListener('click', () => {
+    postPurchase().then((myJson) => {
+        if (myJson['ok']) {
+            document.getElementsByClassName('lds-dual-ring')[0].style.display = 'none';
             clearFileInput(0)
             clearFileInput(1)
             clearFileInput(2)
             document.getElementById("base-info").reset();
-            document.getElementById('message').textContent='開團成功';
-        }else{
-            document.getElementById('message').textContent='開團失敗';
+            document.getElementById('message').textContent = '開團成功';
+        } else {
+            document.getElementById('message').textContent = '開團失敗';
         }
     });
-    document.getElementsByClassName('lds-dual-ring')[0].style.display='inline-block';
+    document.getElementsByClassName('lds-dual-ring')[0].style.display = 'inline-block';
 })

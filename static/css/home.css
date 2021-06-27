@@ -10,8 +10,11 @@ table {
   
 td {
     border-right: 3px solid rgba(194, 179, 179, 0.712);
-    text-align: center;
     cursor: pointer;
+}
+
+#class td{
+    text-align: center;
 }
 
 td:last-child {
@@ -42,4 +45,63 @@ main{
     height: 300px;
     border-radius: 5px;
     display: none;
+}
+
+#loader{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(211, 211, 211, 0.377);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loader-img{
+    width: 8%;
+    height: 15%;
+}
+
+#content{
+    width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    padding-left: 25px;
+    margin-top: 15px;
+}
+.product{
+    border: 1px solid rgb(189, 189, 189);
+    border-radius: 3px;
+    overflow: hidden;
+    width: 280px;
+    height: 250px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    position: relative;
+}
+.product:hover{
+    box-shadow:1px 1px 3px 4px #cccccc;
+}
+
+.product-img{
+    width: 280px;
+    height: 190px;
+    background-position: center center;
+    background-size: cover;
+}
+
+.product-name{
+    font-size: 14px;
+    font-weight: bold;
+    padding-left: 5px;
+}
+.product-condition{
+    font-size: 8px;
+    color: rgb(168, 168, 168);
+    position:absolute;
+    font-weight: bold;
+    bottom: 0;
+    padding-left: 5px;
 }

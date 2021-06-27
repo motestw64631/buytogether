@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>BuyTogether</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/cart.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/header.css')}}">
+    <link rel="icon" href="{{url_for('static',filename='img/icon_buy.png')}}">
+</head>
+
+<body>
+    <div id="loader">
+        <img id="loader-img" src="{{url_for('static',filename='img/loading.gif')}}">
+    </div>
+    <header>
+        <!-- Modal -->
+        <div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel2">購物車</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="booking">
+                            <div class="product-header">
+                                <div class="header-img"></div>
+                                <div class="header-name">綠光森林手工訂製皂</div>
+                            </div>
+                            <hr>
+                            <div class="booking-header">
+                                <div class="header-spec">品項</div>
+                                <div class="header-number">數量</div>
+                                <div class="header-price">價格</div>
+                                <div class="header-manip">操作</div>
+                            </div>
+                            <div class="booking-detail">
+                                <div class="spec">紅色</div>
+                                <div class="number">2</div>
+                                <div class="price">2500</div>
+                                <div class="delete">刪除</div>
+                            </div>
+                            <div class="booking-footer">
+                                <div class="price-sum">總金額：<a>$<a class='sum-a'>5000</a></a></div>
+                                <div class="buy">去買單</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+
+    </div><!-- container -->
+        <div id="left-header">
+            <div id='home'><a href="/">S&S</a></div>
+        </div>
+        <div id="mid-header">
+            <form id="search">
+                <input type="text" placeholder="我想找團購" id="search-item">
+                <input type="image" name='submit' src="{{url_for('static',filename='img/icon_search.png')}}"
+                    id='search-icon'>
+            </form>
+        </div>
+        <div id="right-header">
+            <a class="after-login" href="/board">徵團留言區</a>|<a data-toggle="modal" data-target="#myModal2">購物車</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
+            <a id='sign-in' href="/sign_in" class="before-login">登入</a>
+            <span class="after-login"><a id='toggle-control'>個人帳戶</a>
+                <div id='menu'>
+                    <table id='menu-table'>
+                        <tr>
+                            <td><a href="/profile">個人資訊</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">團購管理</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/purchase_set">我要開團</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/logout">登出</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </span>
+        </div>
+    </header>
+    <main>
+    </main>
+    <script src="https://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="{{url_for('static',filename='js/cart.js')}}"></script>
+</body>
+
+</html>
