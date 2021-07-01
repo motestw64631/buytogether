@@ -1,3 +1,4 @@
+let cUser;
 //model
 
 function getUser() {
@@ -10,8 +11,8 @@ function getBooking() {
         .then((response) => response.json())
 }
 
-function deleteBooking(productId,specId){
-    return fetch(`/api/booking?productId=${productId}&specId=${specId}`,{
+function deleteBooking(productId,specName){
+    return fetch(`/api/booking?productId=${productId}&specName=${specName}`,{
         method:"DELETE"
     }).then((response)=>response.json())
 }
@@ -44,6 +45,9 @@ function sidebarCartView(datas) {
         productImage.style.backgroundImage = `url('${bookDetails['image']}')`
         const productName = document.createElement('div');
         productName.textContent = bookDetails['name'];
+        productName.addEventListener('click',()=>{
+            location.href=`/product/${bookDetails['productId']}`;
+        })
         productName.className = 'header-name';
         bookingHeader = document.createElement('div');
         bookingHeader.className = 'booking-header';
@@ -52,7 +56,9 @@ function sidebarCartView(datas) {
         const headerNumber = document.createElement('div');
         headerNumber.textContent = '數量';
         const headerPrice = document.createElement('div');
-        headerPrice.textContent = '價格';
+        headerPrice.textContent = '總價';
+        const headerSinglePrice = document.createElement('div');
+        headerSinglePrice.textContent = '單價';
         const headerManip = document.createElement('div');
         headerManip.textContent = '操作'
         booking.appendChild(productHeader);
@@ -60,6 +66,7 @@ function sidebarCartView(datas) {
         productHeader.appendChild(productName);
         bookingHeader.appendChild(headerSpec);
         bookingHeader.appendChild(headerNumber);
+        bookingHeader.appendChild(headerSinglePrice);
         bookingHeader.appendChild(headerPrice);
         bookingHeader.appendChild(headerManip);
         booking.appendChild(document.createElement('hr'));
@@ -68,6 +75,7 @@ function sidebarCartView(datas) {
             const bookingDetail = document.createElement('div');
             const bookingSpec = document.createElement('div');
             const bookingNumber = document.createElement('div');
+            const bookingSinglePrice = document.createElement('div');
             const bookingPrice = document.createElement('div');
             const bookingDelete = document.createElement('div');
             bookingDetail.className = 'booking-detail'
@@ -77,12 +85,13 @@ function sidebarCartView(datas) {
             bookingDelete.className = 'delete';
             bookingSpec.textContent = detail['specName'];
             bookingNumber.textContent = detail['number'];
+            bookingSinglePrice.textContent =detail['specPrice'];
             bookingPrice.textContent = detail['specTotalPrice'];
             priceCount+=detail['specTotalPrice'];
             bookingDelete.textContent = '刪除';
             //delete
             bookingDelete.addEventListener('click',function(){
-                deleteBooking(productId,detail['specId']).then((myJson)=>{
+                deleteBooking(productId,detail['specName']).then((myJson)=>{
                     if(myJson['ok']){
                         getBooking().then((myJson) => {
                             sidebarCartView(myJson);
@@ -93,6 +102,7 @@ function sidebarCartView(datas) {
             //
             bookingDetail.appendChild(bookingSpec);
             bookingDetail.appendChild(bookingNumber);
+            bookingDetail.appendChild(bookingSinglePrice);
             bookingDetail.appendChild(bookingPrice);
             bookingDetail.appendChild(bookingDelete);
             booking.appendChild(bookingDetail);
@@ -110,6 +120,11 @@ function sidebarCartView(datas) {
         dollarSign.textContent = '$';
         totalPrice.textContent=priceCount;
         goBuy.textContent = '去買單';
+        //to order
+        goBuy.addEventListener('click',function(){
+            location.href = (`/checkout?productId=${bookDetails['productId']}`);
+        })
+        //
         bookingFooter.appendChild(priceSum);
         bookingFooter.appendChild(goBuy);
         priceSum.appendChild(dollarSign);
@@ -124,7 +139,8 @@ function sidebarCartView(datas) {
 function init() {
     getUser().then((myJson) => {
         if (myJson['data']) {
-            loginView()
+            cUser=myJson['data'];
+            loginView();
         }
         document.getElementById('loader').style.display = 'none';
     })
@@ -145,6 +161,7 @@ function events() {
             sidebarCartView(myJson);
         });
     })
+
 }
 
 

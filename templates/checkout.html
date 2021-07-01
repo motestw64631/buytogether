@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/checkout.css')}}">
+{% endblock %}
+{% block main%}
+
+<div id="order-product">
+    <div id="order-title">訂單商品</div>
+    <hr>
+</div>
+<div id="order-detail">
+    <div id="order-title">寄送資訊</div>
+    <hr>
+    <form id='send-info'>
+        <div>
+            <div>姓名</div>
+            <input type="text" id="send-name">
+        </div>
+        <div>
+            <div>電話</div>
+            <input type="tel" id="send-tel">
+        </div>
+        <div>
+            <div>寄送方式</div>
+            <select name="send-way" id="send-way">
+            </select>
+            <!-- <input type="text" id="send-way"> -->
+        </div>
+        <div>
+            <div>寄送地址</div>
+            <input type="text" id="send-location">
+        </div>
+    </form>
+</div>
+
+<div id="order-tappay">
+    <div id="order-title">付款資訊</div>
+    <hr>
+    <form id='pay-info'>
+        <div>
+            <div>卡片號碼</div>
+            <div class="tpfield" id="card-number"></div>
+        </div>
+        <div>
+            <div>過期時間</div>
+            <div class="tpfield" id="card-expiration-date"></div>
+        </div>
+        <div>
+            <div>驗證密碼</div>
+            <div class="tpfield" id="card-ccv"></div>
+        </div>
+    </form>
+</div>
+
+
+<div id="order-message">
+    <div id="order-title">備註</div>
+    <hr>
+    <div id="order-message-div"><textarea></textarea></div>
+</div>
+
+<div id="order-submit">
+    <button id='submit-btn'>
+        送出
+    </button>    
+</div>
+
+
+
+{% endblock %}
+{% block script %}
+<script src="https://js.tappaysdk.com/tpdirect/v5.1.0"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{url_for('static',filename='js/checkout.js')}}"></script>
+{% endblock %}

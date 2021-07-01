@@ -1,0 +1,97 @@
+.order-booking{
+    width: 100%;
+    background-color: white;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-booking .booking-header>div,.order-booking .booking-detail>div{
+    width: 300px;
+}
+
+#order-product,#order-detail,#order-message,#order-tappay{
+    margin-top: 20px;
+    width: 1200px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 25px;
+}
+
+#send-info{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    padding: 10px;
+}
+#send-info>div ,#pay-info>div{
+    height: 55px;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+}
+#send-info>div>div,#pay-info>div>div{
+    width: 150px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+#send-info input,#send-info select{
+    border:1px solid gray;
+    font-weight: normal;
+    margin-left: 10px;
+    width: 60%;
+    border-radius: 5px;
+    padding: 5px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+}
+
+#pay-info{
+    padding: 10px
+}
+textarea{
+    width: 100%;
+    height: 150px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+#order-message-div{
+    padding: 10px;
+}
+
+#order-submit{
+    display: flex;
+    width: 1200px;
+    justify-content: flex-end;
+    margin-top:10px;
+}
+
+#submit-btn{
+    background-color: rgb(71, 105, 216); /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.tpfield{
+    border:1px solid gray;
+    font-weight: normal;
+    margin-left: 10px;
+    width: 700px !important;
+    border-radius: 5px;
+    padding: 5px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+}

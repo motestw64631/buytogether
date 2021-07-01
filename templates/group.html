@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/group.css')}}">
+{% endblock %}
+{% block main%}
+
+<div id="group-follow">
+    <div id="group-title">我的跟團</div>
+    <hr>
+</div>
+
+<div id="group-owner">
+    <div id="group-title">我的開團</div>
+    <hr>
+</div>
+
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static',filename='js/group.js')}}"></script>
+{% endblock %}

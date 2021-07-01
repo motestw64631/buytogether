@@ -1,0 +1,124 @@
+/* width */
+.message-list::-webkit-scrollbar,.message-content::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  .message-list::-webkit-scrollbar-track,.message-content::-webkit-scrollbar {
+    border-radius: 5px;
+  }
+   
+  /* Handle */
+  .message-list::-webkit-scrollbar-thumb,.message-content::-webkit-scrollbar {
+    background: rgb(71, 105, 216); 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  .message-list::-webkit-scrollbar-thumb:hover,.message-content::-webkit-scrollbar {
+    background: #ffffff; 
+  }
+
+.message{
+    width: 900px;
+    height: 550px;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.message-list{
+    width: 300px;
+    background-color: rgb(220, 234, 247);
+    overflow-y: scroll;
+}
+.friend{
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid rgba(121, 121, 121, 0.308);
+}
+
+.friend:hover{
+    background-color: rgba(212, 212, 212, 0.452);
+    cursor: pointer;
+}
+
+.friend-img{
+    width:100px;
+    height: 100px;
+    background-color: white;
+    border-radius: 10px;
+}
+.friend-content{
+    padding: 10px;
+}
+
+.friend-name{
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+}
+.message-section{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 70%;
+}
+.message-content{
+    height: 550px;
+    background-color: white;
+    overflow-y: scroll;
+}
+
+.message-input{
+    width: 100%;
+    display: flex;
+    position: relative;
+    background-color: #DCEAF7;
+    font-size: 18px;
+}
+
+#ipt{
+    width: 540px;
+    min-height: 30px;
+    overflow: auto;
+    background-color: #F0F2F5;
+    border-radius: 15px;
+    padding-left: 5px;
+    font-size: 20px;
+}
+
+
+#push{
+    width: 70px;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(71, 105, 216);
+    font-weight: 600;
+    position: absolute;
+    right: 0;
+    height: 100%;
+}
+
+.avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+.single-message{
+    display: flex;
+    justify-content: flex-start;
+    height: 50px;
+    padding: 5px;
+    font-size: 16px;
+    align-items: center;
+}
+.msg-n{
+    font-size: 10px;
+    color: grey;
+    display: flex;
+}
+
+.msg-ct{
+    background-color: #DCEAF7;
+    border-radius: 10px;
+    padding: 5px;
+}

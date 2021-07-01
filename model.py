@@ -1,5 +1,6 @@
 from enum import unique
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import backref
 from werkzeug.security import generate_password_hash,check_password_hash
 import datetime
 
@@ -17,6 +18,7 @@ class User(db.Model):
     date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
     product = db.relationship('Product',backref='user')
     message = db.relationship('Message',backref='user')
+    chat_message = db.relationship('Chat_Message',backref='user')
     sub_message = db.relationship('Sub_Message',backref='user')
     def __init__(self,name,email,password,provider):
         self.name = name
@@ -28,7 +30,37 @@ class User(db.Model):
     def __repr__(self):
         return f'<user {self.name}>'
 
+class Chat_Room(db.Model):
+    __tablename__ = 'chat_room'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    room_id = db.Column(db.Integer,unique=True)
+    user_1_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
+    user_2_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
+    unread = db.Column(db.Boolean)
+    date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
+    message = db.relationship('Chat_Message',backref='chat_room')
+    user_1 = db.relationship("User", foreign_keys=[user_1_id])
+    user_2 = db.relationship("User", foreign_keys=[user_2_id])
 
+    def __init__(self,room_id,user_1_id,user_2_id):
+        self.room_id=room_id
+        self.user_1_id=user_1_id
+        self.user_2_id=user_2_id
+        self.unread = True
+
+class Chat_Message(db.Model):
+    __tablename__ = 'chat_message'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
+    chat_room_id = db.Column(db.Integer,db.ForeignKey('chat_room.id'),nullable=False)
+    content = db.Column(db.Text)
+    date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
+    def __init__(self,user_id,chat_room_id,content):
+        self.user_id = user_id
+        self.chat_room_id = chat_room_id
+        self.content = content
 
 class Product(db.Model):
     __tablename__ = 'product'
@@ -41,6 +73,7 @@ class Product(db.Model):
     product_class = db.Column(db.Integer,nullable=False)
     status = db.Column(db.Integer,nullable=False)
     ownerId = db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
+    # order = db.relationship('Order',backref='product', passive_deletes=True)
     spec = db.relationship('Spec',backref='product', passive_deletes=True)
     condition = db.relationship('Condition',backref='product', passive_deletes=True)
     images = db.relationship('Product_Image',backref='product', passive_deletes=True)
@@ -152,14 +185,24 @@ class Product_Image(db.Model):
         self.image_url = image_url
 
 
-'''
-class BuyerList():
-    __tablename__ = 'buyer'
-    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
-    buyerId = db.column(db.Integer,db.ForeignKey('user.id'))
-    number = db.Column(db.Integer,nullable=False)
-    merchandiseId = db.Column(db.Integer,db.ForeignKey('merchandise.id'))
-    paymentState =db.Column(db.Integer,nullable=False)
-    location = db.column(db.String(1000),nullable=False)
-    date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
-'''
+# class Order():
+#     __tablename__ = 'order'
+#     id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+#     buyer_id = db.Column(db.Integer,db.ForeignKey('user.id'))
+#     product_id = db.Column(db.Integer,db.ForeignKey('product.id' , ondelete='CASCADE'))
+#     shipping_way = db.Column(db.String(1000))
+#     shipping_value = db.Column(db.String(2000))
+#     payment_state = db.Column(db.Integer,nullable=False)
+#     message = db.Column(db.Text)
+#     date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
+#     item = db.relationship('Order_item',backref='order')
+
+
+# class Order_Item():
+#     __tablename__ = 'order_item'
+#     id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+#     order_id = db.Column(db.Integer,db.ForeignKey('order.id' , ondelete='CASCADE'))
+#     item_name = db.Column(db.String(200),nullable=False)
+#     item_number = db.Column(db.Integer)
+#     item_total_price = db.Column(db.Integer)
+

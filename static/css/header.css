@@ -11,6 +11,10 @@ header{
     font-size: 20px;
     padding-right: 10px;
     padding-left: 10px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 9999;
 }
 
 #left-header{
@@ -64,12 +68,14 @@ a, u {
 #menu{
     position: absolute;
     border: 1px rgb(184, 181, 181) solid;
-    bottom: -150px;
+    bottom: -145px;
     background-color: rgb(255, 255, 255);
     color: black;
     width: 88px;
     display: none;
     left: -5px;
+    height: 175px;
+    top:25px;
     animation-name: slideDown;    /*動畫名稱，需與 keyframe 名稱對應*/
     animation-duration: 0.5s; 
 }
@@ -78,7 +84,10 @@ a, u {
 }
 
 #menu-table tr{
+    display: flex;
     height: 35px;
+    align-items: center;
+    justify-content: center;
 }
 
 #menu-table tr:hover{

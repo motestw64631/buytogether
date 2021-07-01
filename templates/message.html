@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/message.css')}}">
+{% endblock %}
+{% block main%}
+<div class="message">
+    <div class="message-list">
+        <!-- <div class="friend">
+        <img class="friend-img" src="https://d84l4b8eh7ljv.cloudfront.net/user/animalface_panda.png">
+        <div class="friend-content">
+            <div class="friend-name">小豬</div>
+        </div>
+    </div> -->
+    </div>
+    <div class="message-section">
+        <div class="message-content">
+
+        </div>
+        <div class="message-input">
+            <div id='ipt' contenteditable="true"></div>
+            <button id='push'>發送</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script src="{{url_for('static',filename='js/message.js')}}"></script>
+{% endblock %}

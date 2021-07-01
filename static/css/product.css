@@ -49,11 +49,33 @@ main{
     position: relative;
 }
 
+#show-price{
+    display: none !important;
+    width: 100%;
+    font-size: 35px;
+    height: 50px;
+}
+
 #product-owner{
     display: flex;
     align-items: center;
     font-size: 15px;
     margin-top: 10px;
+    position: relative;
+}
+
+#to-message-menu{
+    display: flex;
+    border: 1px solid black;
+    color: white;
+    padding: 5px;
+    font-size: 25px;
+    height: 30px;
+    margin-left: 10px;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    background-color:rgb(71, 105, 216) ;
 }
 
 #owner-image{
@@ -68,6 +90,8 @@ main{
     color: gray;
     margin-left: 10px;
     font-size: 10px;
+    position: absolute;
+    right: 0;
 }
 
 label {
@@ -205,14 +229,14 @@ input[type='number']{
     margin-top: 10px;
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 80%;
+    width: 90%;
     margin-bottom: 60px;
   }
   
   #spec-edit td, #spec-edit th {
     border: 1px solid #ddd;
     padding: 8px;
-    width: 200px;
+    width: 300px;
   }
   
   #spec-edit tr:nth-child(even){background-color: #f2f2f2;}
