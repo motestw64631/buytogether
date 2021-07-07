@@ -95,3 +95,7 @@ textarea{
     display: flex;
     align-items: center;
 }
+
+#message-owner{
+    font-size: 18px;
+}

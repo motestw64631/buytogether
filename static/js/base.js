@@ -7,12 +7,12 @@ function getUser() {
 }
 
 function getBooking() {
-    return fetch('/api/booking')
+    return fetch('/api/cart')
         .then((response) => response.json())
 }
 
 function deleteBooking(productId,specName){
-    return fetch(`/api/booking?productId=${productId}&specName=${specName}`,{
+    return fetch(`/api/cart?productId=${productId}&specName=${specName}`,{
         method:"DELETE"
     }).then((response)=>response.json())
 }

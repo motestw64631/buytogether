@@ -1,0 +1,59 @@
+#my-group{
+    margin-top: 20px;
+    width: 1200px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 25px;
+}
+
+.product-view{
+    background-color: #DCEAF7;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+.product-view:hover{
+    background-color: #b4dbff;
+}
+
+.product-header{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.product-image{
+    width: 35px;
+    height: 35px;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 5px;
+    margin-right: 12px;
+}
+
+.product-status{
+    position: absolute;
+    right: 0;
+    background-color: rgb(236, 129, 102);
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.product-header{
+    font-size: 20px;
+}
+
+.product-content{
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.product-content>div>a{
+    margin-left: 15px;
+    color:grey;
+}

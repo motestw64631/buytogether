@@ -42,7 +42,7 @@ function postBooking(norm) {
         data.append('specId', spec);
         data.append('bookingNumber', buyNumber);
         data.append('normalize', 1);
-        return fetch('/api/booking', {
+        return fetch('/api/cart', {
             method: 'POST',
             body: data
         }).then(response => response.json())
@@ -67,7 +67,7 @@ function postBooking(norm) {
         data.append('productId', product_id);
         data.append('data',JSON.stringify(specList));
         data.append('normalize', 0);
-        return fetch('/api/booking', {
+        return fetch('/api/cart', {
             method: 'POST',
             body:data
         }).then(response => response.json())

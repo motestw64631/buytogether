@@ -1,5 +1,6 @@
 from flask import Blueprint,request
 from model import *
+import datetime
 
 chat_message = Blueprint('chat_message',__name__)
 
@@ -7,6 +8,8 @@ chat_message = Blueprint('chat_message',__name__)
 def post_chat_message():
     rq = request.get_json()
     message = Chat_Message(rq['user'],rq['room'],rq['content'])
+    room = db.session.query(Chat_Room).filter_by(id=rq['room']).first()
+    room.last_activation_time= datetime.datetime.utcnow()
     db.session.add(message)
     db.session.commit()
     return {

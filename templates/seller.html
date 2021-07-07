@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/seller.css')}}">
+{% endblock %}
+{% block main%}
+<!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#follow-content">开始演示模态框</button> -->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="follow-content" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modal-content">
+            <div class="modal-header" id="follow-header">
+                <h4 class="modal-title" id="myModalLabel">訂單資訊</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div id="my-group">
+    <div id="group-title">我的開團</div>
+    <hr>
+
+</div>
+
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static',filename='js/seller.js')}}"></script>
+{% endblock %}

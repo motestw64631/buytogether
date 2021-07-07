@@ -2,14 +2,14 @@ import re
 from flask import Blueprint, json,session,jsonify,redirect,request
 from model import *
 
-book_api = Blueprint('book_api',__name__)
+cart_api = Blueprint('cart_api',__name__)
 
 def ship_model_to_json(md):
     ls = {"seven":md.seven,"family":md.family,"hilife":md.hilife,"ok":md.ok,"face":md.face,"home":md.home_delivery}
     return [key for key in ls if ls[key]==True]
 
 
-@book_api.route('/api/booking',methods=['POST'])
+@cart_api.route('/api/cart',methods=['POST'])
 def post_booking():
     duplicate_flag = False
     normalize = request.form.get('normalize')
@@ -76,8 +76,8 @@ def post_booking():
             'ok':True
         }
 
-@book_api.route('/api/booking',methods=['GET'])
-def get_booking():
+@cart_api.route('/api/cart',methods=['GET'])
+def get_cart():
     product_id = request.args.get('productId')
     if not product_id:
         if 'cart' not in session:
@@ -99,11 +99,16 @@ def get_booking():
 
 
 
-@book_api.route('/api/booking',methods=['DELETE'])
-def delete_booking():
+@cart_api.route('/api/cart',methods=['DELETE'])
+def delete_cart():
     product_id = request.args.get('productId')
     spec_name = request.args.get('specName')
-    for i,data in enumerate(session['cart'][f'{product_id}']['datas']):
+    if not spec_name:  #delete by product id
+        session['cart'].pop(f'product_{product_id}')
+        return{
+            'ok':True
+        }
+    for i,data in enumerate(session['cart'][f'{product_id}']['datas']): #delete by spec id
         if data['specName']==spec_name:
             session['cart'][f'{product_id}']['datas'].pop(i)
     if len(session['cart'][f'{product_id}']['datas'])==0:

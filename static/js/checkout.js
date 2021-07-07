@@ -1,3 +1,4 @@
+
 let shippingCode = {
     'seven': '7-11店到店',
     'family': '全家店到店',
@@ -13,20 +14,63 @@ function getBookingById() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const productId = urlParams.get('productId')
-    return fetch(`/api/booking?productId=${productId}`)
+    return fetch(`/api/cart?productId=${productId}`)
         .then((response) => response.json())
 }
 
 
-function onClick() {
+function onClickPrime(pd) {
     TPDirect.card.getPrime(function (result) {
         if (result.status !== 0) {
             console.log('getPrime error')
             return
         }
-        var prime = result.card.prime
+        const prime = result.card.prime
         console.log('getPrime success: ' + prime)
+        const name = document.getElementById('send-name').value;
+        const phone = document.getElementById('send-tel').value;
+        const mail = document.getElementById('send-mail').value;
+        const sendWay = document.getElementById('send-way').value;
+        const sendLocation = document.getElementById('send-location').value;
+        const message = document.getElementById('message-owner').value;
+        const priceSum = document.querySelector('.sum-a').textContent;
+        postOrder(prime,cUser['id'],name,phone,mail,pd['data']['productId'],pd['data']['datas'],priceSum,sendWay,sendLocation,message).then((myJson)=>{
+            if(myJson['ok']){
+                deleteBooking(pd['data']['productId']);
+                location.href=`/details?number=${myJson['serial_number']}`
+            }
+        });
     })
+}
+
+function postOrder(prime,buyer, name, phone, mail, product,item,sum, ship, ship_value, message) {
+    const data = {
+        "prime":prime,
+        "buyerId": buyer,
+        "name": name,
+        "phone": phone,
+        "mail": mail,
+        "productId": product,
+        "productItem":item,
+        "productTotalPrice":sum,
+        "shipWay": ship,
+        "shipValue": ship_value,
+        "message": message
+    }
+    console.log(data);
+    return fetch('/api/order', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body:JSON.stringify(data)
+    }).then((response)=>response.json())
+}
+
+function deleteBooking(productId){
+    return fetch(`/api/cart?productId=${productId}`,{
+        method:'DELETE'
+    }).then((response)=>response.json())
 }
 
 
@@ -164,12 +208,11 @@ function sidebarCartViewOrder(datas) {
 }
 
 //control
-
-document.getElementById('submit-btn').addEventListener('click', () => {
-    let name = document.getElementById('send-name');
-    let phone = document.getElementById('send-tel');
-    let sendlocation = document.getElementById('send-location');
-})
+function sumbitBtn(pd) {
+    document.getElementById('submit-btn').addEventListener('click', () => {
+        onClickPrime(pd);
+    })
+}
 
 
 
@@ -182,4 +225,5 @@ getBookingById().then((pd) => {
     console.log(pd);
     shippingWaysView(pd);
     sidebarCartViewOrder(pd);
+    sumbitBtn(pd);
 })

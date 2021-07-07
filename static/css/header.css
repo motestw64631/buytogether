@@ -6,6 +6,7 @@ header{
     background-color: rgb(71, 105, 216);
     height: 70px;
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
     font-size: 20px;
@@ -74,7 +75,7 @@ a, u {
     width: 88px;
     display: none;
     left: -5px;
-    height: 175px;
+    height: 210px;
     top:25px;
     animation-name: slideDown;    /*動畫名稱，需與 keyframe 名稱對應*/
     animation-duration: 0.5s; 

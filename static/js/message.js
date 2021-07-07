@@ -30,9 +30,25 @@ function getChatMessage() {
         .then(response => response.json())
 }
 
+function deleteRoom(room_id) {
+    return fetch(`/api/chatroom?chatroom=${room_id}`, {
+        method: "DELETE"
+    }).then(response => response.json())
+}
+
+
+
 //view
 
-function renderMessageView(msg){
+function renderNullView() {
+    const mainContent = document.querySelector('.message');
+    mainContent.innerHTML = '';
+    mainContent.textContent = '尚無任何訊息';
+    mainContent.style.justifyContent = 'center';
+}
+
+
+function renderMessageView(msg) {
     const messageDiv = document.querySelector('.message-content');
     const singleMessage = document.createElement('div');
     singleMessage.className = 'single-message';
@@ -65,11 +81,15 @@ function renderfriendView() {
         const friendContent = document.createElement('div');
         const friendName = document.createElement('div');
         const friendPreview = document.createElement('div');
+        const roomDelete = document.createElement('div');
+
         singleFriend.className = 'friend';
         friendImage.className = 'friend-img';
         friendContent.className = 'friend-content';
         friendName.className = 'friend-name';
         friendPreview.className = 'friend-preview';
+        roomDelete.className = 'room-delete';
+        roomDelete.textContent = '✖';
         singleFriend.addEventListener('click', function () {
             if (currentRoom !== null) {
                 socket.emit('leave', {
@@ -90,11 +110,22 @@ function renderfriendView() {
                 });
             })
         })
+        roomDelete.addEventListener('click', function (e) {
+            e.stopPropagation();
+            deleteRoom(friend['roomId']).then((myJson) => {
+                if (myJson['ok']) {
+                    location.reload();
+                }
+            });
+        })
         singleFriend.appendChild(friendImage);
         singleFriend.appendChild(friendContent);
+        singleFriend.appendChild(roomDelete);
         friendContent.appendChild(friendName);
         friendName.textContent = friend['friendName'];
         friendImage.src = friend['friendImage'];
+        friendContent.appendChild(friendPreview);
+        friendPreview.textContent = friend['lastMessage'];
         friendView.appendChild(singleFriend);
     })
 }
@@ -135,6 +166,17 @@ document.getElementById('push').addEventListener('click', function () {
     document.getElementById('ipt').textContent = '';
 })
 
+document.getElementById('ipt').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        if(this.textContent==''){
+            return
+        };
+        document.getElementById('push').click();
+    }
+});
+
+
 socket.on('message', function (msg) {
     renderMessageView(msg);
     $(".message-content").scrollTop($(".message-content")[0].scrollHeight);
@@ -144,7 +186,10 @@ socket.on('message', function (msg) {
 
 getChatRoom().then((myJson) => {
     chatrooms = myJson;
-    console.log(chatrooms);
+    if (chatrooms['data'].length == 0) {
+        renderNullView();
+        return
+    };
     renderfriendView();
     clickUserView();
     document.querySelector('.friend:first-child').click();

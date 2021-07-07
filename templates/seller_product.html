@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/seller_product.css')}}">
+{% endblock %}
+{% block main%}
+<!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#follow-content">开始演示模态框</button> -->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="follow-content" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modal-content">
+            <div class="modal-header" id="follow-header">
+                <h4 class="modal-title" id="myModalLabel">訂單資訊</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>購買項目</h3>
+                <div id="product-detail">
+                </div>
+                <div id="order-content">
+                    <h3>訂單細節</h3>
+                    <div id="order-number">
+                        <div>訂單編號</div>：<a></a>
+                    </div>
+                    <div id="order-date">
+                        <div>訂購日期</div>：<a></a>
+                    </div>
+                    <div id="order-buyer-name">
+                        <div>訂購人名稱</div>：<a></a>
+                    </div>
+                    <div id="order-buyer-phone">
+                        <div>訂購人電話</div>：<a></a>
+                    </div>
+                    <div id="order-buyer-mail">
+                        <div>訂購人信箱</div>：<a></a>
+                    </div>
+                    <div id="order-buyer-ship">
+                        <div>寄送方式</div>：<a></a>
+                    </div>
+                    <div id="order-buyer-locaiton">
+                        <div>寄送地址</div>：<a></a>
+                    </div>
+                    <div id="order-buyer-message">
+                        <div>留言</div>：<a></a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div id="product">
+    <div id="my-group"></div>
+    <hr>
+    <h3>團購進度</h3>
+    <div class="pg">
+        <div class="row">
+            <div class="col">
+                <ul id="progress-bar" class="progressbar">
+                    <li class="active" value="0">徵團中</li>
+                    <li value="1">已成團</li>
+                    <li value="2">主購已下單</li>
+                    <li value="3">店家已出貨</li>
+                    <li value="4">主購已取貨</li>
+                    <li value="5">商品已寄出</li>
+                    <li value="6">團購結束</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class='btn-container'>
+        <button class="btn" id="Back">上一階段</button>
+        <button class="btn" id="Next">下一階段</button>
+        <button class="btn" id="Confirm">確定</button>
+    </div>
+
+    <hr>
+    <h3>跟團名單</h3>
+    <div class="followers">
+        <!-- <div class="buyer">
+            <div class="buyer-header">
+                <img src="https://d84l4b8eh7ljv.cloudfront.net/user/animalface_panda.png" class="buyer-image">
+                <div class="buyer-name">
+                    momo
+                </div>
+            </div>
+            <div class="roughly-content">
+                <div>訂單編號<a>1223512151</a></div>
+                <div>訂購日期<a>6/21</a></div>
+                <div>訂單總額<a>5000</a></div>
+            </div>
+            <div class="buyer-footer"><a>詳細</a></div>
+        </div> -->
+    </div>
+    {% endblock %}
+    {% block script %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{url_for('static',filename='js/seller_product.js')}}"></script>
+    {% endblock %}

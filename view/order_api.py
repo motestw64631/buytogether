@@ -1,6 +1,8 @@
+import re
 from flask import Blueprint, json,session,jsonify,redirect,request
 import requests
 from model import *
+import datetime
 
 
 order_api = Blueprint('order_api',__name__)
@@ -24,9 +26,135 @@ def prime_to_tappay(prime,price,phone,name,email):
         }
     }
     print(body)
-    return requests.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime',headers=header,data=json.dumps(body))
+    return requests.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime',headers=header,data=json.dumps(body).encode('utf-8'))
 
 
 @order_api.route('/api/order',methods=['POST'])
 def post_order():
-    pass
+    rq = request.get_json()
+    response = prime_to_tappay(rq['prime'],rq['productTotalPrice'],rq['phone'],rq['name'],rq['mail'])
+    payment_status = True if response.status_code==200 else False
+    order = Order(rq['buyerId'],rq['name'],rq['phone'],rq['mail'],rq['productId'],rq['shipWay'],rq['shipValue'],rq['productTotalPrice'],payment_status,rq['message'])
+    serial_number = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    order.serial_number = serial_number
+    for item in rq['productItem']:
+        order.item.append(Order_Item(item['specName'],item['number'],item['specTotalPrice']))
+    db.session.add(order)
+    db.session.commit()
+    return{
+        "ok":True,
+        "serial_number":serial_number
+    }
+
+@order_api.route('/api/orders',methods=['GET'])
+def get_orders():
+    #get order by product
+    p_id = request.args.get('productId')
+    if p_id:
+        product = db.session.query(Product).filter_by(id=p_id).first()
+        condition = product.condition[0].condition_class
+        if condition=='number':
+            value = product.condition[0].condition_number
+            value_now = 0
+            for order in product.order:
+                value_now +=sum([item.item_number for item in order.item])
+            gap = value-value_now
+        elif condition=='time':
+            value = product.condition[0].condition_date
+            value_now = datetime.datetime.utcnow()
+            gap = (value-value_now).days
+        elif condition=='price':
+            value = product.condition[0].condition_price
+            value_now = 0
+            for order in product.order:
+                value_now+=order.total_price
+            gap = value-value_now
+        js = {
+            "productId":product.id,
+            "productName":product.name,
+            "productImage":product.images[0].image_url,
+            "productDate":product.date,
+            "productStatus":product.status,
+            "productCondition":condition,
+            "productConditionValue":value,
+            "productConditionValueNow":value_now,
+            "conditionGap":gap,
+            "productBuyerNumber":len(product.order)
+        }
+        orders = []
+        for order in product.order:
+            order_temp_json = {
+                "userId":order.user.id,
+                "userName":order.user.name,
+                "userImage":order.user.image,
+                "serialNumber":order.serial_number,
+                "orderId":order.id,
+                "totalPrice":order.total_price,
+                "buyerName":order.buyer_name,
+                "buyerPhone":order.buyer_phone,
+                "buyerMail":order.buyer_mail,
+                "ship":order.shipping_way,
+                "shipTo":order.shipping_location,
+                "message":order.message,
+                "orderDate":order.date
+            }
+            item_js = []
+            for item in order.item:
+                item_temp_js = {
+                "itemName":item.item_name,
+                "itemNumber":item.item_number,
+                "itemTotalPrice":item.item_total_price
+                }
+                item_js.append(item_temp_js)
+            order_temp_json['items']=item_js  
+            orders.append(order_temp_json)
+        js['orders']=orders
+        return{
+            "data":js
+        }
+    #normal get
+    orders = db.session.query(Order).filter_by(buyer_id=session['id']).all()
+    data = []
+    for order in orders:
+        order_js = {
+            "orderId":order.id,
+            "orderStatus":order.product.status,
+            "serialNumber":order.serial_number,
+            "productId":order.product_id,
+            "productName":order.product.name,
+            "productImage":order.product.images[0].image_url,
+            "productStatus":order.product.status,
+            "orderPrice":order.total_price,
+            "buyerName":order.buyer_name,
+            "buyerPhone":order.buyer_phone,
+            "buyerMail":order.buyer_mail,
+            "ship":order.shipping_way,
+            "shipTo":order.shipping_location,
+            "message":order.message,
+            "orderDate":order.date
+        }
+        item_js = []
+        for item in order.item:
+            js = {
+                "itemName":item.item_name,
+                "itemNumber":item.item_number,
+                "itemTotalPrice":item.item_total_price
+            }
+            item_js.append(js)
+        order_js["item"]=item_js
+        data.append(order_js)
+    return{
+        "data":data
+    }
+
+@order_api.route('/api/order/<order_id>',methods=['GET'])
+def get_order(order_id):
+    order = db.session.query(Order).filter_by(id=order_id).first()
+    return {
+        "buyerName":order.buyer_name,
+        "buyerPhone":order.buyer_phone,
+        "buyerMail":order.buyer_mail,
+        "ship":order.shipping_way,
+        "shipTo":order.shipping_location,
+        "message":order.message
+    }

@@ -1,3 +1,4 @@
+from logging import debug
 from dotenv import load_dotenv
 load_dotenv()
 from flask import Flask,render_template,request
@@ -53,13 +54,25 @@ def cart():
 def profile():
     return render_template('profile.html')
 
-@app.route('/group')
+@app.route('/booking')
 def group():
-    return render_template('group.html')
+    return render_template('booking.html')
 
 @app.route('/message')
 def message():
     return render_template('message.html')
+
+@app.route('/seller')
+def seller():
+    return render_template('seller.html')
+
+@app.route('/seller/product/<p_id>')
+def seller_product(p_id):
+    return render_template('seller_product.html')
+
+@app.route('/details')
+def detail():
+    return render_template('detail.html')
 
 
     
@@ -97,17 +110,19 @@ from view.user import user_api
 from view.purchaseorder_api import purchaseorder_api
 from view.message_api import message_api
 from view.sub_message_api import sub_message_api
-from view.book_api import book_api
+from view.cart_api import cart_api
 from view.chat_room import chat_room
 from view.chat_message import chat_message
+from view.order_api import order_api
 
 app.register_blueprint(user_api)
 app.register_blueprint(purchaseorder_api)
 app.register_blueprint(message_api)
 app.register_blueprint(sub_message_api)
-app.register_blueprint(book_api)
+app.register_blueprint(cart_api)
 app.register_blueprint(chat_room)
 app.register_blueprint(chat_message)
+app.register_blueprint(order_api)
 
 if __name__ =='__main__':
-    socketio.run(app, host="0.0.0.0",port=5000)
+    socketio.run(app, host="0.0.0.0",port=5000,debug=True)

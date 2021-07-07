@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/detail.css')}}">
+{% endblock %}
+{% block main%}
+
+<div class="detail-content">
+    訂購成功! 
+    <div class='order-number'>
+        訂單編號
+        <div></div>
+    </div>
+    <div class="to-manage">
+        前往<a href="/booking">訂單紀錄</a>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static',filename='js/detail.js')}}"></script>
+{% endblock %}

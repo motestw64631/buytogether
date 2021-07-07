@@ -1,0 +1,355 @@
+#product h3{
+    margin-left: 15px;
+}
+
+#product{
+    background-color: white;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 10px;
+}
+#product hr{
+    width: 90%;
+    margin: 0 auto;
+}
+#my-group{
+    margin-top: 20px;
+    width: 1200px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 25px;
+}
+
+.product-view{
+    background-color: #ffffff;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+
+.product-header{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.product-image{
+    width: 35px;
+    height: 35px;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 5px;
+    margin-right: 12px;
+}
+
+.product-status{
+    position: absolute;
+    right: 0;
+    background-color: rgb(236, 129, 102);
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.product-header{
+    font-size: 22px;
+}
+
+.product-content{
+    font-size: 16px;
+    margin-top: 5px;
+}
+.product-content>div{
+    height: 30px;
+}
+
+.product-content>div>a{
+    margin-left: 15px;
+    color:grey;
+}
+
+.pg{
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    height: 70px;
+}
+.row{
+    width: 90%;
+}
+
+.progressbar {
+    counter-reset: step;
+}
+.progressbar li {
+    list-style-type: none;
+    width: 13%;
+    float: left;
+    font-size: 12px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    color: #7d7d7d;
+}
+.progressbar li:before {
+    width: 30px;
+    height: 30px;
+    content: '';
+    line-height: 30px;
+    border: 2px solid #7d7d7d;
+    background-color: #7d7d7d;
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    border-radius: 50%;
+    transition: all .8s;
+    z-index: 1;
+}
+.progressbar li:after {
+    width: 100%;
+    height: 2px;
+    content: '';
+    position: absolute;
+    background-color: #7d7d7d;
+    top: 14px;
+    left: -40%;
+    z-index: 0;
+    transition: all .8s;
+}
+.progressbar li:first-child:after {
+    content: none;
+}
+.progressbar li.active:before {
+    border-color: #55b776;
+    background-color: #55b776;
+    transition: all .8s;
+}
+.progressbar li.active:after {
+    background-color: #55b776;
+    transition: all .8s;
+}
+.followers{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 150px;
+}
+
+
+.buyer{
+    border:1px solid rgb(220, 234, 247);
+    width: 25%;
+    border-radius: 10px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.buyer-header{
+    display: flex;
+    align-items: center;
+    background-color: rgb(220, 234, 247);
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.buyer-image{
+    width: 45px;
+    height: 45px;
+    background-color: white;
+    margin-right: 10px;
+    border-radius: 40px;
+    border: 2px solid white;
+}
+
+.roughly-content{
+    padding: 10px 10px 0px 10px;
+}
+
+.roughly-content>div>a{
+    color: rgb(165, 165, 165);
+    margin-left: 20px;
+}
+
+.buyer-footer{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    color: gray;
+    padding: 5px;
+}
+
+.buyer-footer a{
+    cursor: pointer;
+}
+
+#modal-content{
+    border-radius: 6px;
+}
+
+@media (min-width: 768px){
+.modal-dialog {
+    width: 900px;
+}
+}
+  .progressbar {
+      counter-reset: step;
+  }
+  .progressbar li {
+      list-style-type: none;
+      width: 13%;
+      float: left;
+      font-size: 12px;
+      position: relative;
+      text-align: center;
+      text-transform: uppercase;
+      color: #7d7d7d;
+  }
+  .progressbar li:before {
+      width: 15px;
+      height: 15px;
+      content: '';
+      line-height: 30px;
+      border: 2px solid #7d7d7d;
+      background-color: #7d7d7d;
+      display: block;
+      text-align: center;
+      margin: 0 auto 10px auto;
+      border-radius: 50%;
+      transition: all .8s;
+      z-index: 1;
+  }
+  .progressbar li:after {
+      width: 100%;
+      height: 2px;
+      content: '';
+      position: absolute;
+      background-color: #7d7d7d;
+      top: 7px;
+      left: -44%;
+      z-index: 0;
+      transition: all .8s;
+  }
+  .progressbar li:first-child:after {
+      content: none;
+  }
+  .progressbar li.active:before {
+      border-color: #dd8b54;
+      background-color: #dd8b54;
+      transition: all .8s;
+  }
+  .progressbar li.active:after {
+      background-color: #dd8b54;
+      transition: all .8s;
+  }
+
+.btn {
+  background-color: #dd8b54;
+  margin: 5px;
+  width: 75px;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+.btn:hover {
+    background-color: #dd8b54;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.modal-body .order-follow{
+    background-color: white;
+    margin-bottom: 5px;
+}
+
+#order-content{
+    margin-top: 15px;
+}
+#order-number{
+    border-top: 1px solid rgb(202, 202, 202);
+}
+
+
+#order-content>div{
+    margin-top:5px;
+    display: flex;
+    align-items: center;
+    line-height: 20px;
+    border-bottom: 1px solid rgb(202, 202, 202);
+    height: 28px;
+}
+
+#order-content>div>div{
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#product-detail .order-name{
+    font-size: 20px;
+}
+
+#follow-content{
+    top: 100px;
+}
+
+#follow-header{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius:5px 5px 0px 0px;
+}
+
+.items{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid gray;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.items:first-child{
+    border-top: 1px solid gray;
+}
+
+.item-right{
+    color: red;
+}
+
+.item-footer{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.item-footer a{
+    color: red;
+}
+
+.talk{
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 3px;
+    font-size: 15px;
+    height: 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    background-color: rgb(71, 105, 216);
+    margin-left: 10px;
+}

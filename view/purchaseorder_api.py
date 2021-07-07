@@ -1,3 +1,4 @@
+from datetime import time
 from flask import Blueprint, json,session,jsonify,redirect,request
 from model import *
 from flask_sqlalchemy import inspect
@@ -105,19 +106,78 @@ def productbyid(p_id):
 @purchaseorder_api.route('/api/products',methods=['GET'])
 def getPs():
     cls = request.args.get('class')
+    #----find_by_user
+    user_id = request.args.get('userId')
+    if user_id:
+        datas = db.session.query(Product).filter_by(ownerId=user_id).all()
+        json_data=[]
+        for data in datas:
+            condition = data.condition[0].condition_class
+            if condition=='number':
+                value = data.condition[0].condition_number
+                value_now = 0
+                for order in data.order:
+                    value_now +=sum([item.item_number for item in order.item])
+                gap = value-value_now
+            elif condition=='time':
+                value = data.condition[0].condition_date
+                value_now = datetime.datetime.utcnow()
+                gap = (value-value_now).days
+            elif condition=='price':
+                value = data.condition[0].condition_price
+                value_now = 0
+                for order in data.order:
+                    value_now+=order.total_price
+                gap = value-value_now
+            js={
+                "productId":data.id,
+                "productName":data.name,
+                "productImage":data.images[0].image_url,
+                "productStatus":data.status,
+                "productDate":data.date,
+                "productCondition":condition,
+                "productConditionValue":value,
+                "productConditionValueNow":value_now,
+                "conditionGap":gap,
+                "productBuyerNumber":len(data.order)
+            }
+            json_data.append(js)
+        return {
+            'data':json_data
+            }
+    #----
     keyword = request.args.get('keyword')
     page = int(request.args.get('page'))
     if keyword is None:
         count = db.session.query(Product).filter_by(product_class=product_class_code[cls]).count()
         page_count = count//8
         next_page = page+1 if page<page_count else None
-        datas = db.session.query(Product).filter_by(product_class=product_class_code[cls]).slice(8*page,8*(page+1)).all()
+        datas = db.session.query(Product).filter_by(product_class=product_class_code[cls]).order_by(Product.date.desc()).slice(8*page,8*(page+1)).all()
         json_data=[]
         for data in datas:
+            condition = data.condition[0].condition_class
+            if condition=='number':
+                value = data.condition[0].condition_number
+                value_now = 0
+                for order in data.order:
+                    value_now +=sum([item.item_number for item in order.item])
+                gap = value-value_now
+            elif condition=='time':
+                value = data.condition[0].condition_date
+                value_now = datetime.datetime.utcnow()
+                gap = (value-value_now).days
+            elif condition=='price':
+                value = data.condition[0].condition_price
+                value_now = 0
+                for order in data.order:
+                    value_now+=order.total_price
+                gap = value-value_now
             js={
                 "productId":data.id,
                 "productName":data.name,
-                "productImage":data.images[0].image_url
+                "productImage":data.images[0].image_url,
+                "condition":condition,
+                "gap":gap
             }
             json_data.append(js)
         return {
@@ -125,3 +185,16 @@ def getPs():
             'data':json_data
             }
 
+
+@purchaseorder_api.route('/api/product',methods=['PATCH'])
+def status_change():
+    rq = request.get_json()
+    if 'status' in rq:
+        pid = rq['productId']
+        status = rq['status']
+        product = db.session.query(Product).filter_by(id=pid).first()
+        product.status = int(status)
+        db.session.commit()
+        return {
+            'ok':True
+        }

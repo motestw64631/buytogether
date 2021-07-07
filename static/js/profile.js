@@ -40,7 +40,7 @@ function userInfo(img, name, email, date) {
     document.getElementById('u-id').textContent = name;
     document.getElementById('u-mail').textContent = email;
     document.getElementById('u-name').value = name;
-    document.getElementById('u-date').textContent = date;
+    document.getElementById('u-date').textContent = new Date(date).toISOString().slice(0, 10);
 }
 
 
