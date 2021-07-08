@@ -1,4 +1,13 @@
 let cUser;
+
+function loginCheck(){
+    if(cUser==undefined){
+        location.href='/sign_in';
+        return
+    }
+}
+
+
 //model
 
 function getUser() {
@@ -160,6 +169,17 @@ function events() {
         getBooking().then((myJson) => {
             sidebarCartView(myJson);
         });
+    })
+    document.getElementById('search-item').addEventListener('keypress',function(e){
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('search-icon').click();
+        }
+    })
+
+    document.getElementById('search-icon').addEventListener('click',function(){
+        const key = document.getElementById('search-item').value;
+        location.href=`/?keyword=${key}`;
     })
 
 }

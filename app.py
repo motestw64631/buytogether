@@ -51,26 +51,33 @@ def cart():
     return render_template('checkout.html')
 
 @app.route('/profile')
+@login_auth
 def profile():
     return render_template('profile.html')
 
 @app.route('/booking')
+@login_auth
 def group():
     return render_template('booking.html')
 
 @app.route('/message')
+@login_auth
 def message():
     return render_template('message.html')
 
 @app.route('/seller')
+@login_auth
 def seller():
     return render_template('seller.html')
 
+
 @app.route('/seller/product/<p_id>')
+@login_auth
 def seller_product(p_id):
     return render_template('seller_product.html')
 
 @app.route('/details')
+@login_auth
 def detail():
     return render_template('detail.html')
 
@@ -107,22 +114,22 @@ def handle_json(json):
     print('received json: ' + str(json))
 
 from view.user import user_api
-from view.purchaseorder_api import purchaseorder_api
+from view.product import product
 from view.message_api import message_api
 from view.sub_message_api import sub_message_api
-from view.cart_api import cart_api
+from view.cart import cart
 from view.chat_room import chat_room
 from view.chat_message import chat_message
-from view.order_api import order_api
+from view.order import order
 
 app.register_blueprint(user_api)
-app.register_blueprint(purchaseorder_api)
+app.register_blueprint(product)
 app.register_blueprint(message_api)
 app.register_blueprint(sub_message_api)
-app.register_blueprint(cart_api)
+app.register_blueprint(cart)
 app.register_blueprint(chat_room)
 app.register_blueprint(chat_message)
-app.register_blueprint(order_api)
+app.register_blueprint(order)
 
 if __name__ =='__main__':
     socketio.run(app, host="0.0.0.0",port=5000,debug=True)

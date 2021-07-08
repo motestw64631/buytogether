@@ -220,3 +220,9 @@ button{
     background-color: rgb(71, 105, 216);
     color: white;
   }
+
+.fill-alert{
+    color: red;
+    display: flex;
+    align-items: center;
+}

@@ -4,8 +4,8 @@ from redis import Redis
 
 class Config():
     JSON_AS_ASCII=False
-    SESSION_TYPE = 'redis'
-    SESSION_REDIS = Redis(host='127.0.0.1',port=6379) 
+    SESSION_TYPE = 'redis' 
+    SESSION_REDIS = Redis(host=os.getenv('redis_host'),port=os.getenv('redis_port')) 
     SESSION_USE_SIGNER = True
     TEMPLATES_AUTO_RELOAD=True
     JSON_SORT_KEYS = False

@@ -35,6 +35,15 @@ function initData() {
 function postBooking(norm) {
     if (norm==true) {
         productId = product['data']['productId'];
+        if(document.querySelector('input[name=sp]:checked')==null){
+            swal({
+                title: '請至少選取一樣選項',
+                icon: 'warning',
+                buttons: false,
+                className: "swal"
+            });
+            return
+        }
         spec = document.querySelector('input[name=sp]:checked').value;
         buyNumber = document.querySelector('.nice-number input').value;
         let data = new FormData();
@@ -155,6 +164,7 @@ function initView() {
     a.setAttribute('href', product['data']['productSource']);
     document.getElementById('owner-image').src = product['owner']['productOwnerImage'];
     document.getElementById('to-message-menu').addEventListener('click',function(){
+        loginCheck();
         console.log(currentUser.id);
         console.log(product.owner.productOwnerID);
         postChatRoom(currentUser.id,product.owner.productOwnerID);
@@ -228,6 +238,7 @@ function initView() {
         })
         specDiv.appendChild(addSpecBtn);
         document.getElementById('cart').addEventListener('click', function () {
+            loginCheck();
             postBooking(false).then((myJson) => {
                 if (myJson['ok']) {
                     swal({
@@ -258,6 +269,7 @@ function initView() {
         })
         //post when spec
         document.getElementById('cart').addEventListener('click', function () {
+            loginCheck();
             postBooking(true).then((myJson) => {
                 if (myJson['ok']) {
                     swal({

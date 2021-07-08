@@ -1,5 +1,6 @@
 from datetime import time
 from flask import Blueprint, json,session,jsonify,redirect,request
+from sqlalchemy import or_
 from model import *
 from flask_sqlalchemy import inspect
 from werkzeug.utils import secure_filename
@@ -20,9 +21,9 @@ product_class_code={
     }
 
 
-purchaseorder_api = Blueprint('purchaseorder_api',__name__)
+product = Blueprint('product',__name__)
 
-@purchaseorder_api.route('/api/purchaseorder',methods=['POST'])
+@product.route('/api/product',methods=['POST'])
 def post_purchase():
     image_urls = []
     try:
@@ -78,7 +79,7 @@ def post_purchase():
     })
 
 
-@purchaseorder_api.route('/api/product/<p_id>')
+@product.route('/api/product/<p_id>')
 def productbyid(p_id):
     product = db.session.query(Product).filter_by(id=p_id).first()
     print(product.shipping)
@@ -103,7 +104,7 @@ def productbyid(p_id):
     }
 
 
-@purchaseorder_api.route('/api/products',methods=['GET'])
+@product.route('/api/products',methods=['GET'])
 def getPs():
     cls = request.args.get('class')
     #----find_by_user
@@ -148,45 +149,50 @@ def getPs():
     #----
     keyword = request.args.get('keyword')
     page = int(request.args.get('page'))
-    if keyword is None:
+    if not keyword:
         count = db.session.query(Product).filter_by(product_class=product_class_code[cls]).count()
         page_count = count//8
         next_page = page+1 if page<page_count else None
         datas = db.session.query(Product).filter_by(product_class=product_class_code[cls]).order_by(Product.date.desc()).slice(8*page,8*(page+1)).all()
-        json_data=[]
-        for data in datas:
-            condition = data.condition[0].condition_class
-            if condition=='number':
-                value = data.condition[0].condition_number
-                value_now = 0
-                for order in data.order:
-                    value_now +=sum([item.item_number for item in order.item])
-                gap = value-value_now
-            elif condition=='time':
-                value = data.condition[0].condition_date
-                value_now = datetime.datetime.utcnow()
-                gap = (value-value_now).days
-            elif condition=='price':
-                value = data.condition[0].condition_price
-                value_now = 0
-                for order in data.order:
-                    value_now+=order.total_price
-                gap = value-value_now
-            js={
-                "productId":data.id,
-                "productName":data.name,
-                "productImage":data.images[0].image_url,
-                "condition":condition,
-                "gap":gap
-            }
-            json_data.append(js)
-        return {
-            'nextPage':next_page,
-            'data':json_data
-            }
+    elif keyword: 
+        count = db.session.query(Product).filter(or_(Product.name.like(f'%{keyword}%'),Product.describe.like(f'%{keyword}%'))).count()
+        page_count = count//8
+        next_page = page+1 if page<page_count else None
+        datas = db.session.query(Product).filter(or_(Product.name.like(f'%{keyword}%'),Product.describe.like(f'%{keyword}%'))).order_by(Product.date.desc()).slice(8*page,8*(page+1)).all()
+    json_data=[]
+    for data in datas:                            
+        condition = data.condition[0].condition_class
+        if condition=='number':
+            value = data.condition[0].condition_number
+            value_now = 0
+            for order in data.order:
+                value_now +=sum([item.item_number for item in order.item])
+            gap = value-value_now
+        elif condition=='time':
+            value = data.condition[0].condition_date
+            value_now = datetime.datetime.utcnow()
+            gap = (value-value_now).days
+        elif condition=='price':
+            value = data.condition[0].condition_price
+            value_now = 0
+            for order in data.order:
+                value_now+=order.total_price
+            gap = value-value_now
+        js={
+            "productId":data.id,
+            "productName":data.name,
+            "productImage":data.images[0].image_url,
+            "condition":condition,
+            "gap":gap
+        }
+        json_data.append(js)
+    return {
+        'nextPage':next_page,
+        'data':json_data
+        }
 
 
-@purchaseorder_api.route('/api/product',methods=['PATCH'])
+@product.route('/api/product',methods=['PATCH'])
 def status_change():
     rq = request.get_json()
     if 'status' in rq:

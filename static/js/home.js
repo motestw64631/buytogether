@@ -1,3 +1,6 @@
+let nextPage = 0;
+let timeout;
+let elementId;
 //model
 
 function getUser() {
@@ -7,6 +10,11 @@ function getUser() {
 
 function getProduct(cls, keyword, page) {
     return fetch(`/api/products?class=${cls}&page=${page}`)
+        .then(response => response.json())
+}
+
+function getProductKeyword(keyword, page) {
+    return fetch(`/api/products?keyword=${keyword}&page=${page}`)
         .then(response => response.json())
 }
 
@@ -33,7 +41,6 @@ function loginView() {
 
 function productView(myJson) {
     myJson['data'].forEach(function (data) {
-        console.log(data);
         const product = document.createElement('div');
         const productImg = document.createElement('div');
         const productName = document.createElement('div');
@@ -44,11 +51,11 @@ function productView(myJson) {
         productCondition.className = 'product-condition';
         productName.textContent = data['productName'];
         if (data['condition'] == 'time') {
-            productCondition.textContent = '距離成團還差'+data['gap']+'天';
-        }else if(data['condition'] == 'price'){
-            productCondition.textContent = '距離成團還差$'+data['gap']+'元';
-        }else if(data['condition'] == 'number'){
-            productCondition.textContent = '距離成團還差'+data['gap']+'個';
+            productCondition.textContent = '距離成團還差' + data['gap'] + '天';
+        } else if (data['condition'] == 'price') {
+            productCondition.textContent = '距離成團還差$' + data['gap'] + '元';
+        } else if (data['condition'] == 'number') {
+            productCondition.textContent = '距離成團還差' + data['gap'] + '個';
         }
         productImg.style.backgroundImage = `url('${data['productImage']}')`;
         product.appendChild(productImg);
@@ -57,6 +64,22 @@ function productView(myJson) {
         product.addEventListener('click', () => location.href = `/product/${data['productId']}`);
         document.getElementById('content').appendChild(product);
     })
+}
+
+function searchView() {
+    const main = document.querySelector('main');
+    const content = document.getElementById('content');
+    const search = document.createElement('h2');
+    search.id = 'search-title';
+    search.textContent = '搜尋結果';
+    main.insertBefore(search, content);
+}
+
+function deSearchView() {
+    searchText = document.getElementById('search-title');
+    if (searchText !== null) {
+        searchText.remove();
+    }
 }
 
 //controller
@@ -69,20 +92,64 @@ function init() {
     })
 }
 
-function events() {
-    document.querySelectorAll('#class td').forEach(function (element) {
-        element.addEventListener('click', () => {
-            document.getElementById('content').innerHTML = '';
-            getMainPic(element.id);
-            changeColor(element);
-            getProduct(cls = element.id, keyword = null, page = 0).then(function (myJson) {
-                productView(myJson);
-            })
-        })
-    })
-}
+
+
 
 
 init()
-events()
-document.getElementById('outfit').click();
+
+document.querySelectorAll('#class td').forEach(function (element) {
+    element.addEventListener('click', () => {
+        window.addEventListener('scroll', function btEvent(event) {
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+                if (nextPage !== null) {
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.95) {
+                        getProduct(cls = elementId, keyword = null, page = nextPage).then(function (myJson) {
+                            productView(myJson);
+                            nextPage = myJson['nextPage'];
+                        })
+                    }
+                }
+            }, 50);
+        });
+        deSearchView();
+        nextPage = 0;
+        document.getElementById('content').innerHTML = '';
+        elementId = element.id;
+        getMainPic(element.id);
+        changeColor(element);
+        getProduct(cls = element.id, keyword = null, page = nextPage).then(function (myJson) {
+            productView(myJson);
+            nextPage = myJson['nextPage'];
+        })
+    })
+})
+
+
+let queryString = window.location.search;
+let urlParams = new URLSearchParams(queryString);
+let keyword = urlParams.get('keyword');
+if (keyword == null) {
+    document.getElementById('outfit').click();
+} else {
+    nextPage = 0;
+    searchView();
+    getProductKeyword(keyword = keyword, page = nextPage).then(function (myJson) {
+        productView(myJson);
+        nextPage = myJson['nextPage'];
+    })
+    window.addEventListener('scroll', function btEvent(event) {
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            if (nextPage !== null) {
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.95) {
+                    getProductKeyword(keyword = keyword, page = nextPage).then(function (myJson) {
+                        productView(myJson);
+                        nextPage = myJson['nextPage'];
+                    })
+                }
+            }
+        }, 50);
+    });
+}

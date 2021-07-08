@@ -1,15 +1,15 @@
 import re
-from flask import Blueprint, json,session,jsonify,redirect,request
+from flask import Blueprint, json,session,jsonify,redirect,request,url_for
 from model import *
 
-cart_api = Blueprint('cart_api',__name__)
+cart = Blueprint('cart',__name__)
 
 def ship_model_to_json(md):
     ls = {"seven":md.seven,"family":md.family,"hilife":md.hilife,"ok":md.ok,"face":md.face,"home":md.home_delivery}
     return [key for key in ls if ls[key]==True]
 
 
-@cart_api.route('/api/cart',methods=['POST'])
+@cart.route('/api/cart',methods=['POST'])
 def post_booking():
     duplicate_flag = False
     normalize = request.form.get('normalize')
@@ -76,7 +76,7 @@ def post_booking():
             'ok':True
         }
 
-@cart_api.route('/api/cart',methods=['GET'])
+@cart.route('/api/cart',methods=['GET'])
 def get_cart():
     product_id = request.args.get('productId')
     if not product_id:
@@ -99,7 +99,7 @@ def get_cart():
 
 
 
-@cart_api.route('/api/cart',methods=['DELETE'])
+@cart.route('/api/cart',methods=['DELETE'])
 def delete_cart():
     product_id = request.args.get('productId')
     spec_name = request.args.get('specName')
