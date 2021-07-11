@@ -111,7 +111,7 @@ document.querySelectorAll('#class td').forEach(function (element) {
                         })
                     }
                 }
-            }, 50);
+            }, 150);
         });
         deSearchView();
         nextPage = 0;
@@ -150,6 +150,6 @@ if (keyword == null) {
                     })
                 }
             }
-        }, 50);
+        }, 150);
     });
 }

@@ -11,7 +11,7 @@ class User(db.Model):
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer,primary_key=True,autoincrement=True)
     name = db.Column(db.String(100))
-    email = db.Column(db.String(100),unique=True)
+    email = db.Column(db.String(100))
     password_hash = db.Column(db.String(500))
     provider = db.Column(db.String(100))
     image = db.Column(db.String(600))

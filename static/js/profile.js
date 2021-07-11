@@ -41,6 +41,8 @@ function userInfo(img, name, email, date) {
     document.getElementById('u-mail').textContent = email;
     document.getElementById('u-name').value = name;
     document.getElementById('u-date').textContent = new Date(date).toISOString().slice(0, 10);
+    document.getElementById('u-open').textContent = user['followTime'];
+    document.getElementById('u-follow').textContent = user['openTime'];
 }
 
 

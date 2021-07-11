@@ -3,6 +3,9 @@ from flask import Blueprint, json,session,jsonify,redirect,request
 from model import db,User
 from werkzeug.security import check_password_hash
 from bt3 import upload_file_to_s3
+import os
+from google.oauth2 import id_token
+from google.auth.transport import requests
 
 user_api = Blueprint('user_api',__name__)
 
@@ -41,7 +44,9 @@ def getUser():
             'name':session['name'],
             'email':session['email'],
             'image':session['image'],
-            'date':session['date']
+            'date':session['date'],
+            'openTime':len(db.session.query(User).filter_by(id=session['id']).first().product),
+            'followTime':len(db.session.query(User).filter_by(id=session['id']).first().order),
         }
     }),200
 
@@ -88,4 +93,29 @@ def change_name():
     session['name']=name
     return{
         "ok":True
+    }
+
+@user_api.route('/api/google_user',methods=['POST'])
+def google_login():
+    rq = request.get_json()
+    token = rq['token']
+    id_info = id_token.verify_oauth2_token(token,requests.Request(),os.getenv('google_oauth_client_id'))
+    email = id_info['email']
+    name = id_info['name']
+    image = id_info['picture']
+    exist = db.session.query(User).filter_by(email=email,provider='google').count()
+    if not exist:
+        user = User(name,email,None,'google')
+        user.image=image
+        db.session.add(user)
+        db.session.commit()
+    elif exist:
+        user = db.session.query(User).filter_by(email=email,provider='google').first()
+        session['id']=user.id
+        session['name']=user.name
+        session['email']=user.email
+        session['image']=user.image
+        session['date']=user.date
+    return{
+        'ok':True
     }

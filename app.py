@@ -5,6 +5,7 @@ from flask import Flask,render_template,request
 from flask_session import Session
 from flask_migrate import Migrate
 from flask_socketio import SocketIO,emit,join_room,send,leave_room
+import os
 from config import Config
 from model import db
 from view.auth_wrap import login_auth
@@ -39,7 +40,7 @@ def sign_up():
 
 @app.route('/sign_in')
 def sign_in():
-    return render_template('sign_in.html')
+    return render_template('sign_in.html',client_id=os.getenv('google_oauth_client_id'),client_password=os.getenv('google_oauth_client_password'))
 
 @app.route('/board')
 @login_auth

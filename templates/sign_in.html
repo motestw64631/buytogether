@@ -5,10 +5,12 @@
     <meta charset="utf-8">
     <title>BuyTogether</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="{{client_id}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
     <link rel="stylesheet" href="{{url_for('static',filename='css/home.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='css/sign.css')}}">
     <link rel="icon" href="{{url_for('static',filename='img/icon_buy.png')}}">
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton"></script>
 </head>
 
 <body>
@@ -29,6 +31,7 @@
             <input type="password" placeholder="密碼" id='password'>
             <input type="submit" value="登入" id='sb-bt'>
             <hr>
+            <div id="my-signin2"></div>
             <div id='ft'>還沒有密碼?<a href='/sign_up' id='to-login'>註冊</a></div>
             <div id='message'></div>
         </form>
