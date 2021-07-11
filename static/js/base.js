@@ -150,8 +150,8 @@ function init() {
         if (myJson['data']) {
             cUser=myJson['data'];
             loginView();
+            document.getElementById('loader').style.display = 'none';
         }
-        document.getElementById('loader').style.display = 'none';
     })
 }
 
