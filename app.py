@@ -12,7 +12,7 @@ from view.auth_wrap import login_auth
 
 
 app = Flask(__name__)
-socketio = SocketIO()
+socketio = SocketIO(cors_allowed_origins="*")
 
 app.config.from_object(Config)
 Session(app)
