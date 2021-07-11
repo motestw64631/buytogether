@@ -109,13 +109,12 @@ def google_login():
         user.image=image
         db.session.add(user)
         db.session.commit()
-    elif exist:
-        user = db.session.query(User).filter_by(email=email,provider='google').first()
-        session['id']=user.id
-        session['name']=user.name
-        session['email']=user.email
-        session['image']=user.image
-        session['date']=user.date
+    user = db.session.query(User).filter_by(email=email,provider='google').first()
+    session['id']=user.id
+    session['name']=user.name
+    session['email']=user.email
+    session['image']=user.image
+    session['date']=user.date
     return{
         'ok':True
     }
