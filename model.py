@@ -14,7 +14,7 @@ class User(db.Model):
     email = db.Column(db.String(100))
     password_hash = db.Column(db.String(500))
     provider = db.Column(db.String(100))
-    confirm = db.Boolean
+    confirm = db.Column(db.Boolean)
     image = db.Column(db.String(600))
     date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
     product = db.relationship('Product',backref='user')
@@ -28,6 +28,7 @@ class User(db.Model):
         self.email = email
         self.password_hash = generate_password_hash(password) if password is not None else None
         self.provider = provider
+        self.confirm = False
 
     def __repr__(self):
         return f'<user {self.name}>'

@@ -17,4 +17,4 @@ def upload_file_to_s3(file, bucket_name,folder):
     except Exception as e:
         print("upload file {} failed! {}".format(file.filename, e))
 
-    return f'http://d84l4b8eh7ljv.cloudfront.net/{folder}/{file.filename}'
+    return f'https://d84l4b8eh7ljv.cloudfront.net/{folder}/{file.filename}'

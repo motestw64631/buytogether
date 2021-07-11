@@ -107,6 +107,7 @@ def google_login():
     if not exist:
         user = User(name,email,None,'google')
         user.image=image
+        user.confirm = True
         db.session.add(user)
         db.session.commit()
     user = db.session.query(User).filter_by(email=email,provider='google').first()
