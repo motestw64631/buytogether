@@ -14,6 +14,7 @@ class User(db.Model):
     email = db.Column(db.String(100))
     password_hash = db.Column(db.String(500))
     provider = db.Column(db.String(100))
+    confirm = db.Boolean
     image = db.Column(db.String(600))
     date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
     product = db.relationship('Product',backref='user')
@@ -198,7 +199,7 @@ class Order(db.Model):
     product_id = db.Column(db.Integer,db.ForeignKey('product.id' , ondelete='CASCADE'))
     serial_number = db.Column(db.String(1000),unique=True)
     shipping_way = db.Column(db.String(1000))
-    shipping_location = db.Column(db.String(2000))
+    shipping_location = db.Column(db.String(1000))
     total_price = db.Column(db.Integer,nullable=False)
     payment_state = db.Column(db.Boolean,nullable=False)
     message = db.Column(db.Text)
