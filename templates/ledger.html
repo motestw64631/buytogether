@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/ledger.css')}}">
+{% endblock %}
+{% block main%}
+
+<div id="ledger-tb">
+    <h2>S&S目前帳戶餘額：$<a id='acc'></a><h2>
+    <h2>提款申請</h2>
+    <table id="customers">
+        <tr>
+          <th>提款者id</th>
+          <th>提款者email</th>
+          <th>提款金額</th>
+          <th>提款者目前餘額</th>
+          <th>提款日期</th>
+          <th>狀態</th>
+          <th>操作</th>
+        </tr>
+      </table>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{url_for('static',filename='js/ledger.js')}}"></script>
+{% endblock %}

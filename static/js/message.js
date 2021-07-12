@@ -154,7 +154,10 @@ function clickUserView() {
 
 
 document.getElementById('push').addEventListener('click', function () {
-    let m = document.getElementById('ipt').textContent;
+    let m = document.getElementById('ipt').textContent.trim();
+    if(m==''){
+        return
+    };
     postChatMessage();
     socket.emit('receive message', {
         'userId': cUser['id'],
@@ -169,9 +172,6 @@ document.getElementById('push').addEventListener('click', function () {
 document.getElementById('ipt').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
         e.preventDefault();
-        if(this.textContent==''){
-            return
-        };
         document.getElementById('push').click();
     }
 });

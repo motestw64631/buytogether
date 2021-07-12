@@ -1,7 +1,8 @@
 from logging import debug
 from dotenv import load_dotenv
+from flask.globals import session
 load_dotenv()
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request, make_response,jsonify
 from flask_session import Session
 from flask_migrate import Migrate
 from flask_socketio import SocketIO,emit,join_room,send,leave_room
@@ -82,6 +83,14 @@ def seller_product(p_id):
 def detail():
     return render_template('detail.html')
 
+@app.route('/ledger')
+@login_auth
+def ledger():
+    if session['admin']!=True:
+        data = {'error': True}
+        return make_response(jsonify(data), 403)
+    return render_template('ledger.html')
+
 
     
 
@@ -122,6 +131,7 @@ from view.cart import cart
 from view.chat_room import chat_room
 from view.chat_message import chat_message
 from view.order import order
+from view.ledger import ledger
 
 app.register_blueprint(user_api)
 app.register_blueprint(product)
@@ -131,6 +141,7 @@ app.register_blueprint(cart)
 app.register_blueprint(chat_room)
 app.register_blueprint(chat_message)
 app.register_blueprint(order)
+app.register_blueprint(ledger)
 
 if __name__ =='__main__':
     socketio.run(app, host="0.0.0.0",port=5000,debug=True)

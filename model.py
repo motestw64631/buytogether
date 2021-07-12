@@ -16,7 +16,9 @@ class User(db.Model):
     provider = db.Column(db.String(100))
     confirm = db.Column(db.Boolean)
     image = db.Column(db.String(600))
+    admin = db.Column(db.Boolean)
     date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
+    withdraw = db.relationship('Credit',backref='user')
     product = db.relationship('Product',backref='user')
     message = db.relationship('Message',backref='user')
     order = db.relationship('Order',backref='user')
@@ -29,9 +31,27 @@ class User(db.Model):
         self.password_hash = generate_password_hash(password) if password is not None else None
         self.provider = provider
         self.confirm = False
+        self.admin = False
 
     def __repr__(self):
         return f'<user {self.name}>'
+
+
+
+
+class Credit(db.Model):
+    __tablename__ = 'credit'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
+    amount = db.Column(db.Integer)
+    activation =db.Column(db.Boolean)
+    date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
+    def __init__(self,user_id,amount):
+        self.user_id =user_id
+        self.amount = amount
+        self.activation = False
+
 
 class Chat_Room(db.Model):
     __tablename__ = 'chat_room'

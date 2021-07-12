@@ -294,7 +294,14 @@ initData().then(function () {
         if (myJson['data']) {
             currentUser=myJson['data'];
             loginView();
+            if(cUser['admin']){
+                document.querySelectorAll('.admin').forEach(element=>{
+                    element.style.display='flex';
+                    document.getElementById('right-header').style.width = '340px';
+                })
+            }
         }
+        document.getElementById('loader').style.display = 'none';
     })
     popupView();
     sliderView();

@@ -26,6 +26,18 @@ function changeName() {
     }).then(response => response.json())
 }
 
+function withdraw(value){
+    return fetch('/api/credit',{
+        method:'POST',
+        headers:{
+            'content-type':'application/json'
+        },
+        body:JSON.stringify({
+            'amount':value
+        })
+    }).then(response=>response.json())
+}
+
 //view
 function loginView() {
     document.getElementById('right-header').style.width = '280px'
@@ -40,6 +52,7 @@ function userInfo(img, name, email, date) {
     document.getElementById('u-id').textContent = name;
     document.getElementById('u-mail').textContent = email;
     document.getElementById('u-name').value = name;
+    document.getElementById('u-account').textContent = user['balance'];
     document.getElementById('u-date').textContent = new Date(date).toISOString().slice(0, 10);
     document.getElementById('u-open').textContent = user['openTime'];
     document.getElementById('u-follow').textContent = user['followTime'];
@@ -54,6 +67,12 @@ function init() {
             user = myJson['data'];
             console.log(user);
             userInfo(user['image'], user['name'], user['email'], user['date']);
+        }
+        if(cUser['admin']){
+            document.querySelectorAll('.admin').forEach(element=>{
+                element.style.display='flex';
+                document.getElementById('right-header').style.width = '340px';
+            })
         }
     })
 }
@@ -76,6 +95,25 @@ function events() {
             }
         });
     });
+
+    document.getElementById('withdraw').addEventListener('click',()=>{
+        swal("請輸入提取金額", {
+            content: "input",
+          })
+          .then((value)=>{
+              value = Number(value);
+              if(!value || value>user['balance']){
+                  console.log('wrong value');
+                  return
+              }else{
+                withdraw(value).then(myJson=>{
+                    if(myJson['ok']){
+                        location.reload();
+                    }
+                });
+              }
+          })
+    })
 }
 
 init()

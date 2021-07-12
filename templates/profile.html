@@ -23,9 +23,10 @@
     <div class='content-inside'>註冊日期<a id=u-date></a></div>
     <div class='content-inside'>開團次數<a id=u-open>0</a></div>
     <div class='content-inside'>跟團次數<a id=u-follow>0</a></div>
-    <div class='content-inside'>可提取金額<a id=u-account>0</a><button>提取</button></div>
+    <div class='content-inside'>可提取金額<a id=u-account>0</a><button id='withdraw'>提取</button></div>
 </div>
 {% endblock %}
 {% block script %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{url_for('static',filename='js/profile.js')}}"></script>
 {% endblock %}

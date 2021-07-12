@@ -6,29 +6,33 @@ from bt3 import upload_file_to_s3
 import os
 from google.oauth2 import id_token
 from google.auth.transport import requests
+from view.ledger import calculate_balance
 
 user_api = Blueprint('user_api',__name__)
 
 @user_api.route('/api/user',methods=['PATCH'])
 def loginUser():
     rq = request.get_json()
-    user = db.session.query(User).filter_by(email=rq['email']).first()
+    user = db.session.query(User).filter_by(email=rq['email'],provider='native').first()
     if not user:
         return jsonify({
             'error':True,
             'message':'No user found'
         })
     if check_password_hash(user.password_hash,rq['password']):
+        balance = calculate_balance(user)
         session['id']=user.id
         session['name']=user.name
         session['email']=user.email
         session['image']=user.image
+        session['admin']=user.admin
+        session['balance']= balance
         session['date']=user.date
         return jsonify({
             'ok':True
         })
     return jsonify({
-        "ok":True,
+        'error':True,
         "message":'wrong password'
     })
 
@@ -38,12 +42,15 @@ def getUser():
         return jsonify({
             'data':None
         })
+    user = db.session.query(User).filter_by(id=session['id']).first()
     return jsonify({
         'data':{
             'id':session['id'],
             'name':session['name'],
             'email':session['email'],
             'image':session['image'],
+            'admin':session['admin'],
+            'balance':calculate_balance(user),
             'date':session['date'],
             'openTime':len(db.session.query(User).filter_by(id=session['id']).first().product),
             'followTime':len(db.session.query(User).filter_by(id=session['id']).first().order),
@@ -60,7 +67,7 @@ def sign_up():
     
     rq = request.get_json()
     #---check if duplicate
-    if db.session.query(User).filter_by(email=rq['email']).count()!=0:
+    if db.session.query(User).filter_by(email=rq['email'],provider='native').count()!=0:
         return jsonify({
             "error":True,
             "message":"email exists"
@@ -111,10 +118,13 @@ def google_login():
         db.session.add(user)
         db.session.commit()
     user = db.session.query(User).filter_by(email=email,provider='google').first()
+    balance = calculate_balance(user)
     session['id']=user.id
     session['name']=user.name
     session['email']=user.email
     session['image']=user.image
+    session['admin']=user.admin
+    session['balance']= balance
     session['date']=user.date
     return{
         'ok':True

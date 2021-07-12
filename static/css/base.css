@@ -203,3 +203,7 @@ main{
   #search-icon{
       cursor: pointer;
   }
+
+.admin{
+    display: none;
+}

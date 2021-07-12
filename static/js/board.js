@@ -260,6 +260,12 @@ function init() {
             user = myJson['data'];
             loginView();
             userView();
+            if(cUser['admin']){
+                document.querySelectorAll('.admin').forEach(element=>{
+                    element.style.display='flex';
+                    document.getElementById('right-header').style.width = '340px';
+                })
+            }
             getMessage(nextPage).then((myJson => {
                 messageView(myJson);
                 nextPage = myJson['nextPage'];

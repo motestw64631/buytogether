@@ -33,7 +33,7 @@ function deleteBooking(productId,specName){
 
 
 function loginView() {
-    document.getElementById('right-header').style.width = '280px'
+    document.getElementById('right-header').style.width = '280px';
     let beforeLogin = Array.from(document.getElementsByClassName('before-login'));
     beforeLogin.forEach((node) => { node.style.display = 'none' });
     let afterLogin = Array.from(document.getElementsByClassName('after-login'));
@@ -151,6 +151,13 @@ function init() {
             cUser=myJson['data'];
             loginView();
             document.getElementById('loader').style.display = 'none';
+            console.log(cUser);
+            if(cUser['admin']){
+                document.querySelectorAll('.admin').forEach(element=>{
+                    element.style.display='flex';
+                    document.getElementById('right-header').style.width = '340px';
+                })
+            }
         }
     })
 }
