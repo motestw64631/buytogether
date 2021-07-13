@@ -132,6 +132,7 @@ from view.chat_room import chat_room
 from view.chat_message import chat_message
 from view.order import order
 from view.ledger import ledger
+from view.notify import notify
 
 app.register_blueprint(user_api)
 app.register_blueprint(product)
@@ -142,6 +143,7 @@ app.register_blueprint(chat_room)
 app.register_blueprint(chat_message)
 app.register_blueprint(order)
 app.register_blueprint(ledger)
+app.register_blueprint(notify)
 
 if __name__ =='__main__':
     socketio.run(app, host="0.0.0.0",port=5000,debug=True)

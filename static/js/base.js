@@ -26,6 +26,33 @@ function deleteBooking(productId,specName){
     }).then((response)=>response.json())
 }
 
+function getNotify(){
+    return fetch('/api/notify')
+        .then(response=>response.json())
+}
+
+function notifyInterval(){
+    getNotify().then((myJson)=>{
+        notifyView(myJson);
+        if(myJson['newMessage']){
+            document.getElementById('bell').addEventListener('click',function(){
+                this.src='/static/img/bell.png';
+                readNotify();
+            })
+        }else{
+            document.getElementById('bell').removeEventListener('click',function(){
+                this.src='/static/img/bell.png';
+                readNotify();
+            })
+        }
+        
+    })
+}
+
+function readNotify(){
+    return fetch('/user/new_message')
+        .then(response=>response.json())
+}
 
 //view
 
@@ -143,6 +170,25 @@ function sidebarCartView(datas) {
     }
 
 }
+function notifyView(data){
+    $('.dropdown-menu').empty();
+    const notifyMenu = document.querySelector('.dropdown-menu');
+    if(data['newMessage']){
+        document.getElementById('bell').src='/static/img/bell_ring.png'
+    }
+    data['data'].forEach(notify=>{
+        const row = document.createElement('li');
+        row.setAttribute('role','presentation');
+        const anchor = document.createElement('a');
+        anchor.setAttribute('role','menuitem');
+        anchor.setAttribute('tabindex','-1');
+        anchor.setAttribute('href','#');
+        anchor.textContent = notify['content'];
+        row.append(anchor);
+        notifyMenu.append(row);
+    })
+}
+
 
 //controller
 function init() {
@@ -152,6 +198,7 @@ function init() {
             loginView();
             document.getElementById('loader').style.display = 'none';
             console.log(cUser);
+            notifyInterval();
             if(cUser['admin']){
                 document.querySelectorAll('.admin').forEach(element=>{
                     element.style.display='flex';
@@ -189,8 +236,15 @@ function events() {
         location.href=`/?keyword=${key}`;
     })
 
+
 }
+
+
 
 
 init()
 events()
+
+
+
+setInterval(notifyInterval, 30000);

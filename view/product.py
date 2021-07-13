@@ -7,6 +7,16 @@ from werkzeug.utils import secure_filename
 from os import path
 from bt3 import upload_file_to_s3
 
+statusCode = {
+    '0':'開團中',
+    '1':'已成團',
+    '2':'主購已下單',
+    '3':'店家已出貨',
+    '4':'主購已取貨',
+    '5':'商品已寄出',
+    '6':'團購結束'
+}
+
 def ship_model_to_json(md):
     ls = {"seven":md.seven,"family":md.family,"hilife":md.hilife,"ok":md.ok,"face":md.face,"home":md.home_delivery}
     return [key for key in ls if ls[key]==True]
@@ -194,13 +204,26 @@ def getPs():
 
 @product.route('/api/product',methods=['PATCH'])
 def status_change():
-    rq = request.get_json()
-    if 'status' in rq:
-        pid = rq['productId']
-        status = rq['status']
-        product = db.session.query(Product).filter_by(id=pid).first()
-        product.status = int(status)
-        db.session.commit()
+    try:
+        rq = request.get_json()
+        if 'status' in rq:
+            pid = rq['productId']
+            status = rq['status']
+            product = db.session.query(Product).filter_by(id=pid).first()
+            product.status = int(status)
+            #notify zone
+            notify = Notify(f"{product.name} 商品狀態已變為 {statusCode[status]}")
+            for order in product.order:
+                order.user.new_message=True
+                order.user.notify.append(notify)
+            #
+            db.session.commit()
+            return {
+                'ok':True
+            }
+    except Exception as e:
+        print(e)
+        db.session.rollback()
         return {
-            'ok':True
-        }
+            'error':True
+        },500

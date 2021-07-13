@@ -45,6 +45,13 @@ def post_order():
         order.item.append(Order_Item(item['specName'],item['number'],item['specTotalPrice']))
     db.session.add(order)
     db.session.commit()
+    #notify
+    db.session.refresh(order)
+    notify = Notify(f"{order.user.name} 已加入團購 {order.product.name}")
+    order.product.user.notify.append(notify)
+    order.product.user.new_message=True
+    #
+    db.session.commit()
     return{
         "ok":True,
         "serial_number":serial_number

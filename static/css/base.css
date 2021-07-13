@@ -207,3 +207,34 @@ main{
 .admin{
     display: none;
 }
+
+#bell{
+    width: 22px;
+}
+
+.dropdown-menu{
+    left: -300px;
+    width: 350px;
+}
+
+.dropdown-menu>li{
+    border-top: 1px solid rgb(145, 145, 145);
+}
+
+.dropdown-menu>li:first-child{
+    border-top: none;
+}
+
+.dropdown-menu>li>a{
+    white-space:pre-wrap !important;
+    font-size: 12px;
+    color: gray;
+}
+
+#imageDropdown{
+    display: flex;
+}
+
+.dropdown{
+    margin-right: 5px;
+}

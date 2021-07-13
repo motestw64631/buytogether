@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <title>BuyTogether</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
     <link rel="stylesheet" href="{{url_for('static',filename='css/base.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='css/header.css')}}">
@@ -60,19 +61,29 @@
         </div><!-- modal -->
 
 
-    </div><!-- container -->
+        </div><!-- container -->
         <div id="left-header">
             <div id='home'><a href="/">S&S</a></div>
         </div>
         <div id="mid-header">
             <form id="search">
                 <input type="text" placeholder="我想找團購" id="search-item">
-                <img src="{{url_for('static',filename='img/icon_search.png')}}"
-                    id='search-icon'>
+                <img src="{{url_for('static',filename='img/icon_search.png')}}" id='search-icon'>
             </form>
         </div>
         <div id="right-header">
-            <a class="after-login" href="/board">徵團留言區</a><a class="after-login">|</a><a id='header-cart' data-toggle="modal" data-target="#myModal2" class="after-login">購物車</a><a class="admin">|</a><a id='ledger' class='admin' href="/ledger">帳簿</a><a id='sign-up' href="/sign_up" class="before-login">註冊</a>|
+            <div class="dropdown">
+                <a href="#" id="imageDropdown" data-toggle="dropdown">
+                    <img id='bell' src="{{url_for('static',filename='img/bell.png')}}" class="after-login">
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="imageDropdown">
+                
+                </ul>
+            </div>
+            <a class="after-login" href="/board">徵團留言區</a><a class="after-login">|</a><a id='header-cart'
+                data-toggle="modal" data-target="#myModal2" class="after-login">購物車</a><a class="admin">|</a><a
+                id='ledger' class='admin' href="/ledger">帳簿</a><a id='sign-up' href="/sign_up"
+                class="before-login">註冊</a>|
             <a id='sign-in' href="/sign_in" class="before-login">登入</a>
             <span class="after-login"><a id='header-toggle-control'>個人帳戶</a>
                 <div id='menu'>

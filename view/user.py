@@ -129,3 +129,14 @@ def google_login():
     return{
         'ok':True
     }
+
+
+@user_api.route('/user/new_message',methods=['GET'])
+def read_message():
+    user_id = session['id']
+    user = db.session.query(User).filter_by(id=user_id).first()
+    user.new_message=False
+    db.session.commit()
+    return{
+        'ok':True
+    }

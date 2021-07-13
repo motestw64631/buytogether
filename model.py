@@ -6,6 +6,12 @@ import datetime
 
 db = SQLAlchemy()
 
+user_notify = db.Table('user_notify',
+					 db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+					 db.Column('notify_id', db.Integer, db.ForeignKey('notify.id'), primary_key=True)
+					 )
+
+
 class User(db.Model):
     __tablename__ = 'user'
     __table_args__ = {'extend_existing': True}
@@ -16,6 +22,7 @@ class User(db.Model):
     provider = db.Column(db.String(100))
     confirm = db.Column(db.Boolean)
     image = db.Column(db.String(600))
+    new_message = db.Column(db.Boolean)
     admin = db.Column(db.Boolean)
     date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
     withdraw = db.relationship('Credit',backref='user')
@@ -24,6 +31,7 @@ class User(db.Model):
     order = db.relationship('Order',backref='user')
     chat_message = db.relationship('Chat_Message',backref='user')
     sub_message = db.relationship('Sub_Message',backref='user')
+    notify = db.relationship('Notify', secondary=user_notify, backref=db.backref('users'))
     def __init__(self,name,email,password,provider):
         self.name = name
         self.image = 'https://d84l4b8eh7ljv.cloudfront.net/animal_inu.png'
@@ -251,3 +259,28 @@ class Order_Item(db.Model):
         self.item_number=item_number
         self.item_total_price= item_total
 
+class Notify(db.Model):
+    __tablename__ = 'notify'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    content = db.Column(db.Text)
+    date = db.Column(db.DateTime,default=datetime.datetime.utcnow)
+    def __init__(self,content):
+        self.content = content
+
+
+
+
+
+# class User_Notify(db.Model):
+#     __tablename__ = 'user_notify'
+#     __table_args__ = {'extend_existing': True}
+#     id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+#     user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
+#     notify_id = db.Column(db.Integer,db.ForeignKey('notify.id'))
+#     activation = db.Column(db.Boolean)
+#     activation_date = db.Column(db.DateTime)
+#     def __init__(self,user_id,notify_id):
+#         self.user_id = user_id
+#         self.notify_id = notify_id
+#         self.activation = False
