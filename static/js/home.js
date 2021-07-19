@@ -107,6 +107,7 @@ init()
 document.querySelectorAll('#class td').forEach(function (element) {
     element.addEventListener('click', () => {
         window.scrollTo(0, 0);
+        console.log(nextPage);
         window.addEventListener('scroll', function btEvent(event) {
             clearTimeout(timeout);
             timeout = setTimeout(function () {
