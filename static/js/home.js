@@ -87,9 +87,9 @@ function init() {
     getUser().then((myJson) => {
         if (myJson['data']) {
             loginView()
-            if(cUser['admin']){
-                document.querySelectorAll('.admin').forEach(element=>{
-                    element.style.display='flex';
+            if (cUser['admin']) {
+                document.querySelectorAll('.admin').forEach(element => {
+                    element.style.display = 'flex';
                     document.getElementById('right-header').style.width = '340px';
                 })
             }
@@ -106,25 +106,28 @@ init()
 
 document.querySelectorAll('#class td').forEach(function (element) {
     element.addEventListener('click', () => {
-        window.addEventListener('scroll', function btEvent(event) {
-            clearTimeout(timeout);
-            timeout = setTimeout(function () {
-                if (nextPage !== null) {
-                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.98) {
-                        getProduct(cls = elementId, keyword = null, page = nextPage).then(function (myJson) {
-                            productView(myJson);
-                            nextPage = myJson['nextPage'];
-                        })
+        if (nextPage != null) {
+            window.addEventListener('scroll', function btEvent(event) {
+                clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    if (nextPage !== null) {
+                        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.98) {
+                            getProduct(cls = elementId, keyword = null, page = nextPage).then(function (myJson) {
+                                productView(myJson);
+                                nextPage = myJson['nextPage'];
+                            })
+                        }
                     }
-                }
-            }, 200);
-        });
+                }, 200);
+            });
+        }
         deSearchView();
         nextPage = 0;
         document.getElementById('content').innerHTML = '';
         elementId = element.id;
         getMainPic(element.id);
         changeColor(element);
+
         getProduct(cls = element.id, keyword = null, page = nextPage).then(function (myJson) {
             productView(myJson);
             nextPage = myJson['nextPage'];
