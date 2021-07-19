@@ -304,7 +304,7 @@ function events() {
         })
         footer.appendChild(input);
         input.click();
-        if (document.querySelectorAll("input[type='file']").length > 3) {
+        if (document.querySelectorAll("input[type='file']").length >= 1) {
             document.getElementById('upload_icon').style.display = 'none';
         }
     })

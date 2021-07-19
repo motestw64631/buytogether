@@ -110,14 +110,14 @@ document.querySelectorAll('#class td').forEach(function (element) {
             clearTimeout(timeout);
             timeout = setTimeout(function () {
                 if (nextPage !== null) {
-                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.95) {
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.98) {
                         getProduct(cls = elementId, keyword = null, page = nextPage).then(function (myJson) {
                             productView(myJson);
                             nextPage = myJson['nextPage'];
                         })
                     }
                 }
-            }, 150);
+            }, 200);
         });
         deSearchView();
         nextPage = 0;
@@ -156,6 +156,6 @@ if (keyword == null) {
                     })
                 }
             }
-        }, 150);
+        }, 200);
     });
 }

@@ -160,10 +160,10 @@ def getPs():
     keyword = request.args.get('keyword')
     page = int(request.args.get('page'))
     if not keyword:
-        count = db.session.query(Product).filter_by(product_class=product_class_code[cls]).count()
+        count = db.session.query(Product).filter_by(product_class=product_class_code[cls],status=0).count()
         page_count = count//8
         next_page = page+1 if page<page_count else None
-        datas = db.session.query(Product).filter_by(product_class=product_class_code[cls]).order_by(Product.date.desc()).slice(8*page,8*(page+1)).all()
+        datas = db.session.query(Product).filter_by(product_class=product_class_code[cls],status=0).order_by(Product.date.desc()).slice(8*page,8*(page+1)).all()
     elif keyword: 
         count = db.session.query(Product).filter(or_(Product.name.like(f'%{keyword}%'),Product.describe.like(f'%{keyword}%'))).count()
         page_count = count//8
