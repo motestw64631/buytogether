@@ -27,7 +27,7 @@ class Email_comfirm():
 
 def send_email(recipients,subject,token):
     msg = Message(subject,recipients=recipients,sender=sender)
-    url = url_for('confirm.confirm_email', token=token, _external=True)
+    url = os.getenv('SERVER_NAME')+url_for('confirm.confirm_email', token=token)
     msg.html = f"請點擊以下連接進行驗證<br><a href='{url}'>{url}</a>"
     mail.send(msg)
     return '成功寄送'
