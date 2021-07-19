@@ -106,9 +106,7 @@ init()
 
 document.querySelectorAll('#class td').forEach(function (element) {
     element.addEventListener('click', () => {
-        window.scrollTo(0, 0);
-        console.log(nextPage);
-        window.addEventListener('scroll', function btEvent(event) {
+        window.removeEventListener('scroll', function btEvent(event) {
             clearTimeout(timeout);
             timeout = setTimeout(function () {
                 if (nextPage !== null) {
@@ -121,7 +119,22 @@ document.querySelectorAll('#class td').forEach(function (element) {
                 }
             }, 200);
         });
-
+        window.scrollTo(0, 0);
+        if (nextPage != null) {
+            window.addEventListener('scroll', function btEvent(event) {
+                clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    if (nextPage !== null) {
+                        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.98) {
+                            getProduct(cls = elementId, keyword = null, page = nextPage).then(function (myJson) {
+                                productView(myJson);
+                                nextPage = myJson['nextPage'];
+                            })
+                        }
+                    }
+                }, 200);
+            });
+        }
         deSearchView();
         nextPage = 0;
         document.getElementById('content').innerHTML = '';
