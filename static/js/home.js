@@ -106,21 +106,21 @@ init()
 
 document.querySelectorAll('#class td').forEach(function (element) {
     element.addEventListener('click', () => {
-        if (nextPage != null) {
-            window.addEventListener('scroll', function btEvent(event) {
-                clearTimeout(timeout);
-                timeout = setTimeout(function () {
-                    if (nextPage !== null) {
-                        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.98) {
-                            getProduct(cls = elementId, keyword = null, page = nextPage).then(function (myJson) {
-                                productView(myJson);
-                                nextPage = myJson['nextPage'];
-                            })
-                        }
+        window.scrollTo(0, 0);
+        window.addEventListener('scroll', function btEvent(event) {
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+                if (nextPage !== null) {
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.98) {
+                        getProduct(cls = elementId, keyword = null, page = nextPage).then(function (myJson) {
+                            productView(myJson);
+                            nextPage = myJson['nextPage'];
+                        })
                     }
-                }, 200);
-            });
-        }
+                }
+            }, 200);
+        });
+
         deSearchView();
         nextPage = 0;
         document.getElementById('content').innerHTML = '';
