@@ -101,40 +101,11 @@ function init() {
 
 
 
-
 init()
 
 document.querySelectorAll('#class td').forEach(function (element) {
     element.addEventListener('click', () => {
-        window.removeEventListener('scroll', function btEvent(event) {
-            clearTimeout(timeout);
-            timeout = setTimeout(function () {
-                if (nextPage !== null) {
-                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.98) {
-                        getProduct(cls = elementId, keyword = null, page = nextPage).then(function (myJson) {
-                            productView(myJson);
-                            nextPage = myJson['nextPage'];
-                        })
-                    }
-                }
-            }, 200);
-        });
-        window.scrollTo(0, 0);
-        if (nextPage != null) {
-            window.addEventListener('scroll', function btEvent(event) {
-                clearTimeout(timeout);
-                timeout = setTimeout(function () {
-                    if (nextPage !== null) {
-                        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.98) {
-                            getProduct(cls = elementId, keyword = null, page = nextPage).then(function (myJson) {
-                                productView(myJson);
-                                nextPage = myJson['nextPage'];
-                            })
-                        }
-                    }
-                }, 200);
-            });
-        }
+        
         deSearchView();
         nextPage = 0;
         document.getElementById('content').innerHTML = '';
@@ -145,6 +116,23 @@ document.querySelectorAll('#class td').forEach(function (element) {
         getProduct(cls = element.id, keyword = null, page = nextPage).then(function (myJson) {
             productView(myJson);
             nextPage = myJson['nextPage'];
+            if (nextPage!=null){
+                if (nextPage != null) {
+                    window.addEventListener('scroll', function btEvent(event) {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(function () {
+                            if (nextPage !== null) {
+                                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight * 0.98) {
+                                    getProduct(cls = elementId, keyword = null, page = nextPage).then(function (myJson) {
+                                        productView(myJson);
+                                        nextPage = myJson['nextPage'];
+                                    })
+                                }
+                            }
+                        }, 200);
+                    });
+                }
+            }
         })
     })
 })
