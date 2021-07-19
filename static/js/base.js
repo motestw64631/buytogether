@@ -61,7 +61,7 @@ function readNotify(){
 
 function loginView() {
     document.getElementById('right-header').style.width = '280px';
-    document.getElementById('my-avatar').src=cUser['image'];
+    //document.getElementById('my-avatar').src=cUser['image'];
     let beforeLogin = Array.from(document.getElementsByClassName('before-login'));
     beforeLogin.forEach((node) => { node.style.display = 'none' });
     let afterLogin = Array.from(document.getElementsByClassName('after-login'));
