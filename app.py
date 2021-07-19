@@ -9,14 +9,17 @@ from flask_socketio import SocketIO,emit,join_room,send,leave_room
 import os
 from config import Config
 from model import db
-from view.auth_wrap import login_auth
+from confirm_mail import *
+from view.auth_wrap import login_auth,confirm_auth
 
 
 app = Flask(__name__)
+app.config.from_object(Config)
+
 socketio = SocketIO(cors_allowed_origins="*")
 
-app.config.from_object(Config)
 Session(app)
+mail.init_app(app)
 db.init_app(app)
 socketio.init_app(app)
 migrate = Migrate(app,db,compare_type=True)
@@ -32,6 +35,7 @@ def product(id):
 
 @app.route('/purchase_set/')
 @login_auth
+@confirm_auth
 def purchaseSet():
     return render_template('merchandisePost.html')
 
@@ -92,6 +96,14 @@ def ledger():
     return render_template('ledger.html')
 
 
+@app.route('/test')
+def test():
+    send_email(['motestw64631@gmail.com'],'測試','abc')
+    return{
+        'ok':True
+    }
+
+
     
 
 # @socketio.on('connect')
@@ -133,6 +145,7 @@ from view.chat_message import chat_message
 from view.order import order
 from view.ledger import ledger
 from view.notify import notify
+from view.confirm import confirm
 
 app.register_blueprint(user_api)
 app.register_blueprint(product)
@@ -144,6 +157,7 @@ app.register_blueprint(chat_message)
 app.register_blueprint(order)
 app.register_blueprint(ledger)
 app.register_blueprint(notify)
+app.register_blueprint(confirm)
 
 if __name__ =='__main__':
     socketio.run(app, host="0.0.0.0",port=5000,debug=True)

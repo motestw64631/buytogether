@@ -24,6 +24,7 @@ def loginUser():
         session['id']=user.id
         session['name']=user.name
         session['email']=user.email
+        session['confirm']=user.confirm
         session['image']=user.image
         session['admin']=user.admin
         session['balance']= balance
@@ -50,6 +51,7 @@ def getUser():
             'email':session['email'],
             'image':session['image'],
             'admin':session['admin'],
+            'confirm':session['confirm'],
             'balance':calculate_balance(user),
             'date':session['date'],
             'openTime':len(db.session.query(User).filter_by(id=session['id']).first().product),
@@ -122,6 +124,7 @@ def google_login():
     session['id']=user.id
     session['name']=user.name
     session['email']=user.email
+    session['confirm']=user.confirm
     session['image']=user.image
     session['admin']=user.admin
     session['balance']= balance

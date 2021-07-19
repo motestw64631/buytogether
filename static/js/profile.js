@@ -38,6 +38,11 @@ function withdraw(value){
     }).then(response=>response.json())
 }
 
+function sendMail(){
+    return fetch('/confirm/send')
+        .then(response=>response.json())
+}
+
 //view
 function loginView() {
     document.getElementById('right-header').style.width = '280px'
@@ -47,10 +52,29 @@ function loginView() {
     afterLogin.forEach((node) => { node.style.display = 'inline' });
 }
 
+function confirmView(){
+    if(user['confirm']==false){
+        confirmBtn = document.createElement('button');
+        document.getElementById('auth').append(confirmBtn);
+        confirmBtn.textContent='發送驗證信';
+        confirmBtn.addEventListener('click',()=>{
+            document.getElementById('loader').style.display = 'flex';
+            sendMail().then((myJson)=>{
+                if(myJson['ok']){
+                    document.getElementById('loader').style.display = 'none';
+                    swal({buttons: false,text: '驗證信件已發送',type: 'success',timer: 800,});
+                    console.log(myJson['message']);
+                }
+            })
+        })
+    }
+}
+
 function userInfo(img, name, email, date) {
     document.getElementById('u-img').src = img;
     document.getElementById('u-id').textContent = name;
     document.getElementById('u-mail').textContent = email;
+    document.getElementById('auth').textContent = (user['confirm']==true)? '(已通過驗證)':'(未通過驗證)'
     document.getElementById('u-name').value = name;
     document.getElementById('u-account').textContent = user['balance'];
     document.getElementById('u-date').textContent = new Date(date).toISOString().slice(0, 10);
@@ -67,6 +91,7 @@ function init() {
             user = myJson['data'];
             console.log(user);
             userInfo(user['image'], user['name'], user['email'], user['date']);
+            confirmView();
         }
         if(cUser['admin']){
             document.querySelectorAll('.admin').forEach(element=>{

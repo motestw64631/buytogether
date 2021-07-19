@@ -45,12 +45,28 @@ def post_order():
         order.item.append(Order_Item(item['specName'],item['number'],item['specTotalPrice']))
     db.session.add(order)
     db.session.commit()
-    #notify
+    #notify for owner
     db.session.refresh(order)
     notify = Notify(f"{order.user.name} 已加入團購 {order.product.name}")
     order.product.user.notify.append(notify)
     order.product.user.new_message=True
-    #
+    #notify for condition check
+    print(order.product.condition[0].condition_class)
+    if order.product.condition[0].condition_class=='number':
+        condition_number = order.product.condition[0].condition_number
+        now_number = sum([sum([item.item_number for item in order.item]) for order in order.product.order])
+        if now_number>=condition_number:
+            notify = Notify(f"{order.product.name} 目前購買總數為{now_number}個,已達到成團條件{condition_number}個")
+            order.product.user.notify.append(notify)
+            order.product.user.new_message=True
+    elif order.product.condition[0].condition_class=='price':
+        condition_price = order.product.condition[0].condition_price
+        now_price = sum([order.total_price for order in order.product.order])
+        print(condition_price,now_price)
+        if now_price>=condition_price:
+            notify = Notify(f"{order.product.name} 目前購買總金額為{now_price}元,已達到成團條件{condition_price}元")
+            order.product.user.notify.append(notify)
+            order.product.user.new_message=True
     db.session.commit()
     return{
         "ok":True,

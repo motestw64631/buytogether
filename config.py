@@ -16,3 +16,12 @@ class Config():
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{os.getenv('sql_account')}:{os.getenv('sql_secret')}@{os.getenv('sql_location')}:{os.getenv('sql_port')}/{os.getenv('sql_db')}"
     SECRET_KEY = os.getenv('secret_key')
     ENV = 'development'
+
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 465
+    MAIL_USE_SSL = True
+
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+
+    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')

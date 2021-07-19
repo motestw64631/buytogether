@@ -36,7 +36,7 @@ document.getElementById('sign-up-form').addEventListener('submit', function (e) 
         console.log(myJson)
         if(myJson['ok']){
             document.getElementById('sign-up-form').reset();
-            document.getElementById('message').textContent='註冊成功，請登入';
+            document.getElementById('message').textContent='註冊成功，請登入後至個人頁面進行認證';
         }else{
             document.getElementById('message').textContent='重複的電子信箱';
         }

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/confirm.css')}}">
+{% endblock %}
+{% block main%}
+
+{{message}}
+
+{% endblock %}
+{% block script %}
+<script>
+    function toHome(){
+        location.href='/';
+    }
+    setTimeout(toHome,5000)
+</script>
+{% endblock %}

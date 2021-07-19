@@ -61,6 +61,7 @@ function readNotify(){
 
 function loginView() {
     document.getElementById('right-header').style.width = '280px';
+    document.getElementById('my-avatar').src=cUser['image'];
     let beforeLogin = Array.from(document.getElementsByClassName('before-login'));
     beforeLogin.forEach((node) => { node.style.display = 'none' });
     let afterLogin = Array.from(document.getElementsByClassName('after-login'));
@@ -176,6 +177,18 @@ function notifyView(data){
     if(data['newMessage']){
         document.getElementById('bell').src='/static/img/bell_ring.png'
     }
+    if(data['data'].length==0){
+        const row = document.createElement('li');
+        row.setAttribute('role','presentation');
+        const anchor = document.createElement('a');
+        anchor.setAttribute('role','menuitem');
+        anchor.setAttribute('tabindex','-1');
+        anchor.setAttribute('href','#');
+        anchor.textContent = '目前沒有新訊息';
+        row.append(anchor);
+        notifyMenu.append(row);
+        return
+    }
     data['data'].forEach(notify=>{
         const row = document.createElement('li');
         row.setAttribute('role','presentation');
@@ -199,6 +212,7 @@ function init() {
             document.getElementById('loader').style.display = 'none';
             console.log(cUser);
             notifyInterval();
+            setInterval(notifyInterval, 30000);
             if(cUser['admin']){
                 document.querySelectorAll('.admin').forEach(element=>{
                     element.style.display='flex';
@@ -247,4 +261,3 @@ events()
 
 
 
-setInterval(notifyInterval, 30000);

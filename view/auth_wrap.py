@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import session,jsonify
+from flask import session,jsonify,redirect,url_for
 
 def login_auth(func):
     @wraps(func)
@@ -9,5 +9,13 @@ def login_auth(func):
                 "error": True,
                 "message": "未登入系統"
             }),403
+        return func(*args, **kwargs)
+    return wrap
+
+def confirm_auth(func):
+    @wraps(func)
+    def wrap(*args, **kwargs):
+        if session['confirm']!=True:
+            return redirect(url_for('profile'))
         return func(*args, **kwargs)
     return wrap
