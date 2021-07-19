@@ -106,6 +106,19 @@ init()
 
 document.querySelectorAll('#class td').forEach(function (element) {
     element.addEventListener('click', () => {
+
+        deSearchView();
+        nextPage = 0;
+        document.getElementById('content').innerHTML = '';
+        elementId = element.id;
+        getMainPic(element.id);
+        changeColor(element);
+
+        getProduct(cls = element.id, keyword = null, page = nextPage).then(function (myJson) {
+            productView(myJson);
+            nextPage = myJson['nextPage'];
+        })
+
         window.scrollTo(0, 0);
         window.addEventListener('scroll', function btEvent(event) {
             clearTimeout(timeout);
@@ -120,18 +133,6 @@ document.querySelectorAll('#class td').forEach(function (element) {
                 }
             }, 200);
         });
-
-        deSearchView();
-        nextPage = 0;
-        document.getElementById('content').innerHTML = '';
-        elementId = element.id;
-        getMainPic(element.id);
-        changeColor(element);
-
-        getProduct(cls = element.id, keyword = null, page = nextPage).then(function (myJson) {
-            productView(myJson);
-            nextPage = myJson['nextPage'];
-        })
     })
 })
 
