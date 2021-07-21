@@ -2,11 +2,14 @@ import os
 from flask import Blueprint, json,session,jsonify,redirect,request,make_response
 import requests
 from model import *
+from cache import cache
 import datetime
 
 
 ledger = Blueprint('ledger',__name__)
 
+
+@cache.memoize(60*30)
 def calculate_balance(user):
     balance = 0
     for product in user.product:

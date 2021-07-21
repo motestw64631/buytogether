@@ -10,15 +10,16 @@ import os
 from config import Config
 from model import db
 from confirm_mail import *
+from cache import cache
 from view.auth_wrap import login_auth,confirm_auth
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
-socketio = SocketIO(cors_allowed_origins="*")
-
-Session(app)
+socketio = SocketIO(cors_allowed_origins="*") #cors for dns
+Session(app) 
+cache.init_app(app)
 mail.init_app(app)
 db.init_app(app)
 socketio.init_app(app)
@@ -26,68 +27,82 @@ migrate = Migrate(app,db,compare_type=True)
 
 
 @app.route('/')
+@cache.cached(timeout=60*60*24)
 def home():
     return render_template('home.html')
 
 @app.route('/product/<id>')
+@cache.cached(timeout=60*60*24)
 def product(id):
     return render_template('product.html')
 
 @app.route('/purchase_set/')
+@cache.cached(timeout=60*60*24)
 @login_auth
 @confirm_auth
 def purchaseSet():
     return render_template('merchandisePost.html')
 
 @app.route('/sign_up')
+@cache.cached(timeout=60*60*24)
 def sign_up():
     return render_template('sign_up.html')
 
 @app.route('/sign_in')
+@cache.cached(timeout=60*60*24)
 def sign_in():
     return render_template('sign_in.html',client_id=os.getenv('google_oauth_client_id'),client_password=os.getenv('google_oauth_client_password'))
 
 @app.route('/board')
+@cache.cached(timeout=60*60*24)
 @login_auth
 def board():
     return render_template('board.html')
 
 @app.route('/checkout')
+@cache.cached(timeout=60*60*24)
 def cart():
     return render_template('checkout.html')
 
 @app.route('/profile')
+@cache.cached(timeout=60*60*24)
 @login_auth
 def profile():
     return render_template('profile.html')
 
 @app.route('/booking')
+@cache.cached(timeout=60*60*24)
 @login_auth
 def group():
     return render_template('booking.html')
 
 @app.route('/message')
+@cache.cached(timeout=60*60*24)
 @login_auth
 def message():
     return render_template('message.html')
 
 @app.route('/seller')
+@cache.cached(timeout=60*60*24)
 @login_auth
 def seller():
     return render_template('seller.html')
 
 
 @app.route('/seller/product/<p_id>')
+@cache.cached(timeout=60*60*24)
 @login_auth
 def seller_product(p_id):
     return render_template('seller_product.html')
 
 @app.route('/details')
+@cache.cached(timeout=60*60*24)
 @login_auth
 def detail():
     return render_template('detail.html')
 
 @app.route('/ledger')
+@cache.cached(timeout=60*60*24)
 @login_auth
 def ledger():
     if session['admin']!=True:
@@ -97,6 +112,7 @@ def ledger():
 
 
 @app.route('/test')
+@cache.cached(timeout=60*60*24)
 def test():
     send_email(['motestw64631@gmail.com'],'測試','abc')
     return{

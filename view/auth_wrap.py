@@ -1,7 +1,7 @@
 from functools import wraps
 from flask import session,jsonify,redirect,url_for
 
-def login_auth(func):
+def login_auth(func): #check if login
     @wraps(func)
     def wrap(*args, **kwargs):
         if 'email' not in session:
@@ -12,7 +12,9 @@ def login_auth(func):
         return func(*args, **kwargs)
     return wrap
 
-def confirm_auth(func):
+
+
+def confirm_auth(func): #check if email confirm
     @wraps(func)
     def wrap(*args, **kwargs):
         if session['confirm']!=True:

@@ -287,6 +287,7 @@ function events() {
         rmImage.textContent = '✖'
         image.className = 'previewImage';
         input.type = 'file';
+        input.accept = "image/*";
         input.style.display = 'none';
         rmImage.addEventListener('click', () => {
             imageDiv.remove();
@@ -301,12 +302,12 @@ function events() {
             imageDiv.appendChild(image);
             imageDiv.appendChild(rmImage);
             footer.appendChild(imageDiv);
+            if (document.querySelectorAll("input[type='file']").length >= 1) {
+                document.getElementById('upload_icon').style.display = 'none';
+            }
         })
         footer.appendChild(input);
         input.click();
-        if (document.querySelectorAll("input[type='file']").length >= 1) {
-            document.getElementById('upload_icon').style.display = 'none';
-        }
     })
     document.getElementById('post-message').addEventListener('click', (e) => {
         postMessage().then((response) => {
@@ -314,7 +315,7 @@ function events() {
                 location.reload()
             }
         });
-        document.getElementById('loading-mask').style.display='flex';
+        document.getElementById('loader').style.display='flex';
     })
 
     window.addEventListener('scroll', function btEvent(event) {

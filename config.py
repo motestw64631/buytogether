@@ -17,11 +17,15 @@ class Config():
     SECRET_KEY = os.getenv('secret_key')
     ENV = 'development'
 
+    CACHE_TYPE = 'redis'
+    CACHE_DEFAULT_TIMEOUT = 300
+    CACHE_REDIS_HOST = os.getenv('redis_host')
+    CACHE_REDIS_PORT =  os.getenv('redis_port')
+    CACHE_KEY_PREFIX = 'SandS'
+
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 465
     MAIL_USE_SSL = True
-
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
-
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')

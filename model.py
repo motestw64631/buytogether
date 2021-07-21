@@ -1,5 +1,6 @@
 from enum import unique
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Index
 from sqlalchemy.orm import backref
 from werkzeug.security import generate_password_hash,check_password_hash
 import datetime
@@ -44,7 +45,7 @@ class User(db.Model):
     def __repr__(self):
         return f'<user {self.name}>'
 
-
+Index('email_provider_index',User.email,User.provider)
 
 
 class Credit(db.Model):
@@ -80,6 +81,9 @@ class Chat_Room(db.Model):
         self.user_1_id=user_1_id
         self.user_2_id=user_2_id
         self.unread = True
+
+Index('user1_index',Chat_Room.user_1_id)
+Index('user2_index',Chat_Room.user_2_id)
 
 class Chat_Message(db.Model):
     __tablename__ = 'chat_message'
@@ -117,6 +121,8 @@ class Product(db.Model):
         self.product_class = product_class
         self.status = 0
         self.ownerId = ownerId
+
+#full text index to be created
 
 class Condition(db.Model):
     __tablename__ = 'condition'
@@ -245,6 +251,8 @@ class Order(db.Model):
         self.total_price = total_price
         self.payment_state = payment_state
         self.message = message
+
+Index('buyer_index',Order.buyer_id)
 
 class Order_Item(db.Model):
     __tablename__ = 'order_item'

@@ -51,7 +51,7 @@ def post_order():
     order.product.user.notify.append(notify)
     order.product.user.new_message=True
     #notify for condition check
-    print(order.product.condition[0].condition_class)
+    #print(order.product.condition[0].condition_class)
     if order.product.condition[0].condition_class=='number':
         condition_number = order.product.condition[0].condition_number
         now_number = sum([sum([item.item_number for item in order.item]) for order in order.product.order])

@@ -11,7 +11,7 @@ confirm = Blueprint('confirm',__name__)
 
 @confirm.route('/confirm/<token>')
 @login_auth
-def confirm_email(token):
+def confirm_email(token): #token is serialize from user_email
     email_confirm = Email_comfirm()
     try:
         email = email_confirm.confirm_token(token)

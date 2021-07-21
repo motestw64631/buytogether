@@ -9,77 +9,83 @@ def ship_model_to_json(md):
     return [key for key in ls if ls[key]==True]
 
 
-@cart.route('/api/cart',methods=['POST'])
-def post_booking():
-    duplicate_flag = False
-    normalize = request.form.get('normalize')
-    product_id = request.form.get('productId')
-    product = db.session.query(Product).filter_by(id=product_id).first()
-    if normalize=='1':
-        spec_id = request.form.get('specId')
-        number = request.form.get('bookingNumber')
-        spec = db.session.query(Spec).filter_by(spec_id=spec_id).first()
-        if 'cart' not in session:
-            session['cart']={}
-        if f'product_{product_id}' not in session['cart']:
-            session['cart'][f'product_{product_id}']={}
-            session['cart'][f'product_{product_id}']['productId']=product.id
-            session['cart'][f'product_{product_id}']['normalize']=True
-            session['cart'][f'product_{product_id}']['name']=product.name
-            session['cart'][f'product_{product_id}']['shipping']=ship_model_to_json(product.shipping[0])
-            session['cart'][f'product_{product_id}']['image']=product.images[0].image_url
-            session['cart'][f'product_{product_id}']['datas']=[]
-        for data in session['cart'][f'product_{product_id}']['datas']:
-            if data["specId"] == spec_id:
-                data['number']=int(data['number'])+int(number)
-                data['specTotalPrice']=int(spec.spec_price)*data['number']
-                duplicate_flag = True
-        if duplicate_flag==False:
-            session['cart'][f'product_{product_id}']['datas'].append({
-                'specId':spec_id,
-                'specName':spec.spec_name,
-                'number':number,
-                'specPrice':spec.spec_price,
-                'specTotalPrice':int(spec.spec_price)*int(number),
-            })
-        return {
-            'ok':True
-        }
-    else:
-        datas = request.form.get('data')
-        datas = json.loads(datas)
-        if 'cart' not in session:
-            session['cart']={}
-        if f'product_{product_id}' not in session['cart']:
-            session['cart'][f'product_{product_id}']={}
-            session['cart'][f'product_{product_id}']['productId']=product.id
-            session['cart'][f'product_{product_id}']['normalize']=False
-            session['cart'][f'product_{product_id}']['name']=product.name
-            session['cart'][f'product_{product_id}']['shipping']=ship_model_to_json(product.shipping[0])
-            session['cart'][f'product_{product_id}']['image']=product.images[0].image_url
-            session['cart'][f'product_{product_id}']['datas']=[]
-        for data in datas:
-            for single_data in session['cart'][f'product_{product_id}']['datas']:
-                if single_data["specName"]==data['spec']:
-                    single_data['number']=int(single_data['number'])+int(data['number'])
-                    single_data['specTotalPrice']=int(data['price'])*int(single_data['number'])
-                    return {
-                        'ok':True
-                    }
-            session['cart'][f'product_{product_id}']['datas'].append({
-                'specName':data['spec'],
-                'number':data['number'],
-                'specPrice':data['price'],
-                'specTotalPrice':int(data['price'])*int(data['number']),
-            })
-        return {
-            'ok':True
+@cart.route('/api/cart',methods=['POST']) 
+def post_booking(): #post to booking cart
+    try:
+        duplicate_flag = False #check if chosen product in cart already
+        normalize = request.form.get('normalize')
+        product_id = request.form.get('productId')
+        product = db.session.query(Product).filter_by(id=product_id).first()
+        if normalize=='1': #product has spec or not
+            spec_id = request.form.get('specId')
+            number = request.form.get('bookingNumber')
+            spec = db.session.query(Spec).filter_by(spec_id=spec_id).first()
+            if 'cart' not in session:
+                session['cart']={}
+            if f'product_{product_id}' not in session['cart']:
+                session['cart'][f'product_{product_id}']={}
+                session['cart'][f'product_{product_id}']['productId']=product.id
+                session['cart'][f'product_{product_id}']['normalize']=True
+                session['cart'][f'product_{product_id}']['name']=product.name
+                session['cart'][f'product_{product_id}']['shipping']=ship_model_to_json(product.shipping[0])
+                session['cart'][f'product_{product_id}']['image']=product.images[0].image_url
+                session['cart'][f'product_{product_id}']['datas']=[]
+            for data in session['cart'][f'product_{product_id}']['datas']:
+                if data["specId"] == spec_id:
+                    data['number']=int(data['number'])+int(number)
+                    data['specTotalPrice']=int(spec.spec_price)*data['number']
+                    duplicate_flag = True
+            if duplicate_flag==False:
+                session['cart'][f'product_{product_id}']['datas'].append({
+                    'specId':spec_id,
+                    'specName':spec.spec_name,
+                    'number':number,
+                    'specPrice':spec.spec_price,
+                    'specTotalPrice':int(spec.spec_price)*int(number),
+                })
+            return {
+                'ok':True
+            }
+        else: #product has no spec
+            datas = request.form.get('data')
+            datas = json.loads(datas)
+            if 'cart' not in session:
+                session['cart']={}
+            if f'product_{product_id}' not in session['cart']:
+                session['cart'][f'product_{product_id}']={}
+                session['cart'][f'product_{product_id}']['productId']=product.id
+                session['cart'][f'product_{product_id}']['normalize']=False
+                session['cart'][f'product_{product_id}']['name']=product.name
+                session['cart'][f'product_{product_id}']['shipping']=ship_model_to_json(product.shipping[0])
+                session['cart'][f'product_{product_id}']['image']=product.images[0].image_url
+                session['cart'][f'product_{product_id}']['datas']=[]
+            for data in datas:
+                for single_data in session['cart'][f'product_{product_id}']['datas']:
+                    if single_data["specName"]==data['spec']:
+                        single_data['number']=int(single_data['number'])+int(data['number'])
+                        single_data['specTotalPrice']=int(data['price'])*int(single_data['number'])
+                        return {
+                            'ok':True
+                        }
+                session['cart'][f'product_{product_id}']['datas'].append({
+                    'specName':data['spec'],
+                    'number':data['number'],
+                    'specPrice':data['price'],
+                    'specTotalPrice':int(data['price'])*int(data['number']),
+                })
+            return {
+                'ok':True
+            }
+    except Exception as e:
+        print(e)
+        return{
+            'error':True
         }
 
 @cart.route('/api/cart',methods=['GET'])
-def get_cart():
+def get_cart(): # get cart item
     product_id = request.args.get('productId')
-    if not product_id:
+    if not product_id: #nothing in cart
         if 'cart' not in session:
             return{
                 'cart':None

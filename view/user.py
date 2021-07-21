@@ -8,7 +8,10 @@ from google.oauth2 import id_token
 from google.auth.transport import requests
 from view.ledger import calculate_balance
 
+
 user_api = Blueprint('user_api',__name__)
+
+
 
 @user_api.route('/api/user',methods=['PATCH'])
 def loginUser():
@@ -85,7 +88,7 @@ def sign_up():
 @user_api.route('/user/image',methods=['PATCH'])
 def change_image():
     url = upload_file_to_s3(request.files['file'],'shauncc','user')
-    user = db.session.query(User).filter_by(email=session['email']).first()
+    user = db.session.query(User).filter_by(id=session['id']).first()
     user.image = url
     db.session.commit()
     session['image']=url
@@ -96,7 +99,7 @@ def change_image():
 @user_api.route('/user/name',methods=['PATCH'])
 def change_name():
     name = request.form.get('name')
-    user = db.session.query(User).filter_by(email=session['email']).first()
+    user = db.session.query(User).filter_by(id=session['id']).first()
     user.name = name
     db.session.commit()
     session['name']=name
