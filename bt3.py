@@ -42,7 +42,7 @@ def upload_file_to_s3(file, bucket_name,folder):
     try:
         img = read_from_decode(file)
         resized = compress_image(img)
-        temp_file_path = f'./temp/{file.filename}'
+        temp_file_path = f'./temp_image/{file.filename}'
         print(temp_file_path)
         cv2.imwrite(temp_file_path,resized)
         object_name = f'{folder}/'+f"{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}_"+file.filename
