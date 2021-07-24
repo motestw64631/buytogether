@@ -29,6 +29,7 @@ def loginUser():
             session['name']=user.name
             session['email']=user.email
             session['confirm']=user.confirm
+            session['bank']=user.bank
             session['image']=user.image
             session['admin']=user.admin
             session['balance']= balance
@@ -61,6 +62,7 @@ def getUser():
                 'image':session['image'],
                 'admin':session['admin'],
                 'confirm':session['confirm'],
+                'bank':session['bank'],
                 'balance':calculate_balance(user),
                 'date':session['date'],
                 'openTime':len(db.session.query(User).filter_by(id=session['id']).first().product),
@@ -133,6 +135,23 @@ def change_name():
             'error':True
         },500
 
+@user_api.route('/user/bank',methods=['PATCH'])
+def change_bank():
+    try:
+        bank = request.form.get('bank')
+        user = db.session.query(User).filter_by(id=session['id']).first()
+        user.bank = bank
+        db.session.commit()
+        session['bank']=bank
+        return{
+            "ok":True
+        }
+    except:
+        db.session.rollback()
+        return{
+            'error':True
+        },500
+
 @user_api.route('/api/google_user',methods=['POST'])
 def google_login():
     try:
@@ -155,6 +174,7 @@ def google_login():
         session['name']=user.name
         session['email']=user.email
         session['confirm']=user.confirm
+        session['bank']=user.bank
         session['image']=user.image
         session['admin']=user.admin
         session['balance']= balance

@@ -21,6 +21,7 @@ class User(db.Model):
     email = db.Column(db.String(100))
     password_hash = db.Column(db.String(500))
     provider = db.Column(db.String(100))
+    bank = db.Column(db.Text)
     confirm = db.Column(db.Boolean)
     image = db.Column(db.String(600))
     new_message = db.Column(db.Boolean)

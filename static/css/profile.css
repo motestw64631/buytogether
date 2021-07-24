@@ -73,6 +73,13 @@ body{
     border-radius: 5px;
 }
 
+#u-bank{
+    margin-left: 87px;
+    border: 1px black solid;
+    height: 30px;
+    border-radius: 5px;
+}
+
 
 #u-password{
     margin-left: 130px;
@@ -82,6 +89,7 @@ body{
     border-radius: 5px;
     padding: 4px;
 }
+
 
 #u-date{
     margin-left: 87px;

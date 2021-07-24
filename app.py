@@ -102,7 +102,7 @@ def detail():
     return render_template('detail.html')
 
 @app.route('/ledger')
-@cache.cached(timeout=60*60*24)
+#@cache.cached(timeout=60*60*24)
 @login_auth
 def ledger():
     if session['admin']!=True:

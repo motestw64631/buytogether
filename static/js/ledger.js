@@ -18,12 +18,14 @@ getLedgers().then(myJson=>{
         const tr = document.createElement('tr');
         const id = document.createElement('td');
         const email = document.createElement('td');
+        const bank = document.createElement('td');
         const amount = document.createElement('td');
         const blance = document.createElement('td');
         const act = document.createElement('td');
         const date = document.createElement('td');
         id.textContent=data['userId'];
         email.textContent = data['userEmail'];
+        bank.textContent = data['userBank'];
         amount.textContent = data['amount'];
         blance.textContent = data['blance'];
         act.textContent = data['creditStatus']==false?'未付款':'已付款';
@@ -41,7 +43,7 @@ getLedgers().then(myJson=>{
             })
         }
         date.textContent = data['date'];
-        tr.append(id,email,amount,blance,date,act,pay);
+        tr.append(id,email,bank,amount,blance,date,act,pay);
         document.getElementById('customers').append(tr);
     })
 })

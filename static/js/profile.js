@@ -26,6 +26,16 @@ function changeName() {
     }).then(response => response.json())
 }
 
+function changeBank() {
+    let bank = document.getElementById('u-bank').value;
+    let data = new FormData();
+    data.append('bank', bank)
+    return fetch('/user/bank', {
+        method: 'PATCH',
+        body: data
+    }).then(response => response.json())
+}
+
 function withdraw(value){
     return fetch('/api/credit',{
         method:'POST',
@@ -74,6 +84,7 @@ function userInfo(img, name, email, date) {
     document.getElementById('u-img').src = img;
     document.getElementById('u-id').textContent = name;
     document.getElementById('u-mail').textContent = email;
+    document.getElementById('u-bank').value = user['bank'];
     document.getElementById('auth').textContent = (user['confirm']==true)? '(已通過驗證)':'(未通過驗證)'
     document.getElementById('u-name').value = name;
     document.getElementById('u-account').textContent = user['balance'];
@@ -139,6 +150,14 @@ function events() {
               }
           })
     })
+
+    document.getElementById("ch-bank").addEventListener("click", function () {
+        changeBank().then(myJson => {
+            if (myJson['ok']) {
+                location.reload();
+            }
+        });
+    });
 }
 
 init()

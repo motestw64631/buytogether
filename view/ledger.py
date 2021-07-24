@@ -59,7 +59,7 @@ def get_ledger():
         er = {'error': True}
         return make_response(jsonify(er), 403)
     credit = db.session.query(Credit).all()
-    datas = [{"creditStatus":data.activation,"creditId":data.id,"userId":data.user.id,"userEmail":data.user.email,"amount":data.amount,"blance":calculate_balance(db.session.query(User).filter_by(id=data.user_id).first()),"date":data.date} for data in credit]
+    datas = [{"creditStatus":data.activation,"creditId":data.id,"userId":data.user.id,"userEmail":data.user.email,"userBank":data.user.bank,"amount":data.amount,"blance":calculate_balance(db.session.query(User).filter_by(id=data.user_id).first()),"date":data.date} for data in credit]
     return {
         "data":datas
     }
