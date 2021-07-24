@@ -101,7 +101,7 @@
                             <td><a href="/seller">團購管理</a></td>
                         </tr>
                         <tr>
-                            <td><a href="/purchase_set">我要開團</a></td>
+                            <td><a href="/purchase_set" id='post-product'>我要開團</a></td>
                         </tr>
                         <tr>
                             <td><a href="/logout">登出</a></td>
@@ -118,6 +118,7 @@
         integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="{{url_for('static',filename='js/base.js')}}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {% block script %}{% endblock %}
 </body>
 

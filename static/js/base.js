@@ -249,7 +249,16 @@ function events() {
         const key = document.getElementById('search-item').value;
         location.href=`/?keyword=${key}`;
     })
-
+    document.getElementById('post-product').addEventListener('click',(e)=>{
+        if(!cUser['confirm']){
+            e.preventDefault();
+            b = swal({
+                title: "請先驗證信箱",
+                icon: "warning",
+                dangerMode: true
+            })
+        }
+    })
 
 }
 

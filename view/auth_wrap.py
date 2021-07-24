@@ -18,6 +18,9 @@ def confirm_auth(func): #check if email confirm
     @wraps(func)
     def wrap(*args, **kwargs):
         if session['confirm']!=True:
-            return redirect(url_for('profile'))
+            return jsonify({
+                "error": True,
+                "message": "未驗證信箱"
+            }),403
         return func(*args, **kwargs)
     return wrap
