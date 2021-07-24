@@ -27,12 +27,12 @@
     <main>
         <form id='sign-up-form'>
             登入
-            <input type="text" placeholder="email" id='email'>
-            <input type="password" placeholder="密碼" id='password'>
+            <input placeholder="email" id='email' type="email" required>
+            <input type="password" placeholder="密碼" id='password' required minlength="6" maxlength="20">
             <input type="submit" value="登入" id='sb-bt'>
             <hr>
             <div id="my-signin2"></div>
-            <div id='ft'>還沒有密碼?<a href='/sign_up' id='to-login'>註冊</a></div>
+            <div id='ft'>還沒有帳戶?<a href='/sign_up' id='to-login'>註冊</a></div>
             <div id='message'></div>
         </form>
     </main>

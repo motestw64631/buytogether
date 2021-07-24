@@ -44,7 +44,7 @@ main{
     background-color: white;
     margin-right: 10px;
     border-radius: 40px;
-    border: 2px solid rgb(123, 121, 139);
+    border: 1px solid rgb(123, 121, 139);
 }
 #message-input-title{
     width: 900px;
@@ -135,8 +135,8 @@ main{
     height: 60px;
     background-color: white;
     margin-right: 10px;
-    border-radius: 40px;
-    border: 2px solid rgb(123, 121, 139);
+    border-radius: 30px;
+    border: 1px solid rgb(123, 121, 139);
 }
 
 .user{
