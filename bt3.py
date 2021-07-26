@@ -17,7 +17,7 @@ s3 = boto3.client(
 def read_from_decode(file):
     filestr = file.read()
     npimg = numpy.fromstring(filestr, numpy.uint8)
-    img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
+    img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
     return img
 
 def compress_image(img):
