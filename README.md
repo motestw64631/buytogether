@@ -44,3 +44,4 @@ RESTful API
 3. 利用Redis進行快取設置(volatile-lru)以及Session管理
 4. 以Flask-Migrate進行資料庫版本管理
 5. 以WebSocket實作即時聊天功能
+6. HTTPS以Nginx配合SSL憑證
