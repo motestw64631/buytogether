@@ -21,11 +21,11 @@
 * 搜尋功能
 * 上傳圖片壓縮
 ## 使用技術
-* Frond-End
+* Frond-End  
 html.css.javascript.部分以bootsrap建置
-* Back-End
+* Back-End  
 python flask
-* Database
+* Database  
 MySql
 網站部分以ORM(flask-sqlalchemy)進行操作
 * Cloud
@@ -36,4 +36,5 @@ MySql
 5. 快取及Session儲存於ElastiCache
 6. 通知系統結合AWS lambda以及AWS CloudWatch定時排成通知
 * Other
-*
+** 上傳圖片
+** 認證信
