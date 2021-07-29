@@ -24,7 +24,8 @@
 * Frond-End  
 html.css.javascript.部分以bootsrap建置
 * Back-End  
-python flask
+python flask  
+RESTful API架構
 * Database  
 1. MySql
 2. 網站部分以ORM(flask-sqlalchemy)進行操作
@@ -39,7 +40,6 @@ python flask
 * Other
 1. 上傳圖片若超過一定大小則進行壓縮(OpenCV)
 2. 註冊需經過信箱驗證才能發起團購(Flask-mail)
-3. RESTful API架構
-4. 利用Redis進行快取設置(volatile-lru)以及Session管理
-5. 以Flask-Migrate進行資料庫版本管理
-6. 以WebSocket實作即時聊天功能
+3. 利用Redis進行快取設置(volatile-lru)以及Session管理
+4. 以Flask-Migrate進行資料庫版本管理
+5. 以WebSocket實作即時聊天功能
