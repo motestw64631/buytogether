@@ -1,5 +1,5 @@
-# [S&S(Shop&Share)](https://shauncc.site/)  
-本專案網站為一個拍賣網站
+# [S&S(Shop&Share)](https://shauncc.site/)123
+123
 ---
 ## 重點特色
 * 團購商品  
