@@ -4,7 +4,12 @@ function alertForFill(message) {
 }
 //view
 function loginView() {
-    document.getElementById('right-header').style.width = '280px'
+    //document.getElementById('right-header').style.width = '280px'
+    if(cUser['admin']){
+        document.getElementById('right-header').style.width = '340px';
+    }else{
+        document.getElementById('right-header').style.width = '280px'
+    }
     let beforeLogin = Array.from(document.getElementsByClassName('before-login'));
     beforeLogin.forEach((node) => { node.style.display = 'none' });
     let afterLogin = Array.from(document.getElementsByClassName('after-login'));

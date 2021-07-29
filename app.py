@@ -37,7 +37,7 @@ def product(id):
     return render_template('product.html')
 
 @app.route('/purchase_set/')
-@cache.cached(timeout=60*60*24)
+#@cache.cached(timeout=60*60*24)
 @login_auth
 @confirm_auth
 def purchaseSet():
@@ -71,7 +71,7 @@ def profile():
     return render_template('profile.html')
 
 @app.route('/booking')
-#@cache.cached(timeout=60*60*24)
+@cache.cached(timeout=60*60*24)
 @login_auth
 def group():
     return render_template('booking.html')
@@ -102,7 +102,7 @@ def detail():
     return render_template('detail.html')
 
 @app.route('/ledger')
-#@cache.cached(timeout=60*60*24)
+@cache.cached(timeout=60*60*24)
 @login_auth
 def ledger():
     if session['admin']!=True:
