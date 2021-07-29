@@ -1,4 +1,5 @@
 # [S&S(Shop&Share)](https://shauncc.site/)
+[img](img_readme/homepage.png)
 ---
 ## 專案主旨
 本專案為一拍賣網站,但功能注重在團購的商品,並非一般商品,  
