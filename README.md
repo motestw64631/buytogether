@@ -1,2 +1,2 @@
-# [ss](https://shauncc.site/)S&S(Shop&Share)
+# [S&S(Shop&Share)](https://shauncc.site/)
 ---
