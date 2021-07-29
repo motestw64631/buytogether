@@ -37,7 +37,7 @@ def product(id):
     return render_template('product.html')
 
 @app.route('/purchase_set/')
-#@cache.cached(timeout=60*60*24)
+@cache.cached(timeout=60*60*24)
 @login_auth
 @confirm_auth
 def purchaseSet():
