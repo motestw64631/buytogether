@@ -17,5 +17,23 @@
 * 第三方登入(google)
 * 第三方金流(tappay)
 * 註冊驗證信
-* 上傳圖片壓縮
 * 通知功能
+* 搜尋功能
+* 上傳圖片壓縮
+## 使用技術
+* Frond-End
+html.css.javascript.部分以bootsrap建置
+* Back-End
+python flask
+* Database
+MySql
+網站部分以ORM(flask-sqlalchemy)進行操作
+* Cloud
+1. 網站架設於AWS EC2
+2. 資料庫使用AWS RDS(雲端關聯式資料庫)
+3. 圖片皆儲存於AWS S3(Simple Cloud Storage)
+4. 圖片呈現利用AWS CloudFront
+5. 快取及Session儲存於ElastiCache
+6. 通知系統結合AWS lambda以及AWS CloudWatch定時排成通知
+* Other
+*
