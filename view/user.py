@@ -7,6 +7,7 @@ import os
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from view.ledger import calculate_balance
+from cache import cache
 
 
 user_api = Blueprint('user_api',__name__)
@@ -53,7 +54,8 @@ def getUser():
             return jsonify({
                 'data':None
             }),400
-        user = db.session.query(User).filter_by(id=session['id']).first()
+        user =db.session.query(User).filter_by(id=session['id']).first()
+
         return jsonify({
             'data':{
                 'id':session['id'],

@@ -186,7 +186,9 @@
 #order-number{
     border-top: 1px solid rgb(202, 202, 202);
 }
-
+#order-content{
+    padding-bottom: 25px;
+}
 
 #order-content>div{
     margin-top:5px;
@@ -206,4 +208,23 @@
 
 #product-detail .order-name{
     font-size: 20px;
+}
+
+#quit{
+    background-color: rgb(71, 105, 216);
+    border-radius: 5px;
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#modal-body{
+    position: relative;
 }

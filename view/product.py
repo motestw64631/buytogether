@@ -227,3 +227,26 @@ def status_change():
         return {
             'error':True
         },500
+
+@product.route('/api/product',methods=['DELETE'])
+def delete_product():
+    try:
+        rq = request.get_json()
+        product_id = rq['productId']
+        product = db.session.query(Product).filter_by(id=product_id).first()
+        if product.ownerId!=session['id']:
+            return{
+                'error':True,
+                'message':'not authorize'
+            },403
+        db.session.delete(product)
+        db.session.commit()
+        return {
+            'ok':True
+        }
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return {
+            'error':True
+        },500

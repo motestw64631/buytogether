@@ -136,6 +136,7 @@
     display: flex;
     flex-wrap: wrap;
     padding-left: 150px;
+    width: 1200px;
 }
 
 
@@ -153,6 +154,7 @@
     padding: 5px;
     font-size: 20px;
     font-weight: bold;
+    position: relative;
 }
 
 .buyer-image{
@@ -352,4 +354,10 @@
     cursor: pointer;
     background-color: rgb(71, 105, 216);
     margin-left: 10px;
+}
+
+.kick{
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
 }

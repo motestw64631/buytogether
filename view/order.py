@@ -185,3 +185,30 @@ def get_order(order_id):
         "shipTo":order.shipping_location,
         "message":order.message
     }
+
+@order.route('/api/order',methods=['DELETE'])
+def delete_order():
+    try:
+        rq=request.get_json()
+        order_id = rq['orderId']
+        order = db.session.query(Order).filter_by(id=order_id).first()
+        if session['id']==order.buyer_id:
+            db.session.delete(order)
+            db.session.commit()
+        elif session['id']==order.product.ownerId:
+            db.session.delete(order)
+            db.session.commit()
+        else:
+            return{
+                'error':True,
+                'message':'not authorize'
+            },403
+        return{
+            'ok':True
+        }
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return {
+            'error':True
+        },500

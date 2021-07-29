@@ -71,7 +71,7 @@ def profile():
     return render_template('profile.html')
 
 @app.route('/booking')
-@cache.cached(timeout=60*60*24)
+#@cache.cached(timeout=60*60*24)
 @login_auth
 def group():
     return render_template('booking.html')

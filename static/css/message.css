@@ -126,7 +126,7 @@
 .single-message{
     display: flex;
     justify-content: flex-start;
-    height: 50px;
+    min-height: 50px;
     padding: 5px;
     font-size: 16px;
     align-items: center;
@@ -142,4 +142,6 @@
     border-radius: 10px;
     padding: 5px;
     display: inline-block;
+    max-width: 630px;
+    word-wrap: break-word ;
 }

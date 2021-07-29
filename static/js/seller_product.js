@@ -64,6 +64,30 @@ function postChatRoom(user_1,user_2){
     }).then((response)=>response.json())
 }
 
+function deleteProduct(productId){
+    return fetch('/api/product',{
+        method:'DELETE',
+        headers:{
+            'content-type': 'application/json'
+        },
+        body:JSON.stringify({
+            'productId':productId
+        })
+    }).then((response)=>response.json())
+}
+
+function deleteMember(orderId){
+    return fetch('/api/order',{
+        method:'DELETE',
+        headers:{
+            'content-type': 'application/json'
+        },
+        body:JSON.stringify({
+            'orderId':orderId
+        })
+    }).then((response)=>response.json())
+}
+
 //view
 
 function renderOrderView(products) {
@@ -115,6 +139,9 @@ function renderOrderView(products) {
     }
     productFollower.textContent = '跟團人數';
     followA.textContent = product['productBuyerNumber'] + '人';
+    productView.addEventListener('click',()=>{
+        location.href=`/product/${product['productId']}`
+    })
     productHeader.appendChild(productImage);
     productHeader.appendChild(productName);
     productHeader.appendChild(productStatus);
@@ -154,6 +181,20 @@ function renderStepBar(products){
             }
         })
     })
+    document.getElementById('Delete-group').addEventListener('click',()=>{
+        swal({
+            title: "確定要刪除此團購嗎?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+          }).then(response=>{
+              if(response){
+                  deleteProduct(products['data']['productId']).then(myJson=>{
+                      location.href='/seller';
+                  })
+              }
+          })
+    })
 }
 
 function renderBuyerView(products){
@@ -177,6 +218,25 @@ function renderBuyerView(products){
             postChatRoom(cUser['id'],userId);
             location.href='/message';
         })
+        const kick = document.createElement('div');
+        kick.className = 'kick';
+        kick.textContent = '✕';
+        kick.addEventListener('click',()=>{
+            swal({
+                title: "確定將此團員踢除嗎?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+              }).then(response=>{
+                  if(response){
+                      deleteMember(order['orderId']).then(myJson=>{
+                          if(myJson['ok']){
+                              location.reload();
+                          }
+                      });
+                  }
+              })
+        })
         const roughlyContent = document.createElement('div');
         roughlyContent.className = 'roughly-content';
         const serialNumber = document.createElement('div');
@@ -197,7 +257,7 @@ function renderBuyerView(products){
         roughlyPrice.textContent = '訂單總額';
         roughlyPriceA.textContent = order['totalPrice'];
         detail.textContent = '詳細';
-        buyerHeader.append(buyerImg,buyerName,talk);
+        buyerHeader.append(buyerImg,buyerName,talk,kick);
         roughlyContent.append(serialNumber,roughlyDate,roughlyPrice);
         serialNumber.append(serialNumberA);
         roughlyDate.appendChild(roughlyDateA);
