@@ -29,7 +29,6 @@ python flask
 1. MySql
 2. 網站部分以ORM(flask-sqlalchemy)進行操作
 3. 設置Index加速搜尋
-4. 
 * Cloud
 1. 網站架設於AWS EC2
 2. 資料庫使用AWS RDS(雲端關聯式資料庫)
