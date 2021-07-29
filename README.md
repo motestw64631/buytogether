@@ -47,4 +47,4 @@ RESTful API
 5. 以WebSocket實作即時聊天功能
 6. HTTPS以Nginx配合SSL憑證
 ## 資料庫結構
-!(img)[img_readme/database.png]
+![img](img_readme/database.png)
