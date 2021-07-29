@@ -26,8 +26,10 @@ html.css.javascript.部分以bootsrap建置
 * Back-End  
 python flask
 * Database  
-MySql
-網站部分以ORM(flask-sqlalchemy)進行操作
+1. MySql
+2. 網站部分以ORM(flask-sqlalchemy)進行操作
+3. 設置Index加速搜尋
+4. 
 * Cloud
 1. 網站架設於AWS EC2
 2. 資料庫使用AWS RDS(雲端關聯式資料庫)
@@ -36,5 +38,8 @@ MySql
 5. 快取及Session儲存於ElastiCache
 6. 通知系統結合AWS lambda以及AWS CloudWatch定時排成通知
 * Other
-** 上傳圖片
-** 認證信
+1. 上傳圖片若超過一定大小則進行壓縮(OpenCV)
+2. 註冊需經過信箱驗證才能發起團購(Flask-mail)
+3. RESTful API架構
+4. 利用Redis進行快取設置(volatile-lru)以及Session管理
+5. 以Flask-Migrate進行資料庫版本管理
