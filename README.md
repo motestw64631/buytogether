@@ -23,9 +23,10 @@
 ## 使用技術
 * Frond-End  
 html.css.javascript.部分以bootsrap建置
-* Back-End  
+* Back-End
+MVC架構    
 python flask  
-RESTful API架構
+RESTful API
 * Database  
 1. MySql
 2. 網站部分以ORM(flask-sqlalchemy)進行操作
