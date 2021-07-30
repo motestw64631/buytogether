@@ -23,7 +23,7 @@
 * 上傳圖片壓縮
 ## 使用技術
 * Frond-End  
-HTML.CSS.JavaScript　　
+HTML.CSS.JavaScript  
 部分以Bootsrap建置
 * Back-End
 MVC架構    
