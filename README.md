@@ -30,6 +30,7 @@ HTML.CSS.JavaScript 部分以 Bootsrap 建置
 4. 以 Flask-Migrate 進行資料庫版本管理
 5. 以 WebSocket 實作即時聊天功能
 6. HTTPS以 Nginx 配合 SSL 憑證完成
+7. 通知功能以短輪循方式實作
 ## 主要功能
 * 團購商品管理  
 團購商品的買賣管理與查詢
