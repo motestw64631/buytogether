@@ -1,8 +1,8 @@
 from flask import Blueprint, json,session,jsonify,redirect,request
-from model import *
+from model.models import *
 from werkzeug.utils import secure_filename
 from os import path
-from bt3 import upload_file_to_s3
+from utils.bt3 import upload_file_to_s3
 
 
 message_api = Blueprint('message_api',__name__)

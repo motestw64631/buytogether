@@ -146,7 +146,6 @@ function sliderView() {
 };
 
 function initView() {
-    console.log(product);
     const primayImg = document.querySelector('#primary-slider .splide__track .splide__list');
     const secondaryImg = document.querySelector('#secondary-slider .splide__track .splide__list');
     product['data']['productImage'].forEach(function (img) {
@@ -160,13 +159,10 @@ function initView() {
     })
     document.getElementById('product-title').textContent = product['data']['productName'];
     const a = document.querySelector('#product-src a');
-    console.log(product['data']['productSource']);
     a.setAttribute('href', product['data']['productSource']);
     document.getElementById('owner-image').src = product['owner']['productOwnerImage'];
     document.getElementById('to-message-menu').addEventListener('click',function(){
         loginCheck();
-        console.log(currentUser.id);
-        console.log(product.owner.productOwnerID);
         postChatRoom(currentUser.id,product.owner.productOwnerID);
         location.href='/message';
     })
@@ -186,7 +182,6 @@ function initView() {
     document.querySelector('#shipping a').textContent = shipList.join(',');
     //document.querySelector('#condition a').textContent
     const specDiv = document.getElementById('spec');
-    console.log(product['data']['productSpec'].length);
     if (product['data']['productSpec'].length == 0) {
         document.querySelector('.quantity').style.display = 'none';
         addSpecBtn = document.createElement('div');

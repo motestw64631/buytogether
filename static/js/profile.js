@@ -73,7 +73,6 @@ function confirmView(){
                 if(myJson['ok']){
                     document.getElementById('loader').style.display = 'none';
                     swal({buttons: false,text: '驗證信件已發送',type: 'success',timer: 800,});
-                    console.log(myJson['message']);
                 }
             })
         })
@@ -100,7 +99,6 @@ function init() {
         if (myJson['data']) {
             loginView();
             user = myJson['data'];
-            console.log(user);
             userInfo(user['image'], user['name'], user['email'], user['date']);
             confirmView();
         }

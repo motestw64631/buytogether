@@ -1,6 +1,6 @@
 from operator import sub
 from flask import Blueprint, json,session,jsonify,redirect,request
-from model import *
+from model.models import *
 
 
 sub_message_api = Blueprint('sub_message_api',__name__)

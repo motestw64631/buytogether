@@ -86,7 +86,6 @@ function postPurchase() {
     } else if (condition == 'price') {
         conditionValue = document.getElementById('conditionPrice').value.trim();
     }
-    console.log(conditionValue);
     if(conditionValue==''){
         alertForFill('請輸入成團條件');
         return
@@ -112,9 +111,9 @@ function postPurchase() {
     data.append('shipping', shippingList);
     data.append('condition', condition);
     data.append('conditionValue', conditionValue);
-    for (var value of data.values()) {
-        console.log(value);
-    }
+    // for (var value of data.values()) {
+    //     console.log(value);
+    // }
     return fetch('/api/product', {
         method: 'POST',
         body: data

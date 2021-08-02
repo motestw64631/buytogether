@@ -1,11 +1,11 @@
 from datetime import time
 from flask import Blueprint, json,session,jsonify,redirect,request
 from sqlalchemy import or_
-from model import *
+from model.models import *
 from flask_sqlalchemy import inspect
 from werkzeug.utils import secure_filename
 from os import path
-from bt3 import upload_file_to_s3
+from utils.bt3 import upload_file_to_s3
 
 statusCode = {
     '0':'開團中',

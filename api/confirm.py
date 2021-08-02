@@ -1,8 +1,8 @@
 from flask import Blueprint, json,session,render_template
 import requests
-from model import *
-from view.auth_wrap import login_auth
-from confirm_mail import *
+from model.models import *
+from utils.auth_wrap import login_auth
+from utils.confirm_mail import *
 
 
 confirm = Blueprint('confirm',__name__)

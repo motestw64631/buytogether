@@ -210,7 +210,6 @@ function init() {
             cUser=myJson['data'];
             loginView();
             document.getElementById('loader').style.display = 'none';
-            console.log(cUser);
             notifyInterval();
             setInterval(notifyInterval, 30000);
             if(cUser['admin']){

@@ -26,7 +26,6 @@ function getProductByUser(){
 function renderUserProductView(products){
     const main = document.getElementById('my-group');
     products['data'].forEach(product => {
-        console.log(product);
         const productView = document.createElement('div');
         productView.className = 'product-view';
         const productHeader = document.createElement('div');

@@ -1,5 +1,5 @@
 from flask import Blueprint,request
-from model import *
+from model.models import *
 import datetime
 
 chat_message = Blueprint('chat_message',__name__)

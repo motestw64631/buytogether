@@ -8,10 +8,10 @@ from flask_migrate import Migrate
 from flask_socketio import SocketIO,emit,join_room,send,leave_room
 import os
 from config import Config
-from model import db
-from confirm_mail import *
+from model.models import db
+from utils.confirm_mail import *
 from cache import cache
-from view.auth_wrap import login_auth,confirm_auth
+from utils.auth_wrap import login_auth,confirm_auth
 
 
 app = Flask(__name__)
@@ -151,17 +151,17 @@ def handle_my_custom_event(msg):
 def handle_json(json):
     print('received json: ' + str(json))
 
-from view.user import user_api
-from view.product import product
-from view.message_api import message_api
-from view.sub_message_api import sub_message_api
-from view.cart import cart
-from view.chat_room import chat_room
-from view.chat_message import chat_message
-from view.order import order
-from view.ledger import ledger
-from view.notify import notify
-from view.confirm import confirm
+from api.user import user_api
+from api.product import product
+from api.message_api import message_api
+from api.sub_message_api import sub_message_api
+from api.cart import cart
+from api.chat_room import chat_room
+from api.chat_message import chat_message
+from api.order import order
+from api.ledger import ledger
+from api.notify import notify
+from api.confirm import confirm
 
 app.register_blueprint(user_api)
 app.register_blueprint(product)

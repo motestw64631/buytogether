@@ -202,7 +202,6 @@ function messageView(datas) {
                 dangerMode: true
             }).then(response => {
                 if (response) {
-                    console.log('確認刪除')
                     deleteMessage(data['messageId']).then(response => {
                         if (response['ok']) {
                             location.reload()

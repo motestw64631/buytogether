@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint, json,session,jsonify,redirect,request,make_response
 import requests
-from model import *
+from model.models import *
 from cache import cache
 import datetime
 

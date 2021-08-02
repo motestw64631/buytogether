@@ -47,7 +47,6 @@ function getOrder(id) {
 function renderOrderView(data) {
     const follow = document.getElementById('group-follow');
     data['data'].forEach(order => {
-        console.log(statusCode[order['productStatus']]);
         const orderFollow = document.createElement('div');
         orderFollow.className = 'order-follow';
         const orderHeader = document.createElement('div');
@@ -121,6 +120,5 @@ function renderOrderView(data) {
 
 
 getOrders().then((myJson) => {
-    console.log(myJson);
     renderOrderView(myJson);
 })

@@ -1,7 +1,7 @@
 from re import T
 from flask import Blueprint,request
 from flask.globals import session
-from model import *
+from model.models import *
 
 chat_room = Blueprint('chat_room',__name__)
 

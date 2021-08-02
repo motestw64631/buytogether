@@ -201,7 +201,6 @@ function renderBuyerView(products){
     const orders = products['data']['orders'];
     const followersView = document.querySelector('.followers');
     orders.forEach(order => {
-        console.log(order);
         const buyer = document.createElement('div');
         buyer.className = 'buyer';
         const buyerHeader = document.createElement('div');

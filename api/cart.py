@@ -1,6 +1,6 @@
 import re
 from flask import Blueprint, json,session,jsonify,redirect,request,url_for
-from model import *
+from model.models import *
 
 cart = Blueprint('cart',__name__)
 

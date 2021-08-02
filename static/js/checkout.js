@@ -57,7 +57,6 @@ function postOrder(prime,buyer, name, phone, mail, product,item,sum, ship, ship_
         "shipValue": ship_value,
         "message": message
     }
-    console.log(data);
     return fetch('/api/order', {
         method: 'POST',
         headers: {
@@ -222,7 +221,6 @@ tappayView();
 
 
 getBookingById().then((pd) => {
-    console.log(pd);
     shippingWaysView(pd);
     sidebarCartViewOrder(pd);
     sumbitBtn(pd);
