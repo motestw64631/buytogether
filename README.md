@@ -8,8 +8,8 @@
 ## 使用技術
 * Frond-End  
 HTML.CSS.JavaScript 部分以 Bootsrap 建置
-* Back-End
-1. MVC架構    
+* Back-End  
+1. MVC架構  
 2. Python 框架為 Flask  
 3. RESTful API
 * Database  
