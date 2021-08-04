@@ -40,6 +40,17 @@ function getOrder(id) {
         .then(response => response.json())
 }
 
+function deleteOrder(orderId){
+    return fetch('/api/order',{
+        method:'DELETE',
+        headers:{
+            'content-type': 'application/json'
+        },
+        body:JSON.stringify({
+            'orderId':orderId
+        })
+    }).then((response)=>response.json())
+}
 
 
 
@@ -113,6 +124,22 @@ function renderOrderView(data) {
             })
             pdDetail.appendChild(innerDetail);
             //
+        })
+        document.getElementById('quit').addEventListener('click',()=>{
+            swal({
+                title: "確定退出團購嗎?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+              }).then(response=>{
+                  if(response){
+                    deleteOrder(order['orderId']).then(myJson=>{
+                          if(myJson['ok']){
+                              location.reload();
+                          }
+                      });
+                  }
+              })
         })
     });
 

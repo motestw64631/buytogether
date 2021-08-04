@@ -71,7 +71,7 @@ def profile():
     return render_template('profile.html')
 
 @app.route('/booking')
-@cache.cached(timeout=60*60*24)
+#@cache.cached(timeout=60*60*24)
 @login_auth
 def group():
     return render_template('booking.html')
@@ -83,7 +83,7 @@ def message():
     return render_template('message.html')
 
 @app.route('/seller')
-@cache.cached(timeout=60*60*24)
+#@cache.cached(timeout=60*60*24)
 @login_auth
 def seller():
     return render_template('seller.html')

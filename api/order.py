@@ -194,9 +194,17 @@ def delete_order():
         order = db.session.query(Order).filter_by(id=order_id).first()
         if session['id']==order.buyer_id:
             db.session.delete(order)
+            #notify zone
+            notify = Notify(f"買家 {order.buyer_name} 已退出團購 {order.product.name}")
+            order.product.user.new_message=True
+            order.product.user.notify.append(notify)
+            #
             db.session.commit()
         elif session['id']==order.product.ownerId:
             db.session.delete(order)
+            notify = Notify(f"您已被退出 {order.product.name} 團購商品")
+            order.user.new_message=True
+            order.user.notify.append(notify)
             db.session.commit()
         else:
             return{
