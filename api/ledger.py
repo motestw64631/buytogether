@@ -9,7 +9,7 @@ import datetime
 ledger = Blueprint('ledger',__name__)
 
 
-@cache.memoize(60*3)
+#@cache.memoize(60*3)
 def calculate_balance(user):
     balance = 0
     for product in user.product:
