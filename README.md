@@ -9,7 +9,7 @@
 * Frond-End  
 HTML.CSS.JavaScript 部分以 Bootsrap 建置
 * Back-End  
-1. MVC架構  
+1. MVC 架構  
 2. Python 框架為 Flask  
 3. RESTful API
 * Database  
@@ -26,7 +26,7 @@ HTML.CSS.JavaScript 部分以 Bootsrap 建置
 * Other
 1. 上傳圖片若超過一定大小則進行壓縮(OpenCV)
 2. 註冊需經過信箱驗證才能發起團購(Flask-mail)
-3. 利用Redis進行快取設置(volatile-lru)以及 Session 管理
+3. 利用 Redis 進行快取設置(volatile-lru)以及 Session 管理
 4. 以 Flask-Migrate 進行資料庫版本管理
 5. 以 WebSocket 實作即時聊天功能
 6. HTTPS以 Nginx 配合 SSL 憑證完成
@@ -35,7 +35,7 @@ HTML.CSS.JavaScript 部分以 Bootsrap 建置
 * 團購商品管理  
 團購商品的買賣管理與查詢
 * 圖文留言板  
-仿Facebook的簡易圖文留言板
+仿 Facebook 的簡易圖文留言板
 * 聊天功能  
 讓買賣家進行溝通  
 * 金流管控  
