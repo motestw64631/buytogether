@@ -15,7 +15,8 @@ HTML.CSS.JavaScript 部分以 Bootsrap 建置
 * Database  
 1. MySQL
 2. 網站部分以 ORM(Flask-SQLAlchemy) 進行操作
-3. 設置 Index 加速搜尋
+3. 設置 Index 加速搜尋  
+4. 第二正規化
 * Cloud
 1. 網站架設於 AWS EC2
 2. 資料庫使用 AWS RDS(雲端關聯式資料庫)
