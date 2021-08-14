@@ -4,7 +4,9 @@
 ## 專案主旨
 本專案為一拍賣網站，但功能注重在團購的商品，並非一般商品，  
 旨在讓團購主可以透過 S&S 並且根據各種不同的成團條件發出團購商品，  
-而其餘使用者則可在首頁瀏覽到各種商品以及進行下單。
+而其餘使用者則可在首頁瀏覽到各種商品以及進行下單。  
+## 資料庫結構
+![img](img_readme/database.png)  
 ## 使用技術
 * Frond-End  
 HTML.CSS.JavaScript 部分以 Bootsrap 建置
@@ -48,5 +50,3 @@ HTML.CSS.JavaScript 部分以 Bootsrap 建置
 * 通知功能
 * 搜尋功能
 * 上傳圖片壓縮
-## 資料庫結構
-![img](img_readme/database.png)
