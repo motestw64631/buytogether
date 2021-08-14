@@ -6,7 +6,9 @@
 旨在讓團購主可以透過 S&S 並且根據各種不同的成團條件發出團購商品，  
 而其餘使用者則可在首頁瀏覽到各種商品以及進行下單。  
 ## 系統架構  
+<center>
 ![img](img_readme/flow.png)  
+</center>
 ## 資料庫結構
 ![img](img_readme/database.png)  
 ## 使用技術
