@@ -23,7 +23,7 @@ HTML.CSS.JavaScript 部分以 Bootsrap 建置
 3. 圖片皆儲存於 AWS S3(Simple Cloud Storage)
 4. 圖片呈現利用 AWS CloudFront
 5. 快取及 Session 儲存於 AWS ElastiCache
-6. 通知系統結合 AWS lambda 以及 AWS CloudWatch 定時排程通知
+6. 通知系統結合 AWS Lambda 以及 AWS EventBridge 定時排程通知
 * Other
 1. 上傳圖片若超過一定大小則進行壓縮(OpenCV)
 2. 註冊需經過信箱驗證才能發起團購(Flask-mail)
